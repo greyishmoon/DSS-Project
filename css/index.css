@@ -1,19 +1,38 @@
+/* GENERAL */
+
+/* Header fix for no drawer (hamburger) */
+.mdl-layout__header-row {
+  padding: 0 40px;
+}
+
+.mdl-layout.has-drawer .mdl-layout__header-row {
+  padding: 0 40px 0 80px;
+}
+
 .mdl-layout--fixed-header {
-    min-width: 1200px;
+    min-width: 1400px;
 }
 
 .mdl-layout__content {
     align: left;
-}
 
+}
 
 /* Padding for all page content in each tab panel */
 .mdl-layout__tab-panel {
     float: left;
-    width: 1200px;
+    width: 1400px;
     margin: 0 auto;
     background: white;
     padding: 20px;
+}
+
+/* MAIN MENU PAGE */
+
+/* Menu button table - pad top*/
+td.menu {
+    background: white;
+    padding: 10px;
 }
 
 /* PROJECT SETUP PAGE */
