@@ -1,0 +1,98 @@
+.mdl-layout--fixed-header {
+    min-width: 1200px;
+}
+
+.mdl-layout__content {
+    align: left;
+}
+
+
+/* Padding for all page content in each tab panel */
+.mdl-layout__tab-panel {
+    float: left;
+    width: 1200px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+}
+
+/* PROJECT SETUP PAGE */
+
+/* ALL TEXT FIELDS 100% width */
+.mdl-textfield {
+    background: white;
+    width: 100%;
+}
+
+/* Project title + Risk Categories tables */
+.mdl-data-table.project-setup {
+    background: white;
+    width: 600px;
+}
+/* Project title table - left column*/
+td.project-setup.left {
+    background: white;
+    width: 30%;
+}
+/* Project title table - right column*/
+td.project-setup.right {
+    background: white;
+    width: 70%;
+}
+
+/* Risk Categories */
+/* Risk Categories table - left column*/
+th.risk-cats.left {
+    background: white;
+    width: 80%;
+}
+/* Risk Categories table - right column*/
+th.risk-cats.right {
+    background: white;
+    width: 20%;
+}
+/* Center in cell (for checkboxes) */
+.mdl-data-table__cell--center.mdl-data-table__cell--center{
+    text-align:center
+}
+/* Add/Remove buttons table */
+.button-table-cats {
+    background: white;
+    width: 600px;
+    padding-top: 5px;
+}
+
+/* RISK CATEGORIES PAGE */
+
+/* Risk tables */
+.mdl-data-table.risk-table {
+    background: white;
+    width: 1200px;
+}
+/* Add/Remove buttons table */
+.button-table-risks {
+    background: white;
+    width: 1200px;
+    padding-top: 5px;
+}
+
+
+
+
+
+/* FOR LATER TABLE - VERTICLE LINES - ADAPT */
+/* td {
+  border-right: solid 1px #f00;
+  border-left: solid 1px #f00;
+} */
+
+/* FOR LATER TABLE - REMOVE PADDING FROM TEXT FIELD - ADAPT */
+/* NOTE!!! LABEL TEXT DOES NOT WORK */
+/* .mdl-textfield{
+    padding: 0;
+} */
+
+/* FOR LATER TABLE - CENTER TEXT IN INPUT - USE FOR NUMBER INPUT CELLS? - ADAPT */
+/* .mdl-textfield__input {
+    text-align: center !important;
+} */

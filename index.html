@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<title>DSS Prototype</title>
+	<meta name="description" content="DSS Prototype">
+	<meta name="author" content="C Blythe">
+
+	<!--  Remove favicon.ico request to stop error  -->
+	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+	<!-- Material Design Lite -->
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<!-- Material Design Lite colour scheme-->
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+	<!-- Material Design icon font -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<!-- Roboto font -->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+
+	<link href="css/index.css" rel="stylesheet" type="text/css">
+	<script src="libs/jquery-3.2.1.min.js"></script>
+	<!-- Project object definition -->
+	<script src="js/project.js"></script>
+	<!-- DSS model script -->
+	<!-- <script src="js/model.js"></script> -->
+	<!-- Main page script -->
+	<script src="js/index.js"></script>
+
+
+
+	<!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+	<div class="container">
+
+
+
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+			<header class="mdl-layout__header">
+				<div class="mdl-layout__header-row">
+					<!-- Title -->
+					<span class="mdl-layout-title">Decision Support System</span>
+				</div>
+				<!-- Tabs -->
+				<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+					<a class="mdl-layout__tab is-active" href="#page-1">Project Setup</a>
+					<a class="mdl-layout__tab" href="#page-2">Risk Categories</a>
+					<a class="mdl-layout__tab" href="#page-3">Impact Assessment</a>
+					<a class="mdl-layout__tab" href="#page-4">Results</a>
+					<a class="mdl-layout__tab" href="#page-5">Summary</a>
+					<a class="mdl-layout__tab" href="#page-6">Instructions</a>
+					<a class="mdl-layout__tab mdl-color--red-400" href="#page-7">Save / Load</a>
+				</div>
+			</header>
+
+
+			<!-- CONTENT ********************************************************* -->
+			<main class="mdl-layout__content">
+
+				<!-- PROJECT SETUP CONTENT ******************************************* -->
+				<section class="mdl-layout__tab-panel is-active" id="page-1">
+					<div class="page-content">
+
+						<!-- Project setup -->
+						<h4>Project Setup</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<form class="" action="index.html" method="post">
+
+							<!-- Project Title -->
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp project-setup">
+								<tr>
+									<td class="project-setup left">
+										<h5>Project Title: </h5></td>
+									<td class="mdl-data-table__cell--non-numeric project-setup right">
+										<div class="mdl-textfield mdl-js-textfield">
+											<input class="mdl-textfield__input" type="text" id="project-title" value="">
+											<label class="mdl-textfield__label" for="project-title">Project Title...</label>
+										</div>
+									</td>
+								</tr>
+								<!-- Project Cost -->
+								<tr>
+									<td>
+										<h5>Project Cost: £</h5></td>
+									<td class="mdl-data-table__cell--non-numeric">
+										<div class="mdl-textfield mdl-js-textfield" align="left">
+											<input class="mdl-textfield__input" type="text" id="project-cost" pattern="-?[0-9]*(\.[0-9]+)?" value="" textalign="left">
+											<label class="mdl-textfield__label" for="project-cost">Initial Project Cost...</label>
+											<span class="mdl-textfield__error">Input is not a number</span>
+										</div>
+									</td>
+								</tr>
+							</table>
+
+							<!-- Project Risk Categories -->
+							<h4>Project Risk Categories</h4>
+							<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp project-setup" id="category-table">
+								<thead>
+									<tr>
+										<th class="mdl-data-table__cell--non-numeric risk-cats left">
+											<h5>Risk Category Title</h5>
+										</th>
+										<th class="mdl-data-table__cell--center risk-cats right">
+											<h6>Remove</h6>
+										</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								</tbody>
+							</table>
+
+							<!-- Buttons layout table -->
+							<table class="button-table-cats">
+								<tbody>
+									<tr>
+										<td class="mdl-data-table__cell--non-numeric">
+											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-category">Add Category</button>
+										</td>
+										<td>
+											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="delete-categories" style="float: right">Remove Categories</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+
+							</tbody>
+							</table>
+
+						</form>
+					</div>
+
+					<!-- TODO - REMOVE -->
+					<br><br><br>
+					<div id="test-div">
+					</div>
+				</section>
+
+
+				<!-- RISK CATEGORIES CONTENT ***************************************** -->
+				<section class="mdl-layout__tab-panel" id="page-2">
+					<div class="page-content">
+						<!-- Project Risks -->
+						<h4>Risk Categories</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Financial</h5>
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Risk weight
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Likelihood of Occurrence
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Coefficient of Project Features
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Controllability
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Dependency
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Probability
+									</th>
+									<th class="mdl-data-table__cell--center">
+										<h6>Remove</h6>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value='Program delivery'><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
+								</tr>
+
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value='Design growth'><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
+								</tr>
+
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value='Sub-contractor pricing'><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- Buttons layout table -->
+						<table class="button-table-risks">
+							<tbody>
+								<tr>
+									<td class="mdl-data-table__cell--non-numeric">
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-risk">Add Risk</button>
+									</td>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="delete-risks" style="float: right">Remove Risks</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<!-- TEMP MOCK TABLE -->
+						<br />
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Technical & Operational</h5>
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Risk weight
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Likelihood of Occurrence
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Coefficient of Project Features
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Controllability
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Dependency
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Probability
+									</th>
+									<th class="mdl-data-table__cell--center">
+										<h6>Remove</h6>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
+								</tr>
+
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
+								</tr>
+
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- Buttons layout table -->
+						<table class="button-table-risks">
+							<tbody>
+								<tr>
+									<td class="mdl-data-table__cell--non-numeric">
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-risk">Add Risk</button>
+									</td>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="delete-risks" style="float: right">Remove Risks</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<br />
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Managerial & Legal</h5>
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Risk weight
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Likelihood of Occurrence
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Coefficient of Project Features
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Controllability
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Dependency
+									</th>
+									<th class="mdl-data-table__cell--center">
+										Probability
+									</th>
+									<th class="mdl-data-table__cell--center">
+										<h6>Remove</h6>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
+								</tr>
+
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
+								</tr>
+
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- Buttons layout table -->
+						<table class="button-table-risks">
+							<tbody>
+								<tr>
+									<td class="mdl-data-table__cell--non-numeric">
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-risk">Add Risk</button>
+									</td>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="delete-risks" style="float: right">Remove Risks</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+
+
+
+
+
+					</div>
+				</section>
+
+				<!-- IMPACT ASSESSMENT CONTENT *************************************** -->
+				<section class="mdl-layout__tab-panel" id="page-3">
+					<div class="page-content">
+						<h4>Impact Assessment</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Financial</h5>
+									</th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Impact on Project Cost
+									</th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Impact on Project Duration
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Impact on Project Quality
+									</th>
+								</tr>
+
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										DEGREES OF BELIEF %
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Program delivery</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Design growth</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Sub-contractor pricing</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+							</tbody>
+						</table>
+						<br />
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Technical & Operational</h5>
+									</th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Impact on Project Cost
+									</th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Impact on Project Duration
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Impact on Project Quality
+									</th>
+								</tr>
+
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										DEGREES OF BELIEF %
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Risk 1</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Risk 2</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Risk 3</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+							</tbody>
+						</table>
+						<br / />
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Managerial & Legal</h5>
+									</th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Impact on Project Cost
+									</th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Impact on Project Duration
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Impact on Project Quality
+									</th>
+								</tr>
+
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										DEGREES OF BELIEF %
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Risk 1</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Risk 2</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Risk 3</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+							</tbody>
+						</table>
+
+
+
+					</div>
+				</section>
+
+				<!-- RESULTS CONTENT ************************************************* -->
+				<section class="mdl-layout__tab-panel" id="page-4">
+					<div class="page-content">
+						<h4>Results</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Financial</h5>
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk assessment on Project Cost
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk assessment on Project Duration
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk assessment on Project Quality
+									</th>
+								</tr>
+
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										DEGREES OF BELIEF %
+									</th>
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Program delivery</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>0.01</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.02</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.03</td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Design growth</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>0.01</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.02</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.03</td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Sub-contractor pricing</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>0.01</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.02</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.03</td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+
+							</tbody>
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>AGGREGATED</h5>
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk on Project Cost
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk on Project Duration
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk on Project Quality
+									</th>
+								</tr>
+
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										Assessment Grades
+									</th>
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Degrees of Belief</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>0.01</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.02</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.03</td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+							</tbody>
+						</table>
+						<br>
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Technical & Operational</h5>
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk assessment on Project Cost
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk assessment on Project Duration
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk assessment on Project Quality
+									</th>
+								</tr>
+
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										DEGREES OF BELIEF %
+									</th>
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Risk 1</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>0.01</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.02</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.03</td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Risk 2</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>0.01</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.02</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.03</td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Risk 3</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>0.01</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.02</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.03</td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+
+							</tbody>
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>AGGREGATED</h5>
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk on Project Cost
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk on Project Duration
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center blank"></th>
+									<th class="mdl-data-table__cell--center" colspan="3">
+										Risk on Project Quality
+									</th>
+								</tr>
+
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										Assessment Grades
+									</th>
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+									<th class="mdl-data-table__cell--center blank"></th>
+
+									<th class="mdl-data-table__cell--center">
+										0%
+									</th>
+									<th class="mdl-data-table__cell--center">
+										1
+									</th>
+									<th class="mdl-data-table__cell--center">
+										2
+									</th>
+									<th class="mdl-data-table__cell--center">
+										3
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class='mdl-data-table__cell--non-numeric'>
+										<h6>Degrees of Belief</h6>
+									</td>
+									<td class='mdl-data-table__cell--center'>0.01</td>
+									<td class='mdl-data-table__cell--center'>1</td>
+									<td class='mdl-data-table__cell--center'>2</td>
+									<td class='mdl-data-table__cell--center'>3</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.02</td>
+									<td class='mdl-data-table__cell--center'>4</td>
+									<td class='mdl-data-table__cell--center'>5</td>
+									<td class='mdl-data-table__cell--center'>6</td>
+									<td class='mdl-data-table__cell--center blank'></td>
+									<td class='mdl-data-table__cell--center'>0.03</td>
+									<td class='mdl-data-table__cell--center'>7</td>
+									<td class='mdl-data-table__cell--center'>8</td>
+									<td class='mdl-data-table__cell--center'>9</td>
+								</tr>
+							</tbody>
+						</table>
+
+
+					</div>
+				</section>
+
+				<!-- SUMMARY CONTENT ************************************************* -->
+				<section class="mdl-layout__tab-panel" id="page-5">
+					<div class="page-content">
+						<h4>Summary</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					</div>
+				</section>
+
+				<!-- INSTRUCTIONS CONTENT ******************************************** -->
+				<section class="mdl-layout__tab-panel" id="page-6">
+					<div class="page-content">
+						<h4>Instructions</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					</div>
+				</section>
+
+				<!-- SAVE / LOAD CONTENT ******************************************** -->
+				<section class="mdl-layout__tab-panel" id="page-7">
+					<div class="page-content">
+						<h4>Save / Load</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					</div>
+				</section>
+			</main>
+
+		</div>
+
+
+	</div>
+
+</body>
+
+</html>
