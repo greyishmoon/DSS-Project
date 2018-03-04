@@ -1,12 +1,13 @@
+
 var project;
 
 $(document).ready(function () {
 	console.log("ready!");
 
+	// TODO - refactor to only create new project if one not loaded in local memory
 	//	// Initialise Project object
 	project = new Project("EMPTY");
 console.log("proj name test: " + project.name);
-	//console.log(project.name);
 
 	// CATEGORY TABLE
 	// Add initial row automatically

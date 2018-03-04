@@ -4,13 +4,13 @@
 .mdl-layout__header-row {
   padding: 0 40px;
 }
-
 .mdl-layout.has-drawer .mdl-layout__header-row {
   padding: 0 40px 0 80px;
 }
 
-.mdl-layout--fixed-header {
-    min-width: 1400px;
+/* PAGE WIDTH */
+.mdl-layout--fixed-header .mdl-layout__tab-panel{
+    width: 1400px;
 }
 
 .mdl-layout__content {
@@ -43,20 +43,29 @@ td.menu {
     width: 100%;
 }
 
-/* Project title + Risk Categories tables */
-.mdl-data-table.project-setup {
+/* Narrow tables - 600 wide*/
+table.narrow {
     background: white;
     width: 600px;
 }
+/* Narrow cells - reduce vertical padding*/
+td.narrow {
+    background: white;
+    padding: 0px 12px;
+}
+
+
+
+
 /* Project title table - left column*/
 td.project-setup.left {
     background: white;
     width: 30%;
 }
-/* Project title table - right column*/
-td.project-setup.right {
+/* Use to expand cell to fill rest of table width */
+td.fillWidth {
     background: white;
-    width: 70%;
+    width: 100%;
 }
 
 /* Risk Categories */
@@ -75,9 +84,8 @@ th.risk-cats.right {
     text-align:center
 }
 /* Add/Remove buttons table */
-.button-table-cats {
+.button-table {
     background: white;
-    width: 600px;
     padding-top: 5px;
 }
 

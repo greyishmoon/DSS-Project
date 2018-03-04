@@ -26,11 +26,11 @@
 	<link href="../css/index.css" rel="stylesheet" type="text/css">
 	<script src="../libs/jquery-3.2.1.min.js"></script>
 	<!-- Project object definition -->
-	<script src="../js/project.js"></script>
+	<script src="../js/problem.js"></script>
 	<!-- DSS model script -->
-	<!-- <script src="js/model.js"></script> -->
+	<script src="../js/model.js"></script>
 	<!-- Main page script -->
-	<script src="../js/index.js"></script>
+	<script src="../js/decision_making.js"></script>
 
 
 
@@ -41,7 +41,6 @@
 </head>
 
 <body>
-	<p>HELLO</p>
 	<div class="container">
 
 		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -53,19 +52,162 @@
 				</div>
 				<!-- Tabs -->
 				<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-					<!-- <a class="mdl-layout__tab is-active" href="#page-1">Project Setup</a>
-					<a class="mdl-layout__tab" href="#page-2">Risk Categories</a>
-					<a class="mdl-layout__tab" href="#page-3">Impact Assessment</a>
-					<a class="mdl-layout__tab" href="#page-4">Results</a>
-					<a class="mdl-layout__tab" href="#page-5">Summary</a>
-					<a class="mdl-layout__tab" href="#page-6">Instructions</a>
-					<a class="mdl-layout__tab mdl-color--red-400" href="#page-7">Save / Load</a> -->
+					<a class="mdl-layout__tab is-active" href="#page-1">Problem Setup</a>
+					<a class="mdl-layout__tab" href="#page-2">Data Entry</a>
+					<a class="mdl-layout__tab" href="#page-3">Results</a>
+					<a class="mdl-layout__tab" href="#page-4">Instructions</a>
+					<a class="mdl-layout__tab mdl-color--red-400" href="#page-5">Save / Load</a>
 				</div>
 			</header>
 
 
+			<!-- CONTENT ************************************************************* -->
+			<main class="mdl-layout__content">
+
+				<!-- PROBLEM SETUP PAGE ********************************************** -->
+				<section class="mdl-layout__tab-panel is-active" id="page-1">
+					<div class="page-content">
+
+						<!-- Problem Setup -->
+						<h4>Problem Setup</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<!-- Project Title -->
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+							<tr>
+								<td class="narrow">
+									<h5>Problem Title: </h5>
+								</td>
+								<td class="mdl-data-table__cell--non-numeric fillWidth narrow">
+									<div class="mdl-textfield mdl-js-textfield">
+										<input class="mdl-textfield__input" type="text" id="problem-title" value="">
+										<label class="mdl-textfield__label" >Problem Title...</label>
+									</div>
+								</td>
+							</tr>
+						</table>
+
+						<!-- Problem Alternatives -->
+						<h4>Alternative solutions</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="alternative-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Alternatives</h5>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- ALTERNATIVES ROWS ADDED DYNAMICALLY HERE -->
+							</tbody>
+						</table>
+
+						<!-- Buttons layout table -->
+						<table class="button-table narrow">
+							<tbody>
+								<tr>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-alternative">Add Alternative</button>
+									</td>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="remove-alternative" style="float: right">Remove Alternative</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<!-- Problem Factors -->
+						<h4>Decision Factors</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="factors-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Factors</h5>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- ALTERNATIVES ROWS ADDED DYNAMICALLY HERE -->
+							</tbody>
+						</table>
+
+						<!-- Buttons layout table -->
+						<table class="button-table narrow">
+							<tbody>
+								<tr>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-factor">Add Factor</button>
+									</td>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="remove-factor" style="float: right">Remove Factor</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+
+					<!-- TODO - REMOVE -->
+					<br><br><br>
+					<div id="test-div">
+					</div>
+				</section>
+
+
+				<!-- DATA ENTRY PAGE ************************************************* -->
+				<section class="mdl-layout__tab-panel" id="page-2">
+					<div class="page-content">
+						<h4>Data Entry</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+					</div>
+				</section>
+
+				<!-- RESULTS PAGE **************************************************** -->
+				<section class="mdl-layout__tab-panel" id="page-3">
+					<div class="page-content">
+						<h4>Results</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+
+
+
+
+					</div>
+				</section>
+
+
+
+				<!-- INSTRUCTIONS PAGE *********************************************** -->
+				<section class="mdl-layout__tab-panel" id="page-4">
+					<div class="page-content">
+						<h4>Instructions</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					</div>
+				</section>
+
+				<!-- SAVE / LOAD PAGE ************************************************ -->
+				<section class="mdl-layout__tab-panel" id="page-5">
+					<div class="page-content">
+						<h4>Save / Load</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					</div>
+				</section>
+			</main>
+
 		</div>
+
 
 	</div>
 
+
+
 </body>
+
+</html>
