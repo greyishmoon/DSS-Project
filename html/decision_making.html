@@ -23,7 +23,7 @@
 	<!-- Roboto font -->
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
-	<link href="../css/index.css" rel="stylesheet" type="text/css">
+	<link href="../css/dss.css" rel="stylesheet" type="text/css">
 	<script src="../libs/jquery-3.2.1.min.js"></script>
 	<!-- Project object definition -->
 	<script src="../js/problem.js"></script>
@@ -81,7 +81,7 @@
 								<td class="mdl-data-table__cell--non-numeric fillWidth narrow">
 									<div class="mdl-textfield mdl-js-textfield">
 										<input class="mdl-textfield__input" type="text" id="problem-title" value="">
-										<label class="mdl-textfield__label" >Problem Title...</label>
+										<label class="mdl-textfield__label">Problem Title...</label>
 									</div>
 								</td>
 							</tr>
@@ -99,7 +99,7 @@
 									</th>
 								</tr>
 							</thead>
-
+<!-- TODO Limit Alternative names to 14 chars -->
 							<tbody>
 								<!-- ALTERNATIVES ROWS ADDED DYNAMICALLY HERE -->
 							</tbody>
@@ -110,10 +110,10 @@
 							<tbody>
 								<tr>
 									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-alternative">Add Alternative</button>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-alternative">Add Alternative</button>
 									</td>
 									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="remove-alternative" style="float: right">Remove Alternative</button>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="remove-alternative" style="float: right">Remove Alternative</button>
 									</td>
 								</tr>
 							</tbody>
@@ -142,10 +142,10 @@
 							<tbody>
 								<tr>
 									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-factor">Add Factor</button>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-factor" >Add Factor</button>
 									</td>
 									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="remove-factor" style="float: right">Remove Factor</button>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="remove-factor" style="float: right">Remove Factor</button>
 									</td>
 								</tr>
 							</tbody>
@@ -165,6 +165,108 @@
 					<div class="page-content">
 						<h4>Data Entry</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<!-- Problem Factors -->
+						<h4>Factors Criteria</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
+							<thead>
+								<tr>
+									<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
+										<h5>$FACTOR Criteria</h5>
+									</th>
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+										<h6>14charsaaaaaax</h6>
+									</th>
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen">
+										<h6>$ALTERNATIVE 2</h6>
+									</th>
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen">
+										<h6>$ALTERNATIVE 3</h6>
+									</th>
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen">
+										<h6>$ALTERNATIVE 4</h6>
+									</th>
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen">
+										<h6>$ALTERNATIVE 5</h6>
+									</th>
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center number width150 hlBlue" id="lastNumber">
+										<h5>Weight</h5>
+									</th>
+									<!-- <th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
+										<h5>Weight</h5>
+									</th> -->
+
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- ALTERNATIVES ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
+										<div class="mdl-textfield mdl-js-textfield">
+											<input class="mdl-textfield__input" type="text" value="">
+											<label class="mdl-textfield__label">Criteria...</label>
+										</div>
+									</td>
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<div class="mdl-textfield mdl-js-textfield number">
+											<input class="mdl-textfield__input number" type="text" value="0">
+											<label class="mdl-textfield__label">0-100</label>
+										</div>
+									</td>
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<div class="mdl-textfield mdl-js-textfield number">
+											<input class="mdl-textfield__input number" type="text" value="0">
+											<label class="mdl-textfield__label">0-100</label>
+										</div>
+									</td>
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<div class="mdl-textfield mdl-js-textfield number">
+											<input class="mdl-textfield__input number" type="text" value="0">
+											<label class="mdl-textfield__label">0-100</label>
+										</div>
+									</td>
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number  hlGreen">
+										<div class="mdl-textfield mdl-js-textfield number">
+											<input class="mdl-textfield__input number" type="text" value="0">
+											<label class="mdl-textfield__label">0-100</label>
+										</div>
+									</td>
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number  hlGreen">
+										<div class="mdl-textfield mdl-js-textfield number">
+											<input class="mdl-textfield__input number" type="text" value="0">
+											<label class="mdl-textfield__label">0-100</label>
+										</div>
+									</td>
+
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number  hlBlue" id="lastNumber">
+										<div class="mdl-textfield mdl-js-textfield number">
+											<input class="mdl-textfield__input number" type="text" value="0">
+											<label class="mdl-textfield__label">0-100</label>
+										</div>
+									</td>
+								</tr>
+
+
+
+							</tbody>
+						</table>
+
+						<!-- Buttons layout table -->
+						<table class="button-table">
+							<tbody>
+								<tr>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-1-criteria">Add Criteria</button>
+									</td>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="remove-1-criteria" style="float: right">Remove Criteria</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 
 					</div>
 				</section>

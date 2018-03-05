@@ -1,4 +1,8 @@
-var problem;
+var problem; // Problem data object
+var alternativeCount = 0; // Number of alternatives - limited >=1 <=6
+var minAltCount = 1;
+var maxAltCount = 6;
+var factorCount = 0; // Number of factors - min 1 no max
 
 $(document).ready(function() {
     console.log("ready!");
@@ -18,6 +22,8 @@ $(document).ready(function() {
     addBlankAlternative();
     // Remove last row from alternative-table
     $('#remove-alternative').on('click', removeAlternative);
+    // Disable remove button on load
+    disableButton("#remove-alternative");
     // FACTORS
     // Add row to alternative-table
     $('#add-factor').on('click', addBlankFactor);
@@ -25,6 +31,8 @@ $(document).ready(function() {
     addBlankFactor();
     // Remove last row from alternative-table
     $('#remove-factor').on('click', removeFactor);
+    // Disable remove button on load
+    disableButton("#remove-factor");
     // Input change listener - whenever focus leaves input update data object
     $('input').on('focusout', update);
     // SET LISTENERS ON DYNAMIC CONTENT
@@ -64,7 +72,15 @@ function tabClicked() {
 //////////////// ALTERNATIVES ////////////////
 // Adds alternative with no title
 function addBlankAlternative() {
-    addAlternative('')
+        addAlternative('')
+        alternativeCount++;
+
+    // Disable add button if count >= max number
+    if (alternativeCount >= maxAltCount) {
+        disableButton("#add-alternative");
+    }
+    // Enable remove button
+    enableButton("#remove-alternative");
 }
 
 // TEMPLATE for row in alternative-table
@@ -96,6 +112,14 @@ function removeAlternative() {
     removeLastRow("#alternative-table")
     // Reset listeners on all dynamic content
     setListeners();
+    alternativeCount--;
+
+    // Disable remove button if count <= min number
+    if (alternativeCount <= minAltCount) {
+        disableButton("#remove-alternative");
+    }
+    // Enable add button
+    enableButton("#add-alternative");
 }
 //////////////// ALTERNATIVES ////////////////
 
@@ -104,6 +128,10 @@ function removeAlternative() {
 // Adds factor with no title
 function addBlankFactor() {
     addFactor('')
+    factorCount++;
+
+    // Enable remove button
+    enableButton("#remove-factor");
 }
 
 // TEMPLATE for row in factors-table
@@ -132,9 +160,17 @@ function addFactor(factorName) {
 
 // Remove last row from alternative-table
 function removeFactor() {
-    removeLastRow("#factors-table")
-    // Reset listeners on all dynamic content
-    setListeners();
+        removeLastRow("#factors-table")
+        // Reset listeners on all dynamic content
+        setListeners();
+        factorCount--;
+
+        // Disable remove button if count <= min number
+        if (factorCount <= 1) {
+            disableButton("#remove-factor");
+        }
+        // Enable add button
+        enableButton("#add-factor");
 }
 /////////////////// FACTORS ///////////////////
 
@@ -150,15 +186,15 @@ function update(event) {
     // Capture Alternatives
     var altArray = [];
     $("#alternative-table tbody tr").each(function() {
-      altArray.push($(this).find("input.alternative").val());
-      problem.alternatives = altArray;
+        altArray.push($(this).find("input.alternative").val());
+        problem.alternatives = altArray;
     });
     // Capture Factors
     var factArray = [];
     $("#factors-table tbody tr").each(function() {
-      var inputVal = $(this).find("input.factor").val();
-      factArray.push(new Factor(inputVal));
-      problem.factors = factArray;
+        var inputVal = $(this).find("input.factor").val();
+        factArray.push(new Factor(inputVal));
+        problem.factors = factArray;
     });
 
     // TEMP print object to test-div
@@ -181,6 +217,28 @@ function removeLastRow(tableID) {
 function upgradeMDL() {
     componentHandler.upgradeDom('MaterialCheckbox');
     componentHandler.upgradeDom('MaterialTextfield');
+}
+
+// Enable MDL button using buttonID
+function enableButton(buttonID) {
+    // enable HTML button
+    $(buttonID).attr("disabled", false);
+    // enable MDL styling
+    // $(buttonID).removeClass("mdl-button--disabled")
+    // //
+    // componentHandler.upgradeElement($(buttonID));
+}
+
+// Disable MDL button using buttonID
+function disableButton(buttonID) {
+    var button = document.getElementById('remove-alternative');
+    //var button = $(buttonID);
+    //   // enable HTML button
+    $(buttonID).attr("disabled", true);
+    //   // enable MDL styling
+    //   button.addClass("mdl-button--disabled")
+    //   //
+    //   componentHandler.upgradeElement(button);
 }
 ///////// GENERAL HELPER FUNCTIONS ////////////
 

@@ -27,39 +27,62 @@
     padding: 20px;
 }
 
+/* Highlight fill colours */
+.hlBlue {
+  /* MDL - mdl-color--blue-100 */
+  background: #BBDEFB;
+}
+.hlYellow {
+  /* MDL - mdl-color--yellow-A100 */
+  background: #FFFF8D;
+}
+.hlGreen{
+  /* MDL - mdl-color--green-A100 */
+  background: #CCFF90;
+}
+.hlPurple{
+  /* MDL - mdl-color--purple-100 */
+  background: #E1BEE7;
+}
+.hlRed{
+  /* MDL - mdl-color--red-100 */
+  background: #FFCDD2;
+}
+.hlWarningRed{
+  /* MDL - mdl-color--red-400 */
+  background: #EF5350;
+}
 /* MAIN MENU PAGE */
 
 /* Menu button table - pad top*/
 td.menu {
-    background: white;
     padding: 10px;
 }
 
-/* PROJECT SETUP PAGE */
+/****************** DECISION MAKING ****************/
+/* PROBLEM SETUP PAGE */
 
 /* ALL TEXT FIELDS 100% width */
 .mdl-textfield {
-    background: white;
     width: 100%;
 }
 
 /* Narrow tables - 600 wide*/
 table.narrow {
-    background: white;
     width: 600px;
 }
 /* Narrow cells - reduce vertical padding*/
 td.narrow {
-    background: white;
     padding: 0px 12px;
 }
 
-
-
+/* Add/Remove buttons table - pad down from main table */
+.button-table {
+    padding-top: 5px;
+}
 
 /* Project title table - left column*/
 td.project-setup.left {
-    background: white;
     width: 30%;
 }
 /* Use to expand cell to fill rest of table width */
@@ -67,6 +90,55 @@ td.fillWidth {
     background: white;
     width: 100%;
 }
+
+/* DATA ENTRY PAGE */
+table.criteria-table {
+  table-layout: fixed;
+  width: 500px;
+  text-align: center;
+}
+/* Cell widths for criteria table */
+/* Wide first column */
+th.width300 {
+  width: 300px;
+  padding: 8px 8px;
+}
+/* Weight columns - for max 14 characters in criteria name */
+th.width150 {
+  width: 150px;
+  padding: 8px 8px;
+}
+/* Center and reduce width for number inputs*/
+input.number {
+  text-align: center;
+  width: 50px;
+}
+td.number div.number{
+text-align: center;
+width: 50px;
+}
+/* Override offset padding on last number cell */
+#lastNumber{
+  padding: 8px 8px !important;
+}
+/* Reduce extra padding from last in row */
+/* .mdl-data-table th:last-of-type .number,
+.mdl-data-table  td:last-of-type{
+  padding: 8px 8px;
+}  */
+
+
+
+
+
+
+
+
+
+
+
+
+/****************** OLD *********************
 
 /* Risk Categories */
 /* Risk Categories table - left column*/
@@ -83,11 +155,7 @@ th.risk-cats.right {
 .mdl-data-table__cell--center.mdl-data-table__cell--center{
     text-align:center
 }
-/* Add/Remove buttons table */
-.button-table {
-    background: white;
-    padding-top: 5px;
-}
+
 
 /* RISK CATEGORIES PAGE */
 
