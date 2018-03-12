@@ -25,6 +25,8 @@
 
 	<link href="../css/dss.css" rel="stylesheet" type="text/css">
 	<script src="../libs/jquery-3.2.1.min.js"></script>
+	<!-- Ractive library TODO - change from CDN-->
+	<script src="https://cdn.jsdelivr.net/npm/ractive"></script>
 	<!-- Project object definition -->
 	<script src="../js/problem.js"></script>
 	<!-- DSS model script -->
@@ -73,37 +75,67 @@
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
 						<!-- Project Title -->
-						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
-							<tr>
-								<td class="narrow">
-									<h5>Problem Title: </h5>
-								</td>
-								<td class="mdl-data-table__cell--non-numeric fillWidth narrow">
-									<div class="mdl-textfield mdl-js-textfield">
-										<input class="mdl-textfield__input" type="text" id="problem-title" value="">
-										<label class="mdl-textfield__label">Problem Title...</label>
-									</div>
-								</td>
-							</tr>
-						</table>
+
+						<!-- TARGET ractiveTitle -->
+						<div id="target-title-table"></div>
+
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-title-table" type="text/ractive">
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+								<tr>
+									<td class="narrow">
+										<h5>Problem Title: </h5>
+									</td>
+									<td class="mdl-data-table__cell--non-numeric fillWidth narrow">
+										<div class="mdl-textfield mdl-js-textfield">
+											<input class="mdl-textfield__input" type="text" id="problem-title" value="{{title}}">
+											<label class="mdl-textfield__label">Problem Title...</label>
+										</div>
+									</td>
+								</tr>
+							</table>
+
+						</script>
 
 						<!-- Problem Alternatives -->
 						<h4>Alternative solutions</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="alternative-table">
-							<thead>
-								<tr>
-									<th class="mdl-data-table__cell--non-numeric">
-										<h5>Alternatives</h5>
-									</th>
-								</tr>
-							</thead>
-<!-- TODO Limit Alternative names to 14 chars -->
-							<tbody>
-								<!-- ALTERNATIVES ROWS ADDED DYNAMICALLY HERE -->
-							</tbody>
-						</table>
+
+						<!-- TARGET ractiveAlternatives -->
+						<div id="target-alternatives-table"></div>
+
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-alternatives-table" type="text/ractive">
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="alternative-table">
+								<thead>
+									<tr>
+										<th class="mdl-data-table__cell--non-numeric">
+											<h5>Alternatives</h5>
+										</th>
+									</tr>
+								</thead>
+								<!-- TODO Limit Alternative names to 14 chars -->
+
+								<tbody>
+									{{#each alternatives:i}}
+									<tr>
+										<td class="mdl-data-table__cell--non-numeric narrow">
+											<div class="mdl-textfield mdl-js-textfield">
+												<input class="mdl-textfield__input alternative" type="text" value="{{.}}">
+												<label class="mdl-textfield__label">Alternative...</label>
+											</div>
+										</td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+
+						</script>
+
+
 
 						<!-- Buttons layout table -->
 						<table class="button-table narrow">
@@ -119,30 +151,49 @@
 							</tbody>
 						</table>
 
+
+
+
 						<!-- Problem Factors -->
 						<h4>Decision Factors</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="factors-table">
-							<thead>
-								<tr>
-									<th class="mdl-data-table__cell--non-numeric">
-										<h5>Factors</h5>
-									</th>
-								</tr>
-							</thead>
+						<!-- TARGET ractiveAlternatives -->
+						<div id="target-factors-table"></div>
 
-							<tbody>
-								<!-- ALTERNATIVES ROWS ADDED DYNAMICALLY HERE -->
-							</tbody>
-						</table>
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-factors-table" type="text/ractive">
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="factors-table">
+								<thead>
+									<tr>
+										<th class="mdl-data-table__cell--non-numeric">
+											<h5>Factors</h5>
+										</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									{{#each factors:i}}
+									<tr>
+										<td class="mdl-data-table__cell--non-numeric narrow">
+											<div class="mdl-textfield mdl-js-textfield">
+												<input class="mdl-textfield__input factor" type="text" value="{{name}}">
+												<label class="mdl-textfield__label">Factor...</label>
+											</div>
+										</td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+						</script>
 
 						<!-- Buttons layout table -->
 						<table class="button-table narrow">
 							<tbody>
 								<tr>
 									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-factor" >Add Factor</button>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-factor">Add Factor</button>
 									</td>
 									<td>
 										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="remove-factor" style="float: right">Remove Factor</button>

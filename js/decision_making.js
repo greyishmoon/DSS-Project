@@ -1,25 +1,46 @@
 var problem; // Problem data object
-var alternativeCount = 0; // Number of alternatives - limited >=1 <=6
-var minAltCount = 1;
+// Ractive components
+var ractiveTitle, ractiveAlternatives, ractiveFactors;
+var minAltCount = 1; // Number of alternatives - limited >=1 <=6
 var maxAltCount = 6;
-var factorCount = 0; // Number of factors - min 1 no max
+
 
 $(document).ready(function() {
     console.log("ready!");
 
     // TODO - refactor to only create new project if one not loaded in local memory
     //	// Initialise Problem object
-    problem = new Problem("EMPTY");
-    console.log("prob name test: " + problem.title);
+    problem = new Problem("EMPTY!!");
+
+
+    // Initialse Ractive objects
+    // TITLE TABLE
+    ractiveTitle = new Ractive({
+        target: '#target-title-table',
+        template: '#template-title-table',
+        data: problem
+    });
+    // ALTERNATIVES TABLE
+    ractiveAlternatives = new Ractive({
+        target: '#target-alternatives-table',
+        template: '#template-alternatives-table',
+        data: problem
+    });
+    // FACTORS TABLE
+    ractiveFactors = new Ractive({
+        target: '#target-factors-table',
+        template: '#template-factors-table',
+        data: problem
+    });
+
+
 
     // LISTENERS
     // Tab button LISTENERS
     $('.mdl-layout__tab').on('click', tabClicked);
     // ALTERNATIVES
     // Add row to alternative-table
-    $('#add-alternative').on('click', addBlankAlternative);
-    // Place first row
-    addBlankAlternative();
+    $('#add-alternative').on('click', addAlternative);
     // Remove last row from alternative-table
     $('#remove-alternative').on('click', removeAlternative);
     // Disable remove button on load
@@ -28,7 +49,7 @@ $(document).ready(function() {
     // Add row to alternative-table
     $('#add-factor').on('click', addBlankFactor);
     // Place first row
-    addBlankFactor();
+    //addBlankFactor();
     // Remove last row from alternative-table
     $('#remove-factor').on('click', removeFactor);
     // Disable remove button on load
@@ -37,10 +58,7 @@ $(document).ready(function() {
     $('input').on('focusout', update);
     // SET LISTENERS ON DYNAMIC CONTENT
     setListeners();
-
-    function inputChange(event) {
-        console.log('INPUT CHANGE: ' + $(event.target).val());
-    }
+    print();
 
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -70,136 +88,83 @@ function tabClicked() {
 
 
 //////////////// ALTERNATIVES ////////////////
-// Adds alternative with no title
-function addBlankAlternative() {
-        addAlternative('')
-        alternativeCount++;
-
+// Adds alternative with blank name
+function addAlternative() {
+    // Add alternative to data model
+    problem.addAlternative('add alt');
     // Disable add button if count >= max number
-    if (alternativeCount >= maxAltCount) {
+    if (problem.alternatives.length >= maxAltCount) {
         disableButton("#add-alternative");
     }
     // Enable remove button
     enableButton("#remove-alternative");
+    // Update interface
+    update();
 }
 
-// TEMPLATE for row in alternative-table
-const AlternativeRow = ({
-    name
-}) => `
-  <tr>
-    <td class="mdl-data-table__cell--non-numeric narrow">
-      <div class="mdl-textfield mdl-js-textfield">
-        <input class="mdl-textfield__input alternative" type="text" value="${name}">
-        <label class="mdl-textfield__label">Alternative...</label>
-      </div>
-    </td>
-  </tr>
-`;
-
-function addAlternative(alternativeName) {
-    $('#alternative-table tbody').append([{
-        name: alternativeName
-    }, ].map(AlternativeRow));
-    // Upgrade all added MDL elements
-    upgradeMDL();
-    // Reset listeners on all dynamic content
-    setListeners();
-}
-
-// Remove last row from alternative-table
+// Remove last row from alternative array
 function removeAlternative() {
-    removeLastRow("#alternative-table")
-    // Reset listeners on all dynamic content
-    setListeners();
-    alternativeCount--;
-
+    // Remove last alternative from array
+    problem.removeAlternative();
     // Disable remove button if count <= min number
-    if (alternativeCount <= minAltCount) {
+    if (problem.alternatives.length <= minAltCount) {
         disableButton("#remove-alternative");
     }
     // Enable add button
     enableButton("#add-alternative");
+    // Update interface
+    update();
 }
 //////////////// ALTERNATIVES ////////////////
 
 
 ////////////////// FACTORS ///////////////////
-// Adds factor with no title
+// Adds factor with blank name
 function addBlankFactor() {
-    addFactor('')
-    factorCount++;
-
+    // Add factor to data model
+    problem.addFactor('add Fact');
+    // << IF LIMIT TO NUMBER OF FACTORS, ADD HERE
     // Enable remove button
     enableButton("#remove-factor");
+    // Update interface
+    update();
 }
 
-// TEMPLATE for row in factors-table
-const FactorRow = ({
-    name
-}) => `
-  <tr>
-    <td class="mdl-data-table__cell--non-numeric narrow">
-      <div class="mdl-textfield mdl-js-textfield">
-        <input class="mdl-textfield__input factor" type="text" value="${name}">
-        <label class="mdl-textfield__label">Factor...</label>
-      </div>
-    </td>
-  </tr>
-`;
-
-function addFactor(factorName) {
-    $('#factors-table tbody').append([{
-        name: factorName
-    }, ].map(FactorRow));
-    // Upfrade all added MDL elements
-    upgradeMDL();
-    // Reset listeners on all dynamic content
-    setListeners();
-}
-
-// Remove last row from alternative-table
+// Remove last row from factors array
 function removeFactor() {
-        removeLastRow("#factors-table")
-        // Reset listeners on all dynamic content
-        setListeners();
-        factorCount--;
-
-        // Disable remove button if count <= min number
-        if (factorCount <= 1) {
-            disableButton("#remove-factor");
-        }
-        // Enable add button
-        enableButton("#add-factor");
+    // Remove last factor from array
+    problem.removeFactor();
+    // Disable remove button if count <= min number
+    if (problem.factors.length <= 1) {
+        disableButton("#remove-factor");
+    }
+    // Enable add button
+    enableButton("#add-factor");
+    // Update interface
+    update();
 }
 /////////////////// FACTORS ///////////////////
 
 
 /////////////////// UPDATE ////////////////////
-// UPDATE DATA OBJECT WITH CURRENT FORM DATA
-function update(event) {
-    // TEMP note changed text
-    //console.log('INPUT CHANGE: ' + $(event.target).val());
 
-    // Capture title
-    problem.title = $('#problem-title').val();
-    // Capture Alternatives
-    var altArray = [];
-    $("#alternative-table tbody tr").each(function() {
-        altArray.push($(this).find("input.alternative").val());
-        problem.alternatives = altArray;
-    });
-    // Capture Factors
-    var factArray = [];
-    $("#factors-table tbody tr").each(function() {
-        var inputVal = $(this).find("input.factor").val();
-        factArray.push(new Factor(inputVal));
-        problem.factors = factArray;
-    });
+// UPDATE ractive model to display changes, upgrade MDL elements and reset listeners
+function update() {
+    console.log("UPDATE");
+    // Update ractive components
+    ractiveTitle.update();
+    ractiveAlternatives.update();
+    ractiveFactors.update();
+    // Upgrade all added MDL elements
+    upgradeMDL();
+    // Reset listeners on all dynamic content
+    setListeners();
 
-    // TEMP print object to test-div
+    // Test Print
     print();
 }
+
+
 
 
 /////////////////// UPDATE ////////////////////
@@ -260,4 +225,6 @@ function print() {
 
 
     $('#test-div').html(output);
+
+    console.log(problem);
 }

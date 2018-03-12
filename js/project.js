@@ -23,5 +23,3 @@ class Risk {
 		this.dependency = 0;
 	}
 }
-
-//var project = new Project();
