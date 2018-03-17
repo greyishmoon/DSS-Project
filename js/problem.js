@@ -11,13 +11,13 @@ class Problem {
 
     // Add alternative
     addAlternative(name) {
-        // TODO ADD A WEIGHT TO EACH CRITERION OF EACH FACTOR
         this.alternatives.push(name);
+        // TODO ADD A WEIGHT TO EACH CRITERION OF EACH FACTOR
     }
     // Remove last alternative
     removeAlternative() {
-        // TODO REMOVE LAST WEIGHT FROM EACH CRITERION OF EACH FACTOR
         this.alternatives.pop();
+        // TODO REMOVE LAST WEIGHT FROM EACH CRITERION OF EACH FACTOR
     }
 
     // Add factor
