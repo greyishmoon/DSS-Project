@@ -27,8 +27,10 @@
 	<script src="../libs/jquery-3.2.1.min.js"></script>
 	<!-- Ractive library TODO - change from CDN-->
 	<script src="https://cdn.jsdelivr.net/npm/ractive"></script>
-	<!-- Project object definition -->
+
+	<!-- Project object definition + manager-->
 	<script src="../js/problem.js"></script>
+	<script src="../js/problemManager.js"></script>
 	<!-- DSS model script -->
 	<script src="../js/model.js"></script>
 	<!-- Main page script -->
@@ -221,6 +223,94 @@
 						<h4>Factors Criteria</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
+						<!-- TARGET ractiveAlternatives -->
+						<div id="target-data-table"></div>
+
+
+
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-data-table" type="text/ractive">
+
+							<!-- Create full table for each Factor -->
+							{{#each factors:i}}
+							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
+								<thead>
+									<tr>
+										<!-- First header with Factor name -->
+										<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
+											<h5>{{name}} Criteria</h5>
+										</th>
+
+										<!-- Repeat headers for each Alternative -->
+										{{#each alternatives}}
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+											<h6>{{.}}</h6>
+										</th>
+										{{/each}}
+										<!-- For testing paste 14charsaaaaaax into Alt names -->
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
+											<h5>Weight</h5>
+										</th>
+
+									</tr>
+								</thead>
+
+								<tbody>
+									<!-- ALTERNATIVES ROWS ADDED DYNAMICALLY HERE -->
+									<!-- Create row for each Criteria -->
+									{{#each criteria}}
+									<tr>
+										<!-- First cell - Criteria name field -->
+										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
+											<div class="mdl-textfield mdl-js-textfield">
+												<input class="mdl-textfield__input" type="text" value="{{name}}">
+												<label class="mdl-textfield__label">Criteria...</label>
+											</div>
+										</td>
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<input class="mdl-textfield__input number" type="text" value="0">
+												<label class="mdl-textfield__label">0-100</label>
+											</div>
+										</td>
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number  hlBlue" id="lastNumber">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<input class="mdl-textfield__input number" type="text" value="{{weight}}">
+												<label class="mdl-textfield__label">0-100</label>
+											</div>
+										</td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+
+							<!-- Buttons layout table -->
+							<table class="button-table">
+								<tbody>
+									<tr>
+										<td>
+											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored add-criteria" type="button" data-id="{{i}}" id='add-criteria{{i}}'>Add Criteria {{i}}</button>
+										</td>
+										<td>
+											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored remove-criteria" type="button" style="float: right"  data-id="{{i}}" id='remove-criteria{{i}}'
+											{{#if criteria.length<=1}}
+											 disabled='true'
+											 {{/if}}
+											 >Remove Criteria</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<br />
+							{{/each}}
+
+						</script>
+
+
+
+
 						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
 							<thead>
 								<tr>
@@ -328,7 +418,40 @@
 						<h4>Results</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
+						<!-- TODO TEST =========================================================-->
 
+						<!-- TARGET ractiveAlternatives -->
+						<div id="target-test-table">EMPTY</div>
+
+
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-test-table" type="text/ractive">
+							<p>
+								{{greeting}}
+							</p>
+
+							<table>
+								<tr>
+									{{#each row1}}
+									<th>{{header}}</th>
+									{{/each}}
+								</tr>
+							</table>
+							<ul>
+								{{#each row1}}
+								<li>{{.}}</li>
+								{{/each}}
+							</ul>
+
+							<jobs />
+
+						</script>
+
+						<script id="jobs" type="text/ractive">
+							This is the jobs component
+						</script>
+
+						<!-- TODO TEST =========================================================-->
 
 
 
