@@ -113,9 +113,13 @@ input.number {
   text-align: center;
   width: 50px;
 }
-td.number div.number{
+td.number div.number {
 text-align: center;
 width: 50px;
+}
+/* Centre warning label for percentage validation */
+.mdl-textfield__error {
+    margin-left: -25px;
 }
 /* Override offset padding on last number cell */
 #lastNumber{

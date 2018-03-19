@@ -208,7 +208,7 @@
 
 					<!-- TODO - REMOVE -->
 					<br><br><br>
-					<div id="test-div">
+					<div class="test-div">
 					</div>
 				</section>
 
@@ -243,13 +243,14 @@
 
 										<!-- Repeat headers for each Alternative -->
 										{{#each alternatives}}
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
-											<h6>{{.}}</h6>
-										</th>
+											<!-- For testing paste 14charsaaaaaax into Alt names -->
+											<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+												<h6>{{.}}</h6><b>%</b>
+											</th>
 										{{/each}}
-										<!-- For testing paste 14charsaaaaaax into Alt names -->
+										<!-- Final header -->
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
-											<h5>Weight</h5>
+											<h5>Weight</h5>%
 										</th>
 
 									</tr>
@@ -267,18 +268,24 @@
 												<label class="mdl-textfield__label">Criteria...</label>
 											</div>
 										</td>
-
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
-											<div class="mdl-textfield mdl-js-textfield number">
-												<input class="mdl-textfield__input number" type="text" value="0">
-												<label class="mdl-textfield__label">0-100</label>
-											</div>
-										</td>
+										<!-- Create wieght input cell for each alternative -->
+										{{#each alternativeWeights}}
+											<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+												<div class="mdl-textfield mdl-js-textfield number">
+													<!-- Input validation - numbers 0-100 -->
+													<input class="mdl-textfield__input number" type="text" pattern="[0-9]|[1-9][0-9]|100" value="{{.}}">
+													<label class="mdl-textfield__label">0-100</label>
+													<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+												</div>
+											</td>
+										{{/each}}
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number  hlBlue" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
-												<input class="mdl-textfield__input number" type="text" value="{{weight}}">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number" type="text" pattern="[0-9]|[1-9][0-9]|100" value="{{weight}}">
 												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
 									</tr>
@@ -294,120 +301,22 @@
 											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored add-criteria" type="button" data-id="{{i}}" id='add-criteria{{i}}'>Add Criteria {{i}}</button>
 										</td>
 										<td>
-											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored remove-criteria" type="button" style="float: right"  data-id="{{i}}" id='remove-criteria{{i}}'
-											{{#if criteria.length<=1}}
-											 disabled='true'
-											 {{/if}}
-											 >Remove Criteria</button>
+											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored remove-criteria" type="button" style="float: right" data-id="{{i}}" id='remove-criteria{{i}}' {{#if criteria.length<=1}} disabled='true' {{/if}}>Remove Criteria</button>
 										</td>
 									</tr>
 								</tbody>
 							</table>
-							<br />
-							{{/each}}
+							<br /> {{/each}}
 
 						</script>
 
+						<!-- TODO - REMOVE -->
+						<br><br><br>
+						<div class="test-div">
+						</div>
 
 
 
-						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
-							<thead>
-								<tr>
-									<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
-										<h5>$FACTOR Criteria</h5>
-									</th>
-									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
-										<h6>14charsaaaaaax</h6>
-									</th>
-									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen">
-										<h6>$ALTERNATIVE 2</h6>
-									</th>
-									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen">
-										<h6>$ALTERNATIVE 3</h6>
-									</th>
-									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen">
-										<h6>$ALTERNATIVE 4</h6>
-									</th>
-									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen">
-										<h6>$ALTERNATIVE 5</h6>
-									</th>
-									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center number width150 hlBlue" id="lastNumber">
-										<h5>Weight</h5>
-									</th>
-									<!-- <th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
-										<h5>Weight</h5>
-									</th> -->
-
-								</tr>
-							</thead>
-
-							<tbody>
-								<!-- ALTERNATIVES ROWS ADDED DYNAMICALLY HERE -->
-								<tr>
-									<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
-										<div class="mdl-textfield mdl-js-textfield">
-											<input class="mdl-textfield__input" type="text" value="">
-											<label class="mdl-textfield__label">Criteria...</label>
-										</div>
-									</td>
-									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
-										<div class="mdl-textfield mdl-js-textfield number">
-											<input class="mdl-textfield__input number" type="text" value="0">
-											<label class="mdl-textfield__label">0-100</label>
-										</div>
-									</td>
-									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
-										<div class="mdl-textfield mdl-js-textfield number">
-											<input class="mdl-textfield__input number" type="text" value="0">
-											<label class="mdl-textfield__label">0-100</label>
-										</div>
-									</td>
-									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
-										<div class="mdl-textfield mdl-js-textfield number">
-											<input class="mdl-textfield__input number" type="text" value="0">
-											<label class="mdl-textfield__label">0-100</label>
-										</div>
-									</td>
-									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number  hlGreen">
-										<div class="mdl-textfield mdl-js-textfield number">
-											<input class="mdl-textfield__input number" type="text" value="0">
-											<label class="mdl-textfield__label">0-100</label>
-										</div>
-									</td>
-									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number  hlGreen">
-										<div class="mdl-textfield mdl-js-textfield number">
-											<input class="mdl-textfield__input number" type="text" value="0">
-											<label class="mdl-textfield__label">0-100</label>
-										</div>
-									</td>
-
-									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number  hlBlue" id="lastNumber">
-										<div class="mdl-textfield mdl-js-textfield number">
-											<input class="mdl-textfield__input number" type="text" value="0">
-											<label class="mdl-textfield__label">0-100</label>
-										</div>
-									</td>
-								</tr>
-
-
-
-							</tbody>
-						</table>
-
-						<!-- Buttons layout table -->
-						<table class="button-table">
-							<tbody>
-								<tr>
-									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-1-criteria">Add Criteria</button>
-									</td>
-									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="remove-1-criteria" style="float: right">Remove Criteria</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
 
 					</div>
 				</section>

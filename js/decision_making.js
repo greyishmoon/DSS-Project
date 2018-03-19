@@ -172,9 +172,6 @@ function addCriteria(event) {
     console.log('ADD ' + factorId);
     console.log('factor name: ' + data.getFactor(0));
     data.addCriterionTo(data.getFactor(factorId),'test Criterion');
-    // << IF LIMIT TO NUMBER OF CRITERIA, ADD HERE
-    // Enable remove button
-    enableButton(".remove-criteria" + factorId);
     // Update interface
     update();
 }
@@ -184,13 +181,7 @@ function removeCriteria(event) {
     var factorId = $(event.currentTarget).attr('data-id');
     console.log('REMOVE ' + factorId);
     // Remove last factor from array
-    // data.removeFactor();
-    // Disable remove button if count <= min number
-    // if (data.getFactorLength() <= 1) {
-    //     disableButton("#remove-criteria");
-    // }
-    // Enable add button
-    enableButton("#add-criteria");
+    data.removeCriterionFrom(data.getFactor(factorId));
     // Update interface
     update();
 }
@@ -259,6 +250,7 @@ function disableButton(buttonID) {
 function print() {
     var output = '';
     output += '<br> Problem Title: ' + data.problem.title;
+
     // alternatives
     data.problem.alternatives.forEach(function(name, index) {
         output += '<br> Alternative ' + (index + 1) + ': ' + name;
@@ -266,13 +258,11 @@ function print() {
 
     // factors
     data.problem.factors.forEach(function(factor, index) {
-        output += '<br> Factor ' + (index + 1) + ': ' + factor.name;
-        output += '<br> &nbsp;&nbsp; Criteria length: ' + factor.criteria.length;
+        output += '<br><br> Factor ' + (index + 1) + ': ' + factor.name;
         // criteria
         factor.criteria.forEach(function(criterion) {
             output += '<br> &nbsp;&nbsp; Criterion name: ' + criterion.name;
             output += '<br> &nbsp;&nbsp; Criterion weight: ' + criterion.weight;
-            output += '<br> &nbsp;&nbsp; Alt weights length: ' + criterion.alternativeWeights.length;
             altWeightString = '<br> &nbsp;&nbsp; &nbsp;&nbsp; Alt weights: ';
             // Alternative weights for Criterion
             criterion.alternativeWeights.forEach(function(weight) {
@@ -283,7 +273,7 @@ function print() {
     });
 
 
-    $('#test-div').html(output);
+    $('.test-div').html(output);
 
     console.log(data.problem);
 }
