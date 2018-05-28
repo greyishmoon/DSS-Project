@@ -9,7 +9,6 @@ var maxAltCount = 6;
 
 
 $(document).ready(function() {
-    console.log("ready!");
 
     // TODO - refactor to only create new project if one not loaded in local memory (or process this in constructor?)
     data = new ProblemManager();
@@ -101,6 +100,8 @@ function resetListeners() {
 // NAVIGATION
 function tabClicked() {
     window.scrollTo(0, 0);
+    // TODO - TEMP ADDITION TO UPDATE DATA ON TAB CHANGE - MAY BE ABLE TO REMOVE IF NO PROBLEM CALLING DATA.UPDATE FROM THIS.UPDATE
+    data.update();
     console.log("TAB CLICKED");
 }
 
@@ -169,18 +170,17 @@ function addCriteria(event) {
     // Capture which factor to add criteria too
     var factorId = parseInt($(event.currentTarget).attr('data-id'));
     // Add criteria to data model
-    console.log('ADD ' + factorId);
     console.log('factor name: ' + data.getFactor(0));
-    data.addCriterionTo(data.getFactor(factorId),'test Criterion');
+    data.addCriterionTo(data.getFactor(factorId),'');
     // Update interface
     update();
 }
 
-// Remove last row from factors array
+// Remove last row from criteria array of relevent factor object
 function removeCriteria(event) {
+    // Capture which factor to add criteria too
     var factorId = $(event.currentTarget).attr('data-id');
-    console.log('REMOVE ' + factorId);
-    // Remove last factor from array
+    // Remove last criteria from array
     data.removeCriterionFrom(data.getFactor(factorId));
     // Update interface
     update();
@@ -199,10 +199,16 @@ function update() {
     ractiveFactors.update();
     ractiveData.update();
 
+    // Update data object - initiates results calculations
+    // TODO *** POTENTIALLY NEED TO MOVE TO TAB CLICKED TO AVOID RECURSIVE LOOP WITH RESULTS FORM CHANGING FROM DATA UPDATE
+    data.update();
+
     // Upgrade all added MDL elements
     upgradeMDL();
     // Reset listeners on all dynamic content
     resetListeners();
+
+    // TODO - implement saving to local storage
 
     // Test Print
     print();

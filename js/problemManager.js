@@ -10,13 +10,29 @@ class ProblemManager {
             // Create and initialise new data objects
             this.initialiseProblem();
         }
+        // Create Model object for calculations
+        this.model = new DSS_model();
+
     }
 
     // Create new data object and initialise
     initialiseProblem() {
         this.problem = new Problem('');
-        this.addAlternative('TEST ALT');
-        this.addFactor('TEST FACT');
+        this.addAlternative('');
+        this.addFactor('');
+        // Create Model object for calculations
+        this.model = new DSS_model();
+
+        // TODO - REMOVE TEST PROBLEM
+        // Load test problem with data from DSS OUTSOURCING stylesheet
+        this.loadTestProblem();
+    }
+
+    // Update problem - perform calculations to generate results
+    update() {
+        // Pass current problem data object to DSS model for results calculations
+        this.model.problemCalc(this.problem);
+
     }
 
     // Add alternative
@@ -48,7 +64,7 @@ class ProblemManager {
     addFactor(name) {
         var newFactor = new Factor(name);
         // Add single criterion
-        this.addCriterionTo(newFactor, 'TEST CRITERION');
+        this.addCriterionTo(newFactor, '');
         this.problem.factors.push(newFactor);
     }
     // Remove last factor
@@ -81,6 +97,58 @@ class ProblemManager {
     // Remove last criteria from factor
     removeCriterionFrom(factor) {
         factor.criteria.pop();
+    }
+
+    ////////////////// TESTING //////////////////////
+    // load test problem
+    loadTestProblem() {
+        var testProblem = new Problem('Test Problem');
+        this.problem = testProblem;
+        this.addAlternative('Supplier A');
+        this.addAlternative('Supplier B');
+        this.addAlternative('Supplier C');
+
+        this.addFactor('Financial');
+        var factor = this.problem.factors[0];
+        var tmpCriteria = factor.criteria[0];
+        tmpCriteria.name = "Criteria 1A"
+        tmpCriteria.weight = 30;
+        tmpCriteria.alternativeWeights = [80, 0, 0];
+        this.addCriterionTo(factor, "Criteria 1B");
+        tmpCriteria = factor.criteria[1];
+        tmpCriteria.weight = 40;
+        tmpCriteria.alternativeWeights = [60, 20, 20];
+        this.addCriterionTo(factor, "Criteria 1C");
+        tmpCriteria = factor.criteria[2];
+        tmpCriteria.weight = 10;
+        tmpCriteria.alternativeWeights = [100, 0, 0];
+        this.addCriterionTo(factor, "Criteria 1D");
+        tmpCriteria = factor.criteria[3];
+        tmpCriteria.weight = 20;
+        tmpCriteria.alternativeWeights = [40, 20, 30];
+
+
+        // this.addFactor('Operational');
+        // factor = this.problem.factors[1];
+        // tmpCriteria = factor.criteria[0];
+        // tmpCriteria.name = "Criteria 2A"
+        // tmpCriteria.weight = 100;
+        // tmpCriteria.alternativeWeights = [0, 0, 100];
+        // this.addCriterionTo(factor, "Criteria 2B");
+        // tmpCriteria = factor.criteria[1];
+        // tmpCriteria.weight = 0;
+        // tmpCriteria.alternativeWeights = [100, 0, 0];
+        // this.addCriterionTo(factor, "Criteria 2C");
+        // tmpCriteria = factor.criteria[2];
+        // tmpCriteria.weight = 0;
+        // tmpCriteria.alternativeWeights = [100, 0, 0];
+        // this.addCriterionTo(factor, "Criteria 2D");
+        // tmpCriteria = factor.criteria[3];
+        // tmpCriteria.weight = 0;
+        // tmpCriteria.alternativeWeights = [60, 40, 0];
+
+        // Force update for TESTING
+        this.update();
     }
 
 }
