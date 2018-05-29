@@ -15,7 +15,8 @@ class Factor {
 
         // RESULTS
         // Storage of results calculations for each Factor
-        this.K = 0;                     // K value for factor
+        this.K = 0;                     // K value for factor (row 53)
+        this.Malt = [];                 // array of M values relating to each alternative (row 56)
     }
 }
 

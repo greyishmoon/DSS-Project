@@ -31,7 +31,7 @@ class ProblemManager {
     // Update problem - perform calculations to generate results
     update() {
         // Pass current problem data object to DSS model for results calculations
-        this.model.problemCalc(this.problem);
+        this.model.resultsCalc(this.problem);
 
     }
 
@@ -128,24 +128,24 @@ class ProblemManager {
         tmpCriteria.alternativeWeights = [40, 20, 30];
 
 
-        // this.addFactor('Operational');
-        // factor = this.problem.factors[1];
-        // tmpCriteria = factor.criteria[0];
-        // tmpCriteria.name = "Criteria 2A"
-        // tmpCriteria.weight = 100;
-        // tmpCriteria.alternativeWeights = [0, 0, 100];
-        // this.addCriterionTo(factor, "Criteria 2B");
-        // tmpCriteria = factor.criteria[1];
-        // tmpCriteria.weight = 0;
-        // tmpCriteria.alternativeWeights = [100, 0, 0];
-        // this.addCriterionTo(factor, "Criteria 2C");
-        // tmpCriteria = factor.criteria[2];
-        // tmpCriteria.weight = 0;
-        // tmpCriteria.alternativeWeights = [100, 0, 0];
-        // this.addCriterionTo(factor, "Criteria 2D");
-        // tmpCriteria = factor.criteria[3];
-        // tmpCriteria.weight = 0;
-        // tmpCriteria.alternativeWeights = [60, 40, 0];
+        this.addFactor('Operational');
+        factor = this.problem.factors[1];
+        tmpCriteria = factor.criteria[0];
+        tmpCriteria.name = "Criteria 2A"
+        tmpCriteria.weight = 100;
+        tmpCriteria.alternativeWeights = [0, 0, 100];
+        this.addCriterionTo(factor, "Criteria 2B");
+        tmpCriteria = factor.criteria[1];
+        tmpCriteria.weight = 0;
+        tmpCriteria.alternativeWeights = [100, 0, 0];
+        this.addCriterionTo(factor, "Criteria 2C");
+        tmpCriteria = factor.criteria[2];
+        tmpCriteria.weight = 0;
+        tmpCriteria.alternativeWeights = [100, 0, 0];
+        this.addCriterionTo(factor, "Criteria 2D");
+        tmpCriteria = factor.criteria[3];
+        tmpCriteria.weight = 0;
+        tmpCriteria.alternativeWeights = [60, 40, 0];
 
         // Force update for TESTING
         this.update();
