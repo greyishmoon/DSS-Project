@@ -42,7 +42,18 @@ $(document).ready(function() {
         target: '#target-data-table',
         template: '#template-data-table',
         data: data.problem
-
+    });
+    // SUMMARY TABLE
+    ractiveSummary = new Ractive({
+        target: '#target-summary-table',
+        template: '#template-summary-table',
+        data: data.problem
+    });
+    // FACTOR WEIGHTS TABLE
+    ractiveFactorWeights = new Ractive({
+        target: '#target-summary-table',
+        template: '#template-summary-table',
+        data: data.problem
     });
 
     // LISTENERS
@@ -198,10 +209,11 @@ function update() {
     ractiveAlternatives.update();
     ractiveFactors.update();
     ractiveData.update();
+    ractiveSummary.update();
 
     // Update data object - initiates results calculations
     // TODO *** POTENTIALLY NEED TO MOVE TO TAB CLICKED TO AVOID RECURSIVE LOOP WITH RESULTS FORM CHANGING FROM DATA UPDATE
-    data.update();
+    //data.update();
 
     // Upgrade all added MDL elements
     upgradeMDL();

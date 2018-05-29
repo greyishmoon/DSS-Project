@@ -245,10 +245,10 @@
 
 										<!-- Repeat headers for each Alternative -->
 										{{#each alternatives}}
-											<!-- For testing paste 14charsaaaaaax into Alt names -->
-											<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
-												<h6>{{.}}</h6><b>%</b>
-											</th>
+										<!-- For testing paste 14charsaaaaaax into Alt names -->
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+											<h6>{{.}}</h6><b>%</b>
+										</th>
 										{{/each}}
 										<!-- Final header -->
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
@@ -272,14 +272,14 @@
 										</td>
 										<!-- Create wieght input cell for each alternative -->
 										{{#each alternativeWeights}}
-											<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
-												<div class="mdl-textfield mdl-js-textfield number">
-													<!-- Input validation - numbers 0-100 -->
-													<input class="mdl-textfield__input number" type="text" pattern="[0-9]|[1-9][0-9]|100" value="{{.}}">
-													<label class="mdl-textfield__label">0-100</label>
-													<span class="mdl-textfield__error percentage">Percentage 0-100</span>
-												</div>
-											</td>
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number" type="text" pattern="[0-9]|[1-9][0-9]|100" value="{{.}}">
+												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+											</div>
+										</td>
 										{{/each}}
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number  hlBlue" id="lastNumber">
@@ -326,44 +326,64 @@
 				<!-- RESULTS PAGE **************************************************** -->
 				<section class="mdl-layout__tab-panel" id="page-3">
 					<div class="page-content">
-						<h4>Results</h4>
+
+						<!-- Analysis Summary table -->
+
+						<h4>Analysis Summary</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<!-- TODO TEST =========================================================-->
-
-						<!-- TARGET ractiveAlternatives -->
-						<div id="target-test-table">EMPTY</div>
-
+						<!-- TARGET ractiveSummary -->
+						<div id="target-summary-table"></div>
 
 						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-test-table" type="text/ractive">
-							<p>
-								{{greeting}}
-							</p>
+						<script id="template-summary-table" type="text/ractive">
 
-							<table>
-								<tr>
-									{{#each row1}}
-									<th>{{header}}</th>
+							<!-- Create summery table for all factors/alternatives showing degrees of belief -->
+							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
+								<thead>
+									<tr>
+										<!-- First header with Factor name -->
+										<th class="mdl-data-table__cell--non-numeric width300">
+											<h6>Degrees of Belief</h6>
+										</th>
+
+										<!-- Repeat headers for each Alternative -->
+										{{#each alternatives}}
+										<!-- For testing paste 14charsaaaaaax into Alt names -->
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+											<h6>{{.}}</h6>
+										</th>
+										{{/each}}
+
+									</tr>
+								</thead>
+
+								<tbody>
+									<!-- FACTORS ROWS ADDED DYNAMICALLY HERE -->
+									<!-- Create row for each Factor -->
+									{{#each factors}}
+									<tr>
+										<!-- First cell - Factor name field -->
+										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
+											<h6>{{name}} Factors</h6>
+										</td>
+										<!-- Display Belief from problem.factor.Beliefs -->
+										{{#each Beliefs}}
+											<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+												<h6>{{.}}</h6>
+											</td>
+										{{/each}}
+									</tr>
 									{{/each}}
-								</tr>
+								</tbody>
 							</table>
-							<ul>
-								{{#each row1}}
-								<li>{{.}}</li>
-								{{/each}}
-							</ul>
-
-							<jobs />
 
 						</script>
 
-						<script id="jobs" type="text/ractive">
-							This is the jobs component
-						</script>
+						<!-- Analysis Summary table -->
 
-						<!-- TODO TEST =========================================================-->
-
+						<h4>Analysis Summary</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
 
 					</div>

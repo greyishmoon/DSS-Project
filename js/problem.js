@@ -17,6 +17,10 @@ class Factor {
         // Storage of results calculations for each Factor
         this.K = 0;                     // K value for factor (row 53)
         this.Malt = [];                 // array of M values relating to each alternative (row 56)
+        this.MdashH = 0;                // M dash H value for factor (row 63)
+        this.MlH = 0;                   // Ml H value for factor (row 66)
+        this.Beliefs = [];              // array of Beliefs relating to each Alternative (row 71)
+        this.Ignorance = 0;             // level of ignorance associated with Alternatives of this Factor (row 77)
     }
 }
 
