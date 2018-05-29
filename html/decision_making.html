@@ -447,6 +447,57 @@
 						<h5>Aggregated Degrees of Belief</h5>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
+						<!-- TARGET ractiveSummary -->
+						<div id="target-aggregated-beliefs-table"></div>
+
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-aggregated-beliefs-table" type="text/ractive">
+
+							<!-- Create summery table for all factors/alternatives showing degrees of belief -->
+							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
+								<thead>
+									<tr>
+										<!-- Repeat headers for each Alternative -->
+										{{#each alternatives}}
+										<!-- For testing paste 14charsaaaaaax into Alt names -->
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+											<h6>{{.}}</h6>
+										</th>
+										{{/each}}
+
+										<!-- Final header for Ignorance -->
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGray number">
+											<h6>Ignorance</h6>
+										</th>
+
+									</tr>
+								</thead>
+
+								<tbody>
+									<!-- FACTORS ROWS ADDED DYNAMICALLY HERE -->
+									<tr>
+										<!-- Display Belief from problem.factor.Beliefs -->
+										{{#each BeliefPercentages}}
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+											<h6>{{.}}</h6>
+										</td>
+										{{/each}}
+										<!-- Final cell - display Ignorance for each factor -->
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hllightGray">
+											<h6>{{IgnorancePercentage}}</h6>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</script>
+
+						<h5>Most Optomistic Alternative</h5>
+						<p>Table to be implemented</p>
+
+						<h5>Most Pessimistic ((CHECK)) Alternative</h5>
+						<p>Table to be implemented</p>
+
 					</div>
 				</section>
 

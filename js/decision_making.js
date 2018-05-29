@@ -2,7 +2,7 @@
 
 var data; // Manager holding the Problem data object
 // Ractive components
-var ractiveTitle, ractiveAlternatives, ractiveFactors, ractiveData, ractiveSummary, ractiveFactorWeights;
+var ractiveTitle, ractiveAlternatives, ractiveFactors, ractiveData, ractiveSummary, ractiveFactorWeights, ractiveAggregatedBeliefs;
 
 var minAltCount = 1; // Number of alternatives - limited >=1 <=6
 var maxAltCount = 6;
@@ -54,6 +54,12 @@ $(document).ready(function() {
     ractiveFactorWeights = new Ractive({
         target: '#target-factor-weights-table',
         template: '#template-factor-weights-table',
+        data: data.problem
+    });
+    // AGGREGATED BELIEFS TABLE
+    ractiveAggregatedBeliefs = new Ractive({
+        target: '#target-aggregated-beliefs-table',
+        template: '#template-aggregated-beliefs-table',
         data: data.problem
     });
 
@@ -230,6 +236,7 @@ function update() {
     ractiveData.update();
     ractiveSummary.update();
     ractiveFactorWeights.update();
+    ractiveAggregatedBeliefs.update();
 
     // Update data object - initiates results calculations
     // TODO *** POTENTIALLY NEED TO MOVE TO TAB CLICKED TO AVOID RECURSIVE LOOP WITH RESULTS FORM CHANGING FROM DATA UPDATE
