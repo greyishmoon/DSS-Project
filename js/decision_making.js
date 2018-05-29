@@ -2,7 +2,7 @@
 
 var data; // Manager holding the Problem data object
 // Ractive components
-var ractiveTitle, ractiveAlternatives, ractiveFactors, ractiveData;
+var ractiveTitle, ractiveAlternatives, ractiveFactors, ractiveData, ractiveSummary, ractiveFactorWeights;
 
 var minAltCount = 1; // Number of alternatives - limited >=1 <=6
 var maxAltCount = 6;
@@ -16,6 +16,7 @@ $(document).ready(function() {
     // TODO - refactor to only create new project if one not loaded in local memory
     //	// Initialise Problem object
     // problem = new Problem("EMPTY!!");
+
 
 
     // Initialse Ractive objects
@@ -51,34 +52,13 @@ $(document).ready(function() {
     });
     // FACTOR WEIGHTS TABLE
     ractiveFactorWeights = new Ractive({
-        target: '#target-summary-table',
-        template: '#template-summary-table',
+        target: '#target-factor-weights-table',
+        template: '#template-factor-weights-table',
         data: data.problem
     });
 
-    // LISTENERS
-    // Tab button LISTENERS
-    $('.mdl-layout__tab').on('click', tabClicked);
-    // ALTERNATIVES
-    // Add alternative
-    $('#add-alternative').on('click', addAlternative);
-    // Remove last alternative
-    $('#remove-alternative').on('click', removeAlternative);
-    // Disable remove button on load
-    disableButton("#remove-alternative");
-    // FACTORS
-    // Add factor
-    $('#add-factor').on('click', addFactor);
-    // Remove last factor
-    $('#remove-factor').on('click', removeFactor);
-    // Disable remove button on load
-    disableButton("#remove-factor");
-
-    // Input change listener - whenever focus leaves input update data object
-    $('input').on('focusout', update);
-    // SET LISTENERS ON DYNAMIC CONTENT
-    resetListeners();
-    print();
+    // Run dynamic elements initialisation
+    onProjectLoad();
 
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -90,6 +70,42 @@ $(document).ready(function() {
 
 });
 
+///////////////////////// ON LOAD //////////////////////////
+// Initialise listeners etc when project is loaded
+function onProjectLoad() {
+    // LISTENERS
+    // Tab button LISTENERS
+    $('.mdl-layout__tab').on('click', tabClicked);
+    // ALTERNATIVES
+    // Add alternative
+    $('#add-alternative').on('click', addAlternative);
+    // Remove last alternative
+    $('#remove-alternative').on('click', removeAlternative);
+    // Disable remove button on load if count <= min number
+    if (data.getAltLength() <= minAltCount) {
+        disableButton("#remove-alternative");
+    }
+    // FACTORS
+    // Add factor
+    $('#add-factor').on('click', addFactor);
+    // Remove last factor
+    $('#remove-factor').on('click', removeFactor);
+    // Disable remove button on load if count <= min number
+    if (data.getFactorLength() <= 1) {
+        disableButton("#remove-factor");
+    }
+
+    // SET LISTENERS ON DYNAMIC CONTENT
+    resetListeners();
+    print();
+
+    // FORCE CALCULATION OF EVEN FACTOR WEIGHTS ON RESULTS PAGE
+    // ONLY to be run ONCE on initial project load
+    data.forceFactorWeightsCalc();
+    update();
+
+}
+
 //////////////////// DYNAIMC LISTENERS /////////////////////
 // Remove and set listeners on dynamic content
 function resetListeners() {
@@ -97,14 +113,17 @@ function resetListeners() {
     // Remove all listeners on input fields
     $('.add-criteria').off();
     $('.remove-criteria').off();
+    $('input').off();
+    $('input.summaryInput').off();
+
     // Add criteria to specific factor - use class not ID due to repeats
     $('.add-criteria').on('click', addCriteria);
     // Remove last criteria to specific factor
     $('.remove-criteria').on('click', removeCriteria);
-    // Remove all listeners on input fields
-    $('input').off();
     // Input change listener - whenever focus leaves input update data object
     $('input').on('focusout', update);
+    // Input change listener - FOR INPUT CELLS ON RESULTS PAGE - to force data update
+    $('input.summaryInput').on('focusout', updateData);
 }
 //////////////////// DYNAIMC LISTENERS /////////////////////
 
@@ -112,7 +131,7 @@ function resetListeners() {
 function tabClicked() {
     window.scrollTo(0, 0);
     // TODO - TEMP ADDITION TO UPDATE DATA ON TAB CHANGE - MAY BE ABLE TO REMOVE IF NO PROBLEM CALLING DATA.UPDATE FROM THIS.UPDATE
-    data.update();
+    updateData()
     console.log("TAB CLICKED");
 }
 
@@ -210,6 +229,7 @@ function update() {
     ractiveFactors.update();
     ractiveData.update();
     ractiveSummary.update();
+    ractiveFactorWeights.update();
 
     // Update data object - initiates results calculations
     // TODO *** POTENTIALLY NEED TO MOVE TO TAB CLICKED TO AVOID RECURSIVE LOOP WITH RESULTS FORM CHANGING FROM DATA UPDATE
@@ -224,6 +244,11 @@ function update() {
 
     // Test Print
     print();
+}
+
+// UPDATE DATA calculation - on tab change AND ractive changes on Results page
+function updateData() {
+    data.update();
 }
 /////////////////// UPDATE ////////////////////
 

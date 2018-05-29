@@ -32,7 +32,37 @@ class ProblemManager {
     update() {
         // Pass current problem data object to DSS model for results calculations
         this.model.resultsCalc(this.problem);
+    }
 
+    // Force avergaing of Factor weights for summary page
+    // ONLY to be run ONCE on initial project load
+    forceFactorWeightsCalc() {
+        // Only calculate if all weights are zero
+        var weightsEmpty = true;
+        $.each(this.problem.factors, function(index, factor) {
+            if (factor.Weight > 0) {
+                weightsEmpty = false;
+            }
+        });
+
+        if (weightsEmpty) {
+            var aveWeight = (100 / this.problem.factors.length).toFixedNumber(0);
+            var extra = 100 - (aveWeight * this.problem.factors.length);
+            console.log("AVERAGE WEIGHT: " + aveWeight);
+            console.log("AVERAGE extra: " + extra);
+            var weights = [];
+            // push first weight plus extra
+            weights.push(aveWeight + extra);
+            // fill rest of weights with aveWeight
+            for (var i = 1; i < this.problem.factors.length; i++) {
+                weights.push(aveWeight);
+            }
+            // set factor.weight
+            // Loop through all FACTORS
+            $.each(this.problem.factors, function(index, factor) {
+                factor.Weight = weights[index];
+            });
+        }
     }
 
     // Add alternative
@@ -99,6 +129,14 @@ class ProblemManager {
         factor.criteria.pop();
     }
 
+    // HELPER FUNCTIONS
+
+    // Return sum of array -
+    // Call using - ARRAY_TO_BE_SUMMED.reduce(this.getSum); OR ARRAY_TO_BE_SUMMED.reduce(_this.getSum); from within anonymous function
+    getSum(total, num) {
+        return total + num;
+    }
+
     ////////////////// TESTING //////////////////////
     // load test problem
     loadTestProblem() {
@@ -126,6 +164,7 @@ class ProblemManager {
         tmpCriteria = factor.criteria[3];
         tmpCriteria.weight = 20;
         tmpCriteria.alternativeWeights = [40, 20, 30];
+        factor.Weight = 15;
 
 
         this.addFactor('Operational');
@@ -146,9 +185,77 @@ class ProblemManager {
         tmpCriteria = factor.criteria[3];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [60, 40, 0];
+        factor.Weight = 30;
+
+        this.addFactor('Strategic Benefit');
+        var factor = this.problem.factors[2];
+        var tmpCriteria = factor.criteria[0];
+        tmpCriteria.name = "Criteria 1A"
+        tmpCriteria.weight = 50;
+        tmpCriteria.alternativeWeights = [100, 0, 0];
+        this.addCriterionTo(factor, "Criteria 1B");
+        tmpCriteria = factor.criteria[1];
+        tmpCriteria.weight = 20;
+        tmpCriteria.alternativeWeights = [100, 0, 0];
+        this.addCriterionTo(factor, "Criteria 1C");
+        tmpCriteria = factor.criteria[2];
+        tmpCriteria.weight = 20;
+        tmpCriteria.alternativeWeights = [100, 0, 0];
+        this.addCriterionTo(factor, "Criteria 1D");
+        tmpCriteria = factor.criteria[3];
+        tmpCriteria.weight = 10;
+        tmpCriteria.alternativeWeights = [100, 0, 0];
+        factor.Weight = 20;
+
+        this.addFactor('Technical');
+        var factor = this.problem.factors[3];
+        var tmpCriteria = factor.criteria[0];
+        tmpCriteria.name = "Criteria 1A"
+        tmpCriteria.weight = 100;
+        tmpCriteria.alternativeWeights = [50, 30, 0];
+        this.addCriterionTo(factor, "Criteria 1B");
+        tmpCriteria = factor.criteria[1];
+        tmpCriteria.weight = 0;
+        tmpCriteria.alternativeWeights = [0, 0, 0];
+        this.addCriterionTo(factor, "Criteria 1C");
+        tmpCriteria = factor.criteria[2];
+        tmpCriteria.weight = 0;
+        tmpCriteria.alternativeWeights = [0, 0, 0];
+        this.addCriterionTo(factor, "Criteria 1D");
+        tmpCriteria = factor.criteria[3];
+        tmpCriteria.weight = 0;
+        tmpCriteria.alternativeWeights = [0, 0, 0];
+        factor.Weight = 10;
+
+        this.addFactor('Risk');
+        var factor = this.problem.factors[4];
+        var tmpCriteria = factor.criteria[0];
+        tmpCriteria.name = "Criteria 1A"
+        tmpCriteria.weight = 10;
+        tmpCriteria.alternativeWeights = [60, 20, 0];
+        this.addCriterionTo(factor, "Criteria 1B");
+        tmpCriteria = factor.criteria[1];
+        tmpCriteria.weight = 20;
+        tmpCriteria.alternativeWeights = [60, 0, 40];
+        this.addCriterionTo(factor, "Criteria 1C");
+        tmpCriteria = factor.criteria[2];
+        tmpCriteria.weight = 30;
+        tmpCriteria.alternativeWeights = [50, 50, 0];
+        this.addCriterionTo(factor, "Criteria 1D");
+        tmpCriteria = factor.criteria[3];
+        tmpCriteria.weight = 40;
+        tmpCriteria.alternativeWeights = [40, 30, 30];
+        factor.Weight = 25;
 
         // Force update for TESTING
         this.update();
     }
 
+}
+
+// Round number to x decimal places (and return a number not a string)
+// Call using .toFixedNumber(3) for 3 decimal places
+Number.prototype.toFixedNumber = function(x, base) {
+    var pow = Math.pow(base || 10, x);
+    return +(Math.round(this * pow) / pow);
 }

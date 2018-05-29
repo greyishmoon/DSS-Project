@@ -52,6 +52,14 @@
   /* MDL - mdl-color--red-400 */
   background: #EF5350;
 }
+.hlGray{
+  /* MDL - mdl-color--grey-400 */
+  background: #bdbdbd;
+}
+.hllightGray{
+  /* MDL - mdl-color--grey-200 */
+  background: #e0e0e0;
+}
 /* MAIN MENU PAGE */
 
 /* Menu button table - pad top*/

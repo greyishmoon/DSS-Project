@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+1<!DOCTYPE html>
 
 <html lang="en">
 
@@ -47,7 +47,7 @@
 </head>
 
 <body>
-	<div class="container">
+	<!-- <div class="container"> -->
 
 		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
@@ -339,7 +339,7 @@
 						<script id="template-summary-table" type="text/ractive">
 
 							<!-- Create summery table for all factors/alternatives showing degrees of belief -->
-							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
+							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
 								<thead>
 									<tr>
 										<!-- First header with Factor name -->
@@ -355,6 +355,11 @@
 										</th>
 										{{/each}}
 
+										<!-- Final header for Ignorance -->
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGray number">
+											<h6>Ignorance</h6>
+										</th>
+
 									</tr>
 								</thead>
 
@@ -368,11 +373,15 @@
 											<h6>{{name}} Factors</h6>
 										</td>
 										<!-- Display Belief from problem.factor.Beliefs -->
-										{{#each Beliefs}}
-											<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-												<h6>{{.}}</h6>
-											</td>
+										{{#each BeliefPercentages}}
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+											<h6>{{.}}</h6>
+										</td>
 										{{/each}}
+										<!-- Final cell - display Ignorance for each factor -->
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hllightGray">
+											<h6>{{IgnorancePercentage}}</h6>
+										</td>
 									</tr>
 									{{/each}}
 								</tbody>
@@ -382,9 +391,61 @@
 
 						<!-- Analysis Summary table -->
 
-						<h4>Analysis Summary</h4>
+						<h4>Assessment Aggregation</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
+						<!-- TARGET ractiveSummary -->
+						<div id="target-factor-weights-table"></div>
+
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-factor-weights-table" type="text/ractive">
+							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
+								<thead>
+									<tr>
+										<!-- First header with Factor name -->
+										<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
+											<h5>Factors</h5>
+										</th>
+
+										<!-- Final header -->
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
+											<h5>Weight</h5>%
+										</th>
+
+									</tr>
+								</thead>
+
+								<tbody>
+									<!-- FACTORS ROWS ADDED DYNAMICALLY HERE -->
+									<!-- Create row for each Factor -->
+									{{#each factors}}
+									<tr>
+										<!-- First cell - Factor name field -->
+										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
+											<h6>{{name}}</h6>
+										</td>
+										<!-- Create wieght input cell for each factor -->
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number summaryInput" type="text" pattern="[0-9]|[1-9][0-9]|100" value="{{Weight}}">
+												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+											</div>
+										</td>
+
+
+									</tr>
+									{{/each}}
+
+								</tbody>
+							</table>
+
+						</script>
+
+						<h5>Aggregated Degrees of Belief</h5>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
 					</div>
 				</section>
@@ -411,7 +472,7 @@
 		</div>
 
 
-	</div>
+	<!-- </div> -->
 
 
 
