@@ -2,26 +2,27 @@
 
 class ProblemManager {
 
-    constructor(title) {
-        // TODO Check for current problem in memory
-        if (false) {
-            // TODO If present load problem from memory
+    constructor() {
+
+        // Create Model object for calculations
+        this.model = new DSS_model();
+
+        // IF localStorage present, load storage, otherwise intialise problem
+        if (localStorage.getItem('problemData') != null) {
+            this.loadLocal();
         } else {
             // Create and initialise new data objects
             this.initialiseProblem();
         }
-        // Create Model object for calculations
-        this.model = new DSS_model();
-
     }
 
     // Create new data object and initialise
     initialiseProblem() {
-        this.problem = new Problem('');
+        // Create empty copy of Problem data object
+        this.problem = jQuery.extend(true, {}, Problem);
+
         this.addAlternative('');
         this.addFactor('');
-        // Create Model object for calculations
-        this.model = new DSS_model();
 
         // TODO - REMOVE TEST PROBLEM
         // Load test problem with data from DSS OUTSOURCING stylesheet
@@ -92,7 +93,9 @@ class ProblemManager {
 
     // Add factor
     addFactor(name) {
-        var newFactor = new Factor(name);
+        // DEEP COPY Factor to avoid referencing issues
+        var newFactor = jQuery.extend(true, {}, Factor);
+        newFactor.name = name;
         // Add single criterion
         this.addCriterionTo(newFactor, '');
         this.problem.factors.push(newFactor);
@@ -113,7 +116,9 @@ class ProblemManager {
     // Add Criterion to factor
     addCriterionTo(factor, name) {
         // Create new criterion
-        var newCriterion = new Criterion(name);
+        // DEEP COPY Criterion to avoid referencing issues
+        var newCriterion = jQuery.extend(true, {}, Criterion);
+        newCriterion.name = name;
         // init criterion weight to 0
         newCriterion.weight = 0;
         // init alternativeWeights count to number of Alternatives + set to 0
@@ -129,6 +134,30 @@ class ProblemManager {
         factor.criteria.pop();
     }
 
+    // SAVE FUNCTIONS
+
+    // Save problem data object to local storage (as JSON)
+    saveLocal() {
+        localStorage.setObject('problemData', this.problem);
+    }
+
+    // IF data stored - Load problem data object from local storage (convert from JSON)
+    loadLocal() {
+        this.problem = localStorage.getObject('problemData');
+    }
+
+    // Clear local Storage
+    clearLocal() {
+        localStorage.clear();
+        sessionStorage.clear();
+    }
+
+    // Reset project and clear all current data from memory and local Storage
+    resetProject() {
+        this.initialiseProblem();
+        this.clearLocal();
+    }
+
     // HELPER FUNCTIONS
 
     // Return sum of array -
@@ -140,8 +169,10 @@ class ProblemManager {
     ////////////////// TESTING //////////////////////
     // load test problem
     loadTestProblem() {
-        var testProblem = new Problem('Test Problem');
-        this.problem = testProblem;
+        // DEEP COPY Problem to avoid referencing issues
+        this.problem = jQuery.extend(true, {}, Problem);
+        this.problem.title = "Test Problem"
+
         this.addAlternative('Supplier A');
         this.addAlternative('Supplier B');
         this.addAlternative('Supplier C');
@@ -255,7 +286,7 @@ class ProblemManager {
 
 // Round number to x decimal places (and return a number not a string)
 // Call using .toFixedNumber(3) for 3 decimal places
-Number.prototype.toFixedNumber = function(x, base) {
-    var pow = Math.pow(base || 10, x);
-    return +(Math.round(this * pow) / pow);
-}
+// Number.prototype.toFixedNumber = function(x, base) {
+//     var pow = Math.pow(base || 10, x);
+//     return +(Math.round(this * pow) / pow);
+// }

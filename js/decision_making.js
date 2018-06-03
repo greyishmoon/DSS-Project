@@ -10,58 +10,11 @@ var maxAltCount = 6;
 
 $(document).ready(function() {
 
-    // TODO - refactor to only create new project if one not loaded in local memory (or process this in constructor?)
-    data = new ProblemManager();
-
-    // TODO - refactor to only create new project if one not loaded in local memory
-    //	// Initialise Problem object
-    // problem = new Problem("EMPTY!!");
-
-
+    // Datamanager that stores problem data
+    dataManager = new ProblemManager();
 
     // Initialse Ractive objects
-    // TITLE TABLE
-    ractiveTitle = new Ractive({
-        target: '#target-title-table',
-        template: '#template-title-table',
-        data: data.problem
-    });
-    // ALTERNATIVES TABLE
-    ractiveAlternatives = new Ractive({
-        target: '#target-alternatives-table',
-        template: '#template-alternatives-table',
-        data: data.problem
-    });
-    // FACTORS TABLE
-    ractiveFactors = new Ractive({
-        target: '#target-factors-table',
-        template: '#template-factors-table',
-        data: data.problem
-    });
-    // DATA ENTRY TABLE
-    ractiveData = new Ractive({
-        target: '#target-data-table',
-        template: '#template-data-table',
-        data: data.problem
-    });
-    // SUMMARY TABLE
-    ractiveSummary = new Ractive({
-        target: '#target-summary-table',
-        template: '#template-summary-table',
-        data: data.problem
-    });
-    // FACTOR WEIGHTS TABLE
-    ractiveFactorWeights = new Ractive({
-        target: '#target-factor-weights-table',
-        template: '#template-factor-weights-table',
-        data: data.problem
-    });
-    // AGGREGATED BELIEFS TABLE
-    ractiveAggregatedBeliefs = new Ractive({
-        target: '#target-aggregated-beliefs-table',
-        template: '#template-aggregated-beliefs-table',
-        data: data.problem
-    });
+    setRactives();
 
     // Run dynamic elements initialisation
     onProjectLoad();
@@ -77,6 +30,53 @@ $(document).ready(function() {
 });
 
 ///////////////////////// ON LOAD //////////////////////////
+// Set ractive data bindings
+function setRactives() {
+    // Initialse Ractive objects
+    // TITLE TABLE
+    ractiveTitle = new Ractive({
+        target: '#target-title-table',
+        template: '#template-title-table',
+        data: dataManager.problem
+    });
+    // ALTERNATIVES TABLE
+    ractiveAlternatives = new Ractive({
+        target: '#target-alternatives-table',
+        template: '#template-alternatives-table',
+        data: dataManager.problem
+    });
+    // FACTORS TABLE
+    ractiveFactors = new Ractive({
+        target: '#target-factors-table',
+        template: '#template-factors-table',
+        data: dataManager.problem
+    });
+    // DATA ENTRY TABLE
+    ractiveData = new Ractive({
+        target: '#target-data-table',
+        template: '#template-data-table',
+        data: dataManager.problem
+    });
+    // SUMMARY TABLE
+    ractiveSummary = new Ractive({
+        target: '#target-summary-table',
+        template: '#template-summary-table',
+        data: dataManager.problem
+    });
+    // FACTOR WEIGHTS TABLE
+    ractiveFactorWeights = new Ractive({
+        target: '#target-factor-weights-table',
+        template: '#template-factor-weights-table',
+        data: dataManager.problem
+    });
+    // AGGREGATED BELIEFS TABLE
+    ractiveAggregatedBeliefs = new Ractive({
+        target: '#target-aggregated-beliefs-table',
+        template: '#template-aggregated-beliefs-table',
+        data: dataManager.problem
+    });
+}
+
 // Initialise listeners etc when project is loaded
 function onProjectLoad() {
     // LISTENERS
@@ -88,7 +88,7 @@ function onProjectLoad() {
     // Remove last alternative
     $('#remove-alternative').on('click', removeAlternative);
     // Disable remove button on load if count <= min number
-    if (data.getAltLength() <= minAltCount) {
+    if (dataManager.getAltLength() <= minAltCount) {
         disableButton("#remove-alternative");
     }
     // FACTORS
@@ -97,9 +97,12 @@ function onProjectLoad() {
     // Remove last factor
     $('#remove-factor').on('click', removeFactor);
     // Disable remove button on load if count <= min number
-    if (data.getFactorLength() <= 1) {
+    if (dataManager.getFactorLength() <= 1) {
         disableButton("#remove-factor");
     }
+    // LOAD/SAVE PAGE
+    // Reset project button
+    $('#reset').on('click', resetProject);
 
     // SET LISTENERS ON DYNAMIC CONTENT
     resetListeners();
@@ -107,7 +110,7 @@ function onProjectLoad() {
 
     // FORCE CALCULATION OF EVEN FACTOR WEIGHTS ON RESULTS PAGE
     // ONLY to be run ONCE on initial project load
-    data.forceFactorWeightsCalc();
+    dataManager.forceFactorWeightsCalc();
     update();
 
 }
@@ -146,9 +149,9 @@ function tabClicked() {
 // Adds alternative with blank name
 function addAlternative() {
     // Add alternative to data model
-    data.addAlternative('');
+    dataManager.addAlternative('');
     // Disable add button if count >= max number
-    if (data.getAltLength() >= maxAltCount) {
+    if (dataManager.getAltLength() >= maxAltCount) {
         disableButton("#add-alternative");
     }
     // Enable remove button
@@ -160,9 +163,9 @@ function addAlternative() {
 // Remove last row from alternative array
 function removeAlternative() {
     // Remove last alternative from array
-    data.removeAlternative();
+    dataManager.removeAlternative();
     // Disable remove button if count <= min number
-    if (data.getAltLength() <= minAltCount) {
+    if (dataManager.getAltLength() <= minAltCount) {
         disableButton("#remove-alternative");
     }
     // Enable add button
@@ -177,7 +180,7 @@ function removeAlternative() {
 // Adds factor with blank name
 function addFactor() {
     // Add factor to data model
-    data.addFactor('');
+    dataManager.addFactor('');
     // << IF LIMIT TO NUMBER OF FACTORS, ADD HERE
     // Enable remove button
     enableButton("#remove-factor");
@@ -188,9 +191,9 @@ function addFactor() {
 // Remove last row from factors array
 function removeFactor() {
     // Remove last factor from array
-    data.removeFactor();
+    dataManager.removeFactor();
     // Disable remove button if count <= min number
-    if (data.getFactorLength() <= 1) {
+    if (dataManager.getFactorLength() <= 1) {
         disableButton("#remove-factor");
     }
     // Enable add button
@@ -206,8 +209,8 @@ function addCriteria(event) {
     // Capture which factor to add criteria too
     var factorId = parseInt($(event.currentTarget).attr('data-id'));
     // Add criteria to data model
-    console.log('factor name: ' + data.getFactor(0));
-    data.addCriterionTo(data.getFactor(factorId),'');
+    console.log('factor name: ' + dataManager.getFactor(0));
+    dataManager.addCriterionTo(dataManager.getFactor(factorId),'');
     // Update interface
     update();
 }
@@ -217,7 +220,7 @@ function removeCriteria(event) {
     // Capture which factor to add criteria too
     var factorId = $(event.currentTarget).attr('data-id');
     // Remove last criteria from array
-    data.removeCriterionFrom(data.getFactor(factorId));
+    dataManager.removeCriterionFrom(data.getFactor(factorId));
     // Update interface
     update();
 }
@@ -248,18 +251,39 @@ function update() {
     resetListeners();
 
     // TODO - implement saving to local storage
+    // Initiate save to localStorage on every data change
+    saveLocal();
+
+    // Log updated data object
+    console.log(dataManager.problem);
 
     // Test Print
     print();
 }
 
+// Save data to localStorage
+function saveLocal() {
+    dataManager.saveLocal();
+}
+
 // UPDATE DATA calculation - on tab change AND ractive changes on Results page
 function updateData() {
-    data.update();
+    dataManager.update();
 }
 /////////////////// UPDATE ////////////////////
 
+//////////////// LOAD / SAVE //////////////////
 
+// Reset project and clear all current data from memory and local Storage
+function resetProject() {
+    dataManager.resetProject();
+    // Reset ractive bindings
+    setRactives();
+    update();
+}
+
+
+//////////////// LOAD / SAVE //////////////////
 
 ///////// GENERAL HELPER FUNCTIONS ////////////
 
@@ -299,15 +323,15 @@ function disableButton(buttonID) {
 // Print data object to test-div
 function print() {
     var output = '';
-    output += '<br> Problem Title: ' + data.problem.title;
+    output += '<br> Problem Title: ' + dataManager.problem.title;
 
     // alternatives
-    data.problem.alternatives.forEach(function(name, index) {
+    dataManager.problem.alternatives.forEach(function(name, index) {
         output += '<br> Alternative ' + (index + 1) + ': ' + name;
     });
 
     // factors
-    data.problem.factors.forEach(function(factor, index) {
+    dataManager.problem.factors.forEach(function(factor, index) {
         output += '<br><br> Factor ' + (index + 1) + ': ' + factor.name;
         // criteria
         factor.criteria.forEach(function(criterion) {
@@ -325,5 +349,4 @@ function print() {
 
     $('.test-div').html(output);
 
-    console.log(data.problem);
 }
