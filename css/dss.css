@@ -18,6 +18,16 @@
 
 }
 
+/* TEMP - testing for scroll up buttons */
+/* .page-content {
+  max-height: 600px;
+  overflow: auto;
+}
+.tabs--body .page-content{
+  height:100%;
+  min-height:400px;
+} */
+
 /* Padding for all page content in each tab panel */
 .mdl-layout__tab-panel {
     float: left;

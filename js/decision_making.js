@@ -80,9 +80,10 @@ function setRactives() {
 // Initialise listeners etc when project is loaded
 function onProjectLoad() {
     // LISTENERS
+    // PROJECT
     // Tab button LISTENERS
     $('.mdl-layout__tab').on('click', tabClicked);
-    // ALTERNATIVES
+    // PROBLEM SETUP
     // Add alternative
     $('#add-alternative').on('click', addAlternative);
     // Remove last alternative
@@ -91,7 +92,7 @@ function onProjectLoad() {
     if (dataManager.getAltLength() <= minAltCount) {
         disableButton("#remove-alternative");
     }
-    // CATEGORIES
+    // DATA ENTRY
     // Add category
     $('#add-category').on('click', addCategory);
     // Remove last category
@@ -103,6 +104,13 @@ function onProjectLoad() {
     // LOAD/SAVE PAGE
     // Reset project button
     $('#reset').on('click', resetProject);
+
+    // TAB NAVIGATION
+    // Next button on each tab to simulate click on tab
+    $('#go-tab-1-btn').on('click', goTab1);
+    $('#go-tab-2-btn').on('click', goTab2);
+    // Scroll to top buttons (if needed)
+    $("#scroll-up-btn").click(scrollToTop);
 
     // SET LISTENERS ON DYNAMIC CONTENT
     resetListeners();
@@ -225,6 +233,59 @@ function removeCriteria(event) {
     update();
 }
 /////////////////// CRITERIA //////////////////
+
+////////////////// NAVIGATION /////////////////
+
+// Simulate click on MDL tabs
+// Problem Setup
+function goTab0() {
+    // alert("TEST");
+    $(".mdl-layout__tab:eq(0) span").click ();
+}
+// Data Entry
+function goTab1() {
+    // alert("TEST");
+    $(".mdl-layout__tab:eq(1) span").click ();
+}
+// Summary
+function goTab2() {
+    // alert("TEST");
+    $(".mdl-layout__tab:eq(2) span").click ();
+}
+// Results
+function goTab3() {
+    // alert("TEST");
+    $(".mdl-layout__tab:eq(3) span").click ();
+}
+// Instructions
+function goTab4() {
+    // alert("TEST");
+    $(".mdl-layout__tab:eq(4) span").click ();
+}
+// Save/Load
+function goTab5() {
+    // alert("TEST");
+    $(".mdl-layout__tab:eq(5) span").click ();
+}
+
+// TODO complete scroll fix
+// references https://codepen.io/mdlhut/pen/BNeoVa https://codepen.io/exam/pen/ZbvLPO
+var scrollTo = function(top) {
+  var content = $(".page-content");
+  var target = top ? 0 : $(".page-content").height();
+  content.stop().animate({ scrollTop: target }, "slow");
+};
+
+var scrollToTop = function() {
+  scrollTo(true);
+  console.log(("SCROLL UP"));
+};
+
+var scrollToBottom = function() {
+  scrollTo(false);
+};
+
+////////////////// NAVIGATION /////////////////
 
 
 /////////////////// UPDATE ////////////////////

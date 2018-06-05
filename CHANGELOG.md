@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Factors weighting table
 - Analysis Summary table not updating on tab change
 - Changed all references to FACTORS to CATEGORIES
+- Remove Criteria button not removing a criteria
+### Added
+- 'Next' button to progress to next tab
+- Fix to detect corrupt data in localStorage (artefact of renaming factors)
+* clear and reload test data set if detected
 
 ## [Unreleased] - 03-06-2018
 ### Added

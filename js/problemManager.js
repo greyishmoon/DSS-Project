@@ -145,18 +145,28 @@ class ProblemManager {
     // IF data stored - Load problem data object from local storage (convert from JSON)
     loadLocal() {
         this.problem = localStorage.getObject('problemData');
+        // check for null categories problem
+        if (this.problem.categories == null) {
+            // This is incorrectly stored data structure from before factor to category renaming
+            // Clear locaStorage and load test problem
+            localStorage.clear();
+            sessionStorage.clear();
+            this.initialiseProblem();
+        }
     }
 
     // Clear local Storage
     clearLocal() {
+        console.log("local BEFORE: " + localStorage.getObject('problemData'));
         localStorage.clear();
         sessionStorage.clear();
+
     }
 
     // Reset project and clear all current data from memory and local Storage
     resetProject() {
-        this.initialiseProblem();
         this.clearLocal();
+        this.initialiseProblem();
     }
 
     // HELPER FUNCTIONS

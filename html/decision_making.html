@@ -1,4 +1,4 @@
-1<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 
@@ -24,7 +24,8 @@
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
 	<link href="../css/dss.css" rel="stylesheet" type="text/css">
-	<script src="../libs/jquery-3.2.1.min.js"></script>
+	<!-- <script src="../libs/jquery-3.2.1.min.js"></script> -->
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 	<!-- Ractive library TODO - change from CDN-->
 	<script src="https://cdn.jsdelivr.net/npm/ractive"></script>
 
@@ -208,12 +209,22 @@
 							</tbody>
 						</table>
 
+						<!-- Next Tab button -->
+						<br>
+
+						<!-- TODO - remove test scroll button -->
+						<!-- <div>
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-400" type="button" id="scroll-up-btn">Top></button>
+						</div> -->
+
+						<div>
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" type="button" id="go-tab-1-btn">Next ></button>
+						</div>
+
 					</div>
 
-					<!-- TODO - REMOVE -->
-					<br><br><br>
-					<div class="test-div">
-					</div>
+
+
 				</section>
 
 
@@ -313,16 +324,14 @@
 							<br /> {{/each}}
 
 						</script>
-
-						<!-- TODO - REMOVE -->
-						<br><br><br>
-						<div class="test-div">
-						</div>
-
-
-
-
 					</div>
+
+					<!-- Next Tab button -->
+					<br>
+					<div>
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" type="button" id="go-tab-2-btn">Next ></button>
+					</div>
+
 				</section>
 
 				<!-- RESULTS PAGE **************************************************** -->
@@ -494,10 +503,7 @@
 
 						</script>
 
-						<h5>Most Optomistic Alternative</h5>
-						<p>Table to be implemented</p>
-
-						<h5>Most Pessimistic ((CHECK)) Alternative</h5>
+						<h5>Distributed Ignorance</h5>
 						<p>Table to be implemented</p>
 
 					</div>
@@ -526,10 +532,7 @@
 
 		</div>
 
-
 	<!-- </div> -->
-
-
 
 </body>
 
