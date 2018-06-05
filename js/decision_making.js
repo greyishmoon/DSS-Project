@@ -269,6 +269,7 @@ function saveLocal() {
 // UPDATE DATA calculation - on tab change AND ractive changes on Results page
 function updateData() {
     dataManager.update();
+    update();
 }
 /////////////////// UPDATE ////////////////////
 
