@@ -1,0 +1,82 @@
+# Changelog - DSS Project
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/0.3.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [Unreleased] - 05-06-2018
+### Fixed
+- Ractive numbers being saved as strings in
+* Criteria tables
+* Factors weighting table
+- Analysis Summary table not updating on tab change
+
+## [Unreleased] - 03-06-2018
+### Added
+- localStorage save/reload
+
+## [Unreleased] - 29-05-2018
+### Added
+- Results page
+- Algorithms for Aggregation calculations:
+* calcAggregatedMvalues
+* calcAggregatedK
+* calcAggregatedMalternatives
+* calcAggregatedMdashH
+* calcAggregatedBeliefs
+* calcAggregatedIgnorance
+
+## [Unreleased] - 28-05-2018
+### Added
+- DSS_model - for calculation algorithms
+- Algorithms for DSS calculations:
+* calcMvalues
+* calcK
+* calcMdashH
+* calcMlH
+* calcBeliefs
+* calcIgnorance
+
+## [Unreleased] - 19-03-2018
+### Added
+- Data entry page
+- Criteria data entry pages
+
+## [Unreleased] - 17-03-2018
+### Changed
+- Data model refactored and expanded
+
+## [Unreleased] - 12-03-2018
+### Added
+- Ractive integration
+- Data model template
+- Ractive templates for
+* Title
+* Alternatives
+* Factors
+
+
+## [Unreleased] - 05-03-2018
+### Added
+- Data entry page
+- Criteria tables
+
+## [Unreleased] - 04-03-2018
+### Added
+- Decision Making page layout
+- Problem Setup page
+
+## [Unreleased] - 03-03-2018
+### Added
+- Initial framework
+- Menu structure
+- MDL integration
+
+
+
+
+
+## [1.0.0] - 2017-06-20
+### Added
+- EXAMPLE
+- EXAMPLE
