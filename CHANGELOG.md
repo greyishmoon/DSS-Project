@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Criteria tables
 * Factors weighting table
 - Analysis Summary table not updating on tab change
+- Changed all references to FACTORS to CATEGORIES
 
 ## [Unreleased] - 03-06-2018
 ### Added

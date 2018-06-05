@@ -160,32 +160,32 @@
 
 
 
-						<!-- Problem Factors -->
-						<h4>Decision Factors</h4>
+						<!-- Criteria Categories -->
+						<h4>Criteria Categories</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
 						<!-- TARGET ractiveAlternatives -->
-						<div id="target-factors-table"></div>
+						<div id="target-categories-table"></div>
 
 						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-factors-table" type="text/ractive">
+						<script id="template-categories-table" type="text/ractive">
 
-							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="factors-table">
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="categories-table">
 								<thead>
 									<tr>
 										<th class="mdl-data-table__cell--non-numeric">
-											<h5>Factors</h5>
+											<h5>Categories</h5>
 										</th>
 									</tr>
 								</thead>
 
 								<tbody>
-									{{#each factors:i}}
+									{{#each categories:i}}
 									<tr>
 										<td class="mdl-data-table__cell--non-numeric narrow">
 											<div class="mdl-textfield mdl-js-textfield">
-												<input class="mdl-textfield__input factor" type="text" value="{{name}}">
-												<label class="mdl-textfield__label">Factor...</label>
+												<input class="mdl-textfield__input category" type="text" value="{{name}}">
+												<label class="mdl-textfield__label">Category...</label>
 											</div>
 										</td>
 									</tr>
@@ -199,10 +199,10 @@
 							<tbody>
 								<tr>
 									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-factor">Add Factor</button>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-category">Add Category</button>
 									</td>
 									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="remove-factor" style="float: right">Remove Factor</button>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="remove-category" style="float: right">Remove Category</button>
 									</td>
 								</tr>
 							</tbody>
@@ -223,8 +223,8 @@
 						<h4>Data Entry</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<!-- Problem Factors -->
-						<h4>Factors Criteria</h4>
+						<!-- Problem Categories -->
+						<h4>Categories Criteria</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
 						<!-- TARGET ractiveAlternatives -->
@@ -235,12 +235,12 @@
 						<!-- TEMPLATE ractiveAlternatives -->
 						<script id="template-data-table" type="text/ractive">
 
-							<!-- Create full table for each Factor -->
-							{{#each factors:i}}
+							<!-- Create full table for each Category -->
+							{{#each categories:i}}
 							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
 								<thead>
 									<tr>
-										<!-- First header with Factor name -->
+										<!-- First header with Category name -->
 										<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
 											<h5>{{name}} Criteria</h5>
 										</th>
@@ -340,11 +340,11 @@
 						<!-- TEMPLATE ractiveAlternatives -->
 						<script id="template-summary-table" type="text/ractive">
 
-							<!-- Create summery table for all factors/alternatives showing degrees of belief -->
+							<!-- Create summery table for all categories/alternatives showing degrees of belief -->
 							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
 								<thead>
 									<tr>
-										<!-- First header with Factor name -->
+										<!-- First header with Category name -->
 										<th class="mdl-data-table__cell--non-numeric width300">
 											<h6>Degrees of Belief</h6>
 										</th>
@@ -366,21 +366,21 @@
 								</thead>
 
 								<tbody>
-									<!-- FACTORS ROWS ADDED DYNAMICALLY HERE -->
-									<!-- Create row for each Factor -->
-									{{#each factors}}
+									<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
+									<!-- Create row for each Category -->
+									{{#each categories}}
 									<tr>
-										<!-- First cell - Factor name field -->
+										<!-- First cell - Category name field -->
 										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
-											<h6>{{name}} Factors</h6>
+											<h6>{{name}}</h6>
 										</td>
-										<!-- Display Belief from problem.factor.Beliefs -->
+										<!-- Display Belief from problem.category.Beliefs -->
 										{{#each BeliefPercentages}}
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
 											<h6>{{.}}</h6>
 										</td>
 										{{/each}}
-										<!-- Final cell - display Ignorance for each factor -->
+										<!-- Final cell - display Ignorance for each category -->
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hllightGray">
 											<h6>{{IgnorancePercentage}}</h6>
 										</td>
@@ -397,16 +397,16 @@
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
 						<!-- TARGET ractiveSummary -->
-						<div id="target-factor-weights-table"></div>
+						<div id="target-category-weights-table"></div>
 
 						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-factor-weights-table" type="text/ractive">
+						<script id="template-category-weights-table" type="text/ractive">
 							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
 								<thead>
 									<tr>
-										<!-- First header with Factor name -->
+										<!-- First header with Category name -->
 										<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
-											<h5>Factors</h5>
+											<h5>Category</h5>
 										</th>
 
 										<!-- Final header -->
@@ -418,15 +418,15 @@
 								</thead>
 
 								<tbody>
-									<!-- FACTORS ROWS ADDED DYNAMICALLY HERE -->
-									<!-- Create row for each Factor -->
-									{{#each factors}}
+									<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
+									<!-- Create row for each Category -->
+									{{#each categories}}
 									<tr>
-										<!-- First cell - Factor name field -->
+										<!-- First cell - Category name field -->
 										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
 											<h6>{{name}}</h6>
 										</td>
-										<!-- Create wieght input cell for each factor -->
+										<!-- Create wieght input cell for each category -->
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
@@ -455,7 +455,7 @@
 						<!-- TEMPLATE ractiveAlternatives -->
 						<script id="template-aggregated-beliefs-table" type="text/ractive">
 
-							<!-- Create summery table for all factors/alternatives showing degrees of belief -->
+							<!-- Create summery table for all categories/alternatives showing degrees of belief -->
 							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
 								<thead>
 									<tr>
@@ -476,15 +476,15 @@
 								</thead>
 
 								<tbody>
-									<!-- FACTORS ROWS ADDED DYNAMICALLY HERE -->
+									<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
 									<tr>
-										<!-- Display Belief from problem.factor.Beliefs -->
+										<!-- Display Belief from problem.category.Beliefs -->
 										{{#each BeliefPercentages}}
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
 											<h6>{{.}}</h6>
 										</td>
 										{{/each}}
-										<!-- Final cell - display Ignorance for each factor -->
+										<!-- Final cell - display Ignorance for each category -->
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hllightGray">
 											<h6>{{IgnorancePercentage}}</h6>
 										</td>

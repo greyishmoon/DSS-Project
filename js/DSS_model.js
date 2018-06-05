@@ -1,5 +1,5 @@
 // DSS model for all calculations
-// (Row references relate to DSS OUTSOURCING / FINANCIAL FACTORS sheet)
+// (Row references relate to DSS OUTSOURCING / FINANCIAL CATEGORIES sheet)
 
 
 class DSS_model {
@@ -14,21 +14,21 @@ class DSS_model {
         this.data = data;
         // Calculate M values for each CRITERION (Mni and M and Ml and Mdash) (row 17 + 26 + 35 + 44)
         this.calcMvalues();
-        // Calculate K value for FACTOR (row 53)
+        // Calculate K value for CATEGORY (row 53)
         this.calcK();
-        // Calculate M values for each ALTERNATIVE in Factor (row 56)
+        // Calculate M values for each ALTERNATIVE in Category (row 56)
         this.calcMalternatives();
-        // Calculate M dash H value for FACTOR (row 63)
+        // Calculate M dash H value for CATEGORY (row 63)
         this.calcMdashH();
-        // Calculate Ml H value for FACTOR (row 66)
+        // Calculate Ml H value for CATEGORY (row 66)
         this.calcMlH();
         // Calculate array of Beliefs relating to each ALTERNATIVE (row 71)
         this.calcBeliefs();
-        // Calculate level of ignorance associated with ALTERNATIVES of this FACTOR (row 77)
+        // Calculate level of ignorance associated with ALTERNATIVES of this CATEGORY (row 77)
         this.calcIgnorance();
 
         // RESULTS PAGE calculations
-        // Calculate array of M n,i relating to each factor (summary sheet row 41 + 52 + 63 + 74)
+        // Calculate array of M n,i relating to each category (summary sheet row 41 + 52 + 63 + 74)
         this.calcAggregatedMvalues();
         // Calculate aggregated K value for PROJECT (summary sheet row 85)
         this.calcAggregatedK();
@@ -53,12 +53,12 @@ class DSS_model {
         var _this = this;
         var data = this.data;
 
-        // Loop through all FACTORS
-        $.each(data.factors, function(index, factor) {
-            if (this.debug) console.log("\nCALC M - Factor: " + factor.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        // Loop through all CATEGORIES
+        $.each(data.categories, function(index, category) {
+            if (this.debug) console.log("\nCALC M - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-            // Loop through each CRITERIA of each FACTOR - run calculations and update data model
-            $.each(factor.criteria, function(index, criteria) {
+            // Loop through each CRITERIA of each CATEGORY - run calculations and update data model
+            $.each(category.criteria, function(index, criteria) {
                 // Clear MNI_results
                 var MNI_result = [];
                 // Temp array to store converted CRITERIA WEIGHT
@@ -103,13 +103,13 @@ class DSS_model {
         });
     }
 
-    // Calculate K value for each FACTOR (row 53)
+    // Calculate K value for each CATEGORY (row 53)
     calcK() {
         var _this = this;
         var data = this.data;
-        // Loop through all FACTORS
-        $.each(data.factors, function(index, factor) {
-            if (this.debug) console.log("\nCALC K - Factor: " + factor.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        // Loop through all CATEGORIES
+        $.each(data.categories, function(index, category) {
+            if (this.debug) console.log("\nCALC K - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
             var criteria_results = []; // capture results from each ALTERNATIVE loop - to be summed for final criteria_result
 
@@ -121,7 +121,7 @@ class DSS_model {
                 var criteria_calcs = []; // Capture calc (Mni+Ml+Mdash)
 
                 // For each CRITERIA, capture data, perform calculation and push to criteria_calcs
-                $.each(factor.criteria, function(indexCrit, criteria) {
+                $.each(category.criteria, function(indexCrit, criteria) {
                     var temp_calc; // Capture calc (Mni+Ml+Mdash)
                     temp_calc = criteria.Mni[indexAlt] + criteria.Ml + criteria.Mdash;
                     criteria_calcs.push(temp_calc);
@@ -138,27 +138,27 @@ class DSS_model {
             if (this.debug) console.log("criteria_result: " + criteria_result);
 
             // Calculate M value relationships
-            var m_relationships = _this.calcFactorMrealtionships(factor);
+            var m_relationships = _this.calcCategoryMrealtionships(category);
             if (this.debug) console.log("m_relationships: " + m_relationships);
 
             // Final K calculation
             var k_result = 1 / (criteria_result - 2 * m_relationships)
-            factor.K = k_result.toFixedNumber(3);
-            if (this.debug) console.log("k_result: " + factor.K);
+            category.K = k_result.toFixedNumber(3);
+            if (this.debug) console.log("k_result: " + category.K);
         });
     }
 
-    // Calculate M values for each ALTERNATIVE in Factor (row 56)
+    // Calculate M values for each ALTERNATIVE in Category (row 56)
     calcMalternatives() {
         var _this = this;
         var data = this.data;
 
-        // Loop through all FACTORS
-        $.each(data.factors, function(index, factor) {
-            if (this.debug) console.log("\nCALC Malt - Factor: " + factor.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        // Loop through all CATEGORIES
+        $.each(data.categories, function(index, category) {
+            if (this.debug) console.log("\nCALC Malt - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
             var criteria_result = 0; // capture results from each ALTERNATIVE loop - use in final Malt calc
-            var Malt_array = []; // stores Malt values to set factor.Malt at end
+            var Malt_array = []; // stores Malt values to set category.Malt at end
 
             // loop for each ALTERNATIVE, calculate Malt (row 56) amd push to data.Malt array
             // Loop for each ALTERNATIVE to capture criteria data
@@ -167,7 +167,7 @@ class DSS_model {
 
                 var criteria_calcs = []; // Capture calc (Mni+Ml+Mdash)
                 // For each CRITERIA, capture data, perform calculation and push to criteria_calcs
-                $.each(factor.criteria, function(indexCrit, criteria) {
+                $.each(category.criteria, function(indexCrit, criteria) {
                     var temp_calc; // Capture calc (Mni+Ml+Mdash)
                     temp_calc = criteria.Mni[indexAlt] + criteria.Ml + criteria.Mdash;
                     criteria_calcs.push(temp_calc);
@@ -178,43 +178,43 @@ class DSS_model {
                 if (this.debug) console.log("criteria_result: " + criteria_result);
 
                 // Calculate Malt for this ALTERNATIVE and push to data.Malt
-                var Malt_result = factor.K * (criteria_result - _this.calcFactorMrealtionships(factor));
+                var Malt_result = category.K * (criteria_result - _this.calcCategoryMrealtionships(category));
                 Malt_array.push(Malt_result);
             });
-            factor.Malt = Malt_array;
-            if (this.debug) console.log("factor.Malt: " + factor.Malt);
+            category.Malt = Malt_array;
+            if (this.debug) console.log("category.Malt: " + category.Malt);
         });
     }
 
-    // Calculate M dash H value for FACTOR (row 63)
+    // Calculate M dash H value for CATEGORY (row 63)
     calcMdashH() {
         var _this = this;
         var data = this.data;
 
-        // Loop through all FACTORS
-        $.each(data.factors, function(index, factor) {
-            if (this.debug) console.log("\nCALC MdashH - Factor: " + factor.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        // Loop through all CATEGORIES
+        $.each(data.categories, function(index, category) {
+            if (this.debug) console.log("\nCALC MdashH - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-            // Calculate MdashH for FACTOR and set data.MdashH
-            var MdashH_result = (factor.K * (_this.calcFactorMrealtionships(factor) - _this.calcMlProduct(factor)));
-            factor.MdashH = MdashH_result;
-            if (this.debug) console.log("factor.MdashH: " + factor.MdashH);
+            // Calculate MdashH for CATEGORY and set data.MdashH
+            var MdashH_result = (category.K * (_this.calcCategoryMrealtionships(category) - _this.calcMlProduct(category)));
+            category.MdashH = MdashH_result;
+            if (this.debug) console.log("category.MdashH: " + category.MdashH);
         });
     }
 
-    // Calculate Ml H value for FACTOR (row 66)
+    // Calculate Ml H value for CATEGORY (row 66)
     calcMlH() {
         var _this = this;
         var data = this.data;
 
-        // Loop through all FACTORS
-        $.each(data.factors, function(index, factor) {
-            if (this.debug) console.log("\nCALC calcMlH - Factor: " + factor.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        // Loop through all CATEGORIES
+        $.each(data.categories, function(index, category) {
+            if (this.debug) console.log("\nCALC calcMlH - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-            // Calculate MlH for FACTOR and set data.MlH
-            var MlH_result = (factor.K * _this.calcMlProduct(factor));
-            factor.MlH = MlH_result;
-            if (this.debug) console.log("factor.MdashH: " + factor.MlH);
+            // Calculate MlH for CATEGORY and set data.MlH
+            var MlH_result = (category.K * _this.calcMlProduct(category));
+            category.MlH = MlH_result;
+            if (this.debug) console.log("category.MdashH: " + category.MlH);
         });
     }
 
@@ -223,37 +223,37 @@ class DSS_model {
         var _this = this;
         var data = this.data;
 
-        // Loop through all FACTORS
-        $.each(data.factors, function(index, factor) {
-            if (this.debug) console.log("\nCALC Beliefs - Factor: " + factor.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        // Loop through all CATEGORIES
+        $.each(data.categories, function(index, category) {
+            if (this.debug) console.log("\nCALC Beliefs - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
             var belief_array = [];
             var belief_percentages = [];
             // Loop for each ALTERNATIVE, calculate belief and push to belief_array
             $.each(data.alternatives, function(indexAlt, alternative) {
-                var belief_result = factor.Malt[indexAlt] / (1 - factor.MlH);
+                var belief_result = category.Malt[indexAlt] / (1 - category.MlH);
                 belief_array.push(belief_result);
                 belief_percentages.push((belief_result * 100).toFixedNumber(1));
             });
-            factor.Beliefs = belief_array;
-            factor.BeliefPercentages = belief_percentages;
-            if (this.debug) console.log("factor.Beliefs: " + factor.Beliefs);
+            category.Beliefs = belief_array;
+            category.BeliefPercentages = belief_percentages;
+            if (this.debug) console.log("category.Beliefs: " + category.Beliefs);
 
         });
     }
 
-    // Calculate level of ignorance associated with ALTERNATIVES of this FACTOR (row 77)
+    // Calculate level of ignorance associated with ALTERNATIVES of this CATEGORY (row 77)
     calcIgnorance() {
         var _this = this;
         var data = this.data;
 
-        // Loop through all FACTORS
-        $.each(data.factors, function(index, factor) {
-            if (this.debug) console.log("\nCALC Ignorance - Factor: " + factor.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-            var ignorance_result = factor.MdashH / (1 - factor.MlH);
-            factor.Ignorance = ignorance_result;
-            factor.IgnorancePercentage = (ignorance_result * 100).toFixedNumber(1);
-            if (this.debug) console.log("factor.Ignorance: " + factor.Ignorance);
+        // Loop through all CATEGORIES
+        $.each(data.categories, function(index, category) {
+            if (this.debug) console.log("\nCALC Ignorance - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            var ignorance_result = category.MdashH / (1 - category.MlH);
+            category.Ignorance = ignorance_result;
+            category.IgnorancePercentage = (ignorance_result * 100).toFixedNumber(1);
+            if (this.debug) console.log("category.Ignorance: " + category.Ignorance);
         });
 
     }
@@ -263,123 +263,123 @@ class DSS_model {
 
     // RESULTS PAGE calculations
     // Calculate aggregated M values (summary sheet row 41)
-    // M n,i for each factor relating to each alternative (summary sheet row 41) - alternative belief*factor weight
+    // M n,i for each category relating to each alternative (summary sheet row 41) - alternative belief*category weight
     // M value for each criterion (summary sheet row 52) - 1-(sum Mni values)
-    // Ml value for each criterion (summary sheet row 63) - 1-(factor weight (convert from percentage)
-    // Mdash value for each criterion (summary sheet row 74) - factor weight * (1-(sum(alternative beliefs)))
+    // Ml value for each criterion (summary sheet row 63) - 1-(category weight (convert from percentage)
+    // Mdash value for each criterion (summary sheet row 74) - category weight * (1-(sum(alternative beliefs)))
     calcAggregatedMvalues() {
         var _this = this;
         var data = this.data;
 
-        // Loop through all FACTORS
-        $.each(data.factors, function(index, factor) {
-            if (this.debug) console.log("\nCALC Aggregated M values - Factor: " + factor.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        // Loop through all CATEGORIES
+        $.each(data.categories, function(index, category) {
+            if (this.debug) console.log("\nCALC Aggregated M values - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-            var aggMni_results = []; // capture agregated Mni values for each FACTOR (one per each solution)
+            var aggMni_results = []; // capture agregated Mni values for each CATEGORY (one per each solution)
 
             // Loop over each belief value for Mni
-            for (var i = 0; i < factor.Beliefs.length; i++) {
-                aggMni_results.push(factor.Beliefs[i] * (factor.Weight / 100));
+            for (var i = 0; i < category.Beliefs.length; i++) {
+                aggMni_results.push(category.Beliefs[i] * (category.Weight / 100));
             }
-            factor.Mni = aggMni_results;
+            category.Mni = aggMni_results;
 
-            // CALCULATE M for each FACTOR ////////////////////////////////////
+            // CALCULATE M for each CATEGORY ////////////////////////////////////
             // 1-(sum Mni aggMni_results)
             var M_result = 1 - (aggMni_results.reduce(_this.getSum));
             // update data model, rounded to 3 decimal places
-            factor.M = M_result;
+            category.M = M_result;
 
-            // CALCULATE Ml for each FACTOR ////////////////////////////////////
-            // 1-(factor weight (convert from percentage)
-            factor.Ml = 1 - (factor.Weight * 0.01);
+            // CALCULATE Ml for each CATEGORY ////////////////////////////////////
+            // 1-(category weight (convert from percentage)
+            category.Ml = 1 - (category.Weight * 0.01);
 
-            // CALCULATE Mdash for each FACTOR ////////////////////////////////////
-            // factor weight * (1-(sum(alternative beliefs)))
-            var Mdash_result = (factor.Weight * 0.01) * (1 - (factor.Beliefs.reduce(_this.getSum)));
-            factor.Mdash = Mdash_result;
+            // CALCULATE Mdash for each CATEGORY ////////////////////////////////////
+            // category weight * (1-(sum(alternative beliefs)))
+            var Mdash_result = (category.Weight * 0.01) * (1 - (category.Beliefs.reduce(_this.getSum)));
+            category.Mdash = Mdash_result;
 
-            if (this.debug) console.log("MNI: " + factor.Mni);
-            if (this.debug) console.log("M: " + factor.M);
-            if (this.debug) console.log("Ml: " + factor.Ml);
-            if (this.debug) console.log("Mdash: " + factor.Mdash);
+            if (this.debug) console.log("MNI: " + category.Mni);
+            if (this.debug) console.log("M: " + category.M);
+            if (this.debug) console.log("Ml: " + category.Ml);
+            if (this.debug) console.log("Mdash: " + category.Mdash);
         });
     }
 
-    // Calculate K value for each FACTOR (summary sheet row 85)
+    // Calculate K value for each CATEGORY (summary sheet row 85)
     calcAggregatedK() {
         var _this = this;
         var data = this.data;
 
         var criteria_results = []; // capture results from each ALTERNATIVE loop - to be summed for final criteria_result
-        var factor_results = []; // capture results from each ALTERNATIVE loop - to be summed for final factor_result
+        var category_results = []; // capture results from each ALTERNATIVE loop - to be summed for final category_result
 
         // Calculate weighting relationships
         // Loop for each ALTERNATIVE to capture criteria data
         $.each(data.alternatives, function(indexAlt, alternative) {
             if (this.debug) console.log("\nCALC AGG K - Alternative loop: " + alternative + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-            var factor_calcs = []; // Capture calc (Mni+Ml+Mdash)
+            var category_calcs = []; // Capture calc (Mni+Ml+Mdash)
 
-            // Loop through all FACTORS, capture data, perform calculation and push to criteria_calcs
-            $.each(data.factors, function(index, factor) {
+            // Loop through all CATEGORIES, capture data, perform calculation and push to criteria_calcs
+            $.each(data.categories, function(index, category) {
                 var temp_calc; // Capture calc (Mni+Ml+Mdash)
-                temp_calc = factor.Mni[indexAlt] + factor.Ml + factor.Mdash;
-                factor_calcs.push(temp_calc);
+                temp_calc = category.Mni[indexAlt] + category.Ml + category.Mdash;
+                category_calcs.push(temp_calc);
             });
 
-            if (this.debug) console.log("criteria_calcs: " + factor_calcs);
+            if (this.debug) console.log("criteria_calcs: " + category_calcs);
             // Multiply all results from criteria_calcs and push total to criteria_results
-            factor_results.push(factor_calcs.reduce(_this.getProduct));
-            if (this.debug) console.log("criteria_results: " + factor_results);
+            category_results.push(category_calcs.reduce(_this.getProduct));
+            if (this.debug) console.log("criteria_results: " + category_results);
         });
 
         // Sum all subtotals from criteria_results for single criteria_results
-        var factor_result = factor_results.reduce(_this.getSum);
-        if (this.debug) console.log("criteria_result: " + factor_result);
+        var category_result = category_results.reduce(_this.getSum);
+        if (this.debug) console.log("criteria_result: " + category_result);
 
         // Calculate M value relationships
         var m_relationships = _this.calcProjectMrealtionships(data);
         if (this.debug) console.log("m_relationships: " + m_relationships);
 
         // Final K calculation
-        var k_result = 1 / (factor_result - 2 * m_relationships)
-        data.K = k_result.toFixedNumber(3);
+        var k_result = 1 / (category_result - 2 * m_relationships)
+        data.K = k_result;
         if (this.debug) console.log("k_result: " + data.K);
 
     }
 
-    // Calculate aggregated M values for each FACTOR in PROJECT (summary sheet row 88)
+    // Calculate aggregated M values for each CATEGORY in PROJECT (summary sheet row 88)
     calcAggregatedMalternatives() {
         var _this = this;
         var data = this.data;
 
-        var Malt_array = []; // stores Malt values to set factor.Malt at end
+        var Malt_array = []; // stores Malt values to set category.Malt at end
 
         //loop over alternatives (3 times)
-        // loop over factors (5 times)
-        // add (factor.Mni[indexFact] + factor.Ml + factor.Mdash) and push to factor_calcs array
-        // Product of factor_calcs - put in factor_result
-        // var Malt_result = data.K * (factor_result - _this.calcProjectMrealtionships(data));
+        // loop over categories (5 times)
+        // add (category.Mni[indexFact] + category.Ml + category.Mdash) and push to category_calcs array
+        // Product of category_calcs - put in category_result
+        // var Malt_result = data.K * (category_result - _this.calcProjectMrealtionships(data));
 
         // loop for each ALTERNATIVE, calculate Malt (row 56) amd push to data.Malt array
         // Loop for each ALTERNATIVE to capture criteria data
         $.each(data.alternatives, function(indexAlt, alternative) {
             if (this.debug) console.log("\nCALC Malt - Alternative: " + alternative + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
-            var factor_calcs = []; // Capture calc (Mni+Ml+Mdash)
+            var category_calcs = []; // Capture calc (Mni+Ml+Mdash)
             // For each CRITERIA, capture data, perform calculation and push to criteria_calcs
-            $.each(data.factors, function(index, factor) {
+            $.each(data.categories, function(index, category) {
                 var temp_calc; // Capture calc (Mni+Ml+Mdash)
-                temp_calc = factor.Mni[indexAlt] + factor.Ml + factor.Mdash;
-                factor_calcs.push(temp_calc);
+                temp_calc = category.Mni[indexAlt] + category.Ml + category.Mdash;
+                category_calcs.push(temp_calc);
             });
-            if (this.debug) console.log("factor_calcs: " + factor_calcs);
+            if (this.debug) console.log("category_calcs: " + category_calcs);
             // Multiply all results from criteria_calcs and push total to criteria_results
-            var factor_result = factor_calcs.reduce(_this.getProduct);
-            if (this.debug) console.log("factor_result: " + factor_result);
+            var category_result = category_calcs.reduce(_this.getProduct);
+            if (this.debug) console.log("category_result: " + category_result);
 
             // Calculate Malt for this ALTERNATIVE and push to data.Malt
-            var Malt_result = data.K * (factor_result - _this.calcProjectMrealtionships(data));
+            var Malt_result = data.K * (category_result - _this.calcProjectMrealtionships(data));
             Malt_array.push(Malt_result);
         });
         data.Malt = Malt_array;
@@ -391,7 +391,7 @@ class DSS_model {
         if (this.debug) console.log("\nCALC Aggregated MdashH - PROJECT - >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         var data = this.data;
 
-        // Calculate MdashH for FACTOR and set data.MdashH
+        // Calculate MdashH for CATEGORY and set data.MdashH
         data.MdashH = (data.K * (this.calcProjectMrealtionships(data) - this.calcProjectMlProduct(data)));
         if (this.debug) console.log("data.MdashH: " + data.MdashH);
     }
@@ -440,46 +440,46 @@ class DSS_model {
     // MINI FUNCTIONS
     // Repeat operations used in multiple calculations
 
-    // Calculate relationships between Ml and Mdash values for each CRITERIA in a FACTOR and return the product
+    // Calculate relationships between Ml and Mdash values for each CRITERIA in a CATEGORY and return the product
     // Used in calcK() and calcMalternatives()
-    calcFactorMrealtionships(factor) {
+    calcCategoryMrealtionships(category) {
         var _this = this;
         var m_results = []; // capture results from each CRITERIA loop - to be multiplied for final m_result
-        $.each(factor.criteria, function(indexCrit, criteria) {
+        $.each(category.criteria, function(indexCrit, criteria) {
             m_results.push(criteria.Ml + criteria.Mdash);
         });
         return m_results.reduce(_this.getProduct);
     }
 
-    // Calculate relationships between Ml and Mdash values for each FACTOR in a PROJECT and return the product
+    // Calculate relationships between Ml and Mdash values for each CATEGORY in a PROJECT and return the product
     // Used in calcK() and calcMalternatives()
     calcProjectMrealtionships(project) {
         var _this = this;
         var m_results = []; // capture results from each CRITERIA loop - to be multiplied for final m_result
-        $.each(project.factors, function(index, factor) {
-            m_results.push(factor.Ml + factor.Mdash);
+        $.each(project.categories, function(index, category) {
+            m_results.push(category.Ml + category.Mdash);
         });
         return m_results.reduce(_this.getProduct);
     }
 
-    // Calculate and return the product of all Ml values (one for each CRITERION) in a FACTOR
-    calcMlProduct(factor) {
+    // Calculate and return the product of all Ml values (one for each CRITERION) in a CATEGORY
+    calcMlProduct(category) {
         var _this = this;
         var Ml_values = []; // capture Ml values from each CRITERION - calc product for final calc
-        // Loop through each CRITERIA of each FACTOR - calculate sum of Ml values from each CRITERION
-        $.each(factor.criteria, function(index, criteria) {
+        // Loop through each CRITERIA of each CATEGORY - calculate sum of Ml values from each CRITERION
+        $.each(category.criteria, function(index, criteria) {
             Ml_values.push(criteria.Ml);
         });
         return Ml_values.reduce(_this.getProduct);
     }
 
-    // Calculate and return the product of all Ml values (one for each FACTOR) in a PROJECT
+    // Calculate and return the product of all Ml values (one for each CATEGORY) in a PROJECT
     calcProjectMlProduct(project) {
         var _this = this;
         var Ml_values = []; // capture Ml values from each CRITERION - calc product for final calc
-        // Loop through each CRITERIA of each FACTOR - calculate sum of Ml values from each CRITERION
-        $.each(project.factors, function(index, factor) {
-            Ml_values.push(factor.Ml);
+        // Loop through each CRITERIA of each CATEGORY - calculate sum of Ml values from each CRITERION
+        $.each(project.categories, function(index, category) {
+            Ml_values.push(category.Ml);
         });
         return Ml_values.reduce(_this.getProduct);
     }
@@ -503,8 +503,8 @@ class DSS_model {
 
 }
 
-// Call using .toFixedNumber(3) for 3 decimal places
-Number.prototype.toFixedNumber = function(x, base) {
-    var pow = Math.pow(base || 10, x);
-    return +(Math.round(this * pow) / pow);
-}
+// // Call using .toFixedNumber(3) for 3 decimal places
+// Number.prototype.toFixedNumber = function(x, base) {
+//     var pow = Math.pow(base || 10, x);
+//     return +(Math.round(this * pow) / pow);
+// }

@@ -2,7 +2,7 @@
 
 var data; // Manager holding the Problem data object
 // Ractive components
-var ractiveTitle, ractiveAlternatives, ractiveFactors, ractiveData, ractiveSummary, ractiveFactorWeights, ractiveAggregatedBeliefs;
+var ractiveTitle, ractiveAlternatives, ractiveCategorys, ractiveData, ractiveSummary, ractiveCategoryWeights, ractiveAggregatedBeliefs;
 
 var minAltCount = 1; // Number of alternatives - limited >=1 <=6
 var maxAltCount = 6;
@@ -45,10 +45,10 @@ function setRactives() {
         template: '#template-alternatives-table',
         data: dataManager.problem
     });
-    // FACTORS TABLE
-    ractiveFactors = new Ractive({
-        target: '#target-factors-table',
-        template: '#template-factors-table',
+    // CATEGORIES TABLE
+    ractiveCategorys = new Ractive({
+        target: '#target-categories-table',
+        template: '#template-categories-table',
         data: dataManager.problem
     });
     // DATA ENTRY TABLE
@@ -63,10 +63,10 @@ function setRactives() {
         template: '#template-summary-table',
         data: dataManager.problem
     });
-    // FACTOR WEIGHTS TABLE
-    ractiveFactorWeights = new Ractive({
-        target: '#target-factor-weights-table',
-        template: '#template-factor-weights-table',
+    // CATEGORY WEIGHTS TABLE
+    ractiveCategoryWeights = new Ractive({
+        target: '#target-category-weights-table',
+        template: '#template-category-weights-table',
         data: dataManager.problem
     });
     // AGGREGATED BELIEFS TABLE
@@ -91,14 +91,14 @@ function onProjectLoad() {
     if (dataManager.getAltLength() <= minAltCount) {
         disableButton("#remove-alternative");
     }
-    // FACTORS
-    // Add factor
-    $('#add-factor').on('click', addFactor);
-    // Remove last factor
-    $('#remove-factor').on('click', removeFactor);
+    // CATEGORIES
+    // Add category
+    $('#add-category').on('click', addCategory);
+    // Remove last category
+    $('#remove-category').on('click', removeCategory);
     // Disable remove button on load if count <= min number
-    if (dataManager.getFactorLength() <= 1) {
-        disableButton("#remove-factor");
+    if (dataManager.getCategoryLength() <= 1) {
+        disableButton("#remove-category");
     }
     // LOAD/SAVE PAGE
     // Reset project button
@@ -108,9 +108,9 @@ function onProjectLoad() {
     resetListeners();
     print();
 
-    // FORCE CALCULATION OF EVEN FACTOR WEIGHTS ON RESULTS PAGE
+    // FORCE CALCULATION OF EVEN CATEGORY WEIGHTS ON RESULTS PAGE
     // ONLY to be run ONCE on initial project load
-    dataManager.forceFactorWeightsCalc();
+    dataManager.forceCategoryWeightsCalc();
     update();
 
 }
@@ -125,9 +125,9 @@ function resetListeners() {
     $('input').off();
     $('input.summaryInput').off();
 
-    // Add criteria to specific factor - use class not ID due to repeats
+    // Add criteria to specific category - use class not ID due to repeats
     $('.add-criteria').on('click', addCriteria);
-    // Remove last criteria to specific factor
+    // Remove last criteria to specific category
     $('.remove-criteria').on('click', removeCriteria);
     // Input change listener - whenever focus leaves input update data object
     $('input').on('focusout', update);
@@ -176,51 +176,51 @@ function removeAlternative() {
 //////////////// ALTERNATIVES ////////////////
 
 
-////////////////// FACTORS ///////////////////
-// Adds factor with blank name
-function addFactor() {
-    // Add factor to data model
-    dataManager.addFactor('');
-    // << IF LIMIT TO NUMBER OF FACTORS, ADD HERE
+////////////////// CATEGORIES ///////////////////
+// Adds category with blank name
+function addCategory() {
+    // Add category to data model
+    dataManager.addCategory('');
+    // << IF LIMIT TO NUMBER OF CATEGORIES, ADD HERE
     // Enable remove button
-    enableButton("#remove-factor");
+    enableButton("#remove-category");
     // Update interface
     update();
 }
 
-// Remove last row from factors array
-function removeFactor() {
-    // Remove last factor from array
-    dataManager.removeFactor();
+// Remove last row from Categories array
+function removeCategory() {
+    // Remove last category from array
+    dataManager.removeCategory();
     // Disable remove button if count <= min number
-    if (dataManager.getFactorLength() <= 1) {
-        disableButton("#remove-factor");
+    if (dataManager.getCategoryLength() <= 1) {
+        disableButton("#remove-category");
     }
     // Enable add button
-    enableButton("#add-factor");
+    enableButton("#add-category");
     // Update interface
     update();
 }
-/////////////////// FACTORS ///////////////////
+/////////////////// CATEGORIES ///////////////////
 
 /////////////////// CRITERIA //////////////////
 // Adds criterion with blank name
 function addCriteria(event) {
-    // Capture which factor to add criteria too
-    var factorId = parseInt($(event.currentTarget).attr('data-id'));
+    // Capture which category to add criteria too
+    var categoryId = parseInt($(event.currentTarget).attr('data-id'));
     // Add criteria to data model
-    console.log('factor name: ' + dataManager.getFactor(0));
-    dataManager.addCriterionTo(dataManager.getFactor(factorId),'');
+    console.log('category name: ' + dataManager.getCategory(0));
+    dataManager.addCriterionTo(dataManager.getCategory(categoryId),'');
     // Update interface
     update();
 }
 
-// Remove last row from criteria array of relevent factor object
+// Remove last row from criteria array of relevent category object
 function removeCriteria(event) {
-    // Capture which factor to add criteria too
-    var factorId = $(event.currentTarget).attr('data-id');
+    // Capture which category to add criteria too
+    var categoryId = $(event.currentTarget).attr('data-id');
     // Remove last criteria from array
-    dataManager.removeCriterionFrom(dataManager.getFactor(factorId));
+    dataManager.removeCriterionFrom(dataManager.getCategory(categoryId));
     // Update interface
     update();
 }
@@ -235,10 +235,10 @@ function update() {
     // Update ractive components
     ractiveTitle.update();
     ractiveAlternatives.update();
-    ractiveFactors.update();
+    ractiveCategorys.update();
     ractiveData.update();
     ractiveSummary.update();
-    ractiveFactorWeights.update();
+    ractiveCategoryWeights.update();
     ractiveAggregatedBeliefs.update();
 
     // Update data object - initiates results calculations
@@ -331,11 +331,11 @@ function print() {
         output += '<br> Alternative ' + (index + 1) + ': ' + name;
     });
 
-    // factors
-    dataManager.problem.factors.forEach(function(factor, index) {
-        output += '<br><br> Factor ' + (index + 1) + ': ' + factor.name;
+    // categories
+    dataManager.problem.categories.forEach(function(category, index) {
+        output += '<br><br> Category ' + (index + 1) + ': ' + category.name;
         // criteria
-        factor.criteria.forEach(function(criterion) {
+        category.criteria.forEach(function(criterion) {
             output += '<br> &nbsp;&nbsp; Criterion name: ' + criterion.name;
             output += '<br> &nbsp;&nbsp; Criterion weight: ' + criterion.weight;
             altWeightString = '<br> &nbsp;&nbsp; &nbsp;&nbsp; Alt weights: ';

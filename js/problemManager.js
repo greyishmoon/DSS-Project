@@ -22,7 +22,7 @@ class ProblemManager {
         this.problem = jQuery.extend(true, {}, Problem);
 
         this.addAlternative('');
-        this.addFactor('');
+        this.addCategory('');
 
         // TODO - REMOVE TEST PROBLEM
         // Load test problem with data from DSS OUTSOURCING stylesheet
@@ -35,33 +35,33 @@ class ProblemManager {
         this.model.resultsCalc(this.problem);
     }
 
-    // Force avergaing of Factor weights for summary page
+    // Force avergaing of Category weights for summary page
     // ONLY to be run ONCE on initial project load
-    forceFactorWeightsCalc() {
+    forceCategoryWeightsCalc() {
         // Only calculate if all weights are zero
         var weightsEmpty = true;
-        $.each(this.problem.factors, function(index, factor) {
-            if (factor.Weight > 0) {
+        $.each(this.problem.categories, function(index, category) {
+            if (category.Weight > 0) {
                 weightsEmpty = false;
             }
         });
 
         if (weightsEmpty) {
-            var aveWeight = (100 / this.problem.factors.length).toFixedNumber(0);
-            var extra = 100 - (aveWeight * this.problem.factors.length);
+            var aveWeight = (100 / this.problem.categories.length).toFixedNumber(0);
+            var extra = 100 - (aveWeight * this.problem.categories.length);
             console.log("AVERAGE WEIGHT: " + aveWeight);
             console.log("AVERAGE extra: " + extra);
             var weights = [];
             // push first weight plus extra
             weights.push(aveWeight + extra);
             // fill rest of weights with aveWeight
-            for (var i = 1; i < this.problem.factors.length; i++) {
+            for (var i = 1; i < this.problem.categories.length; i++) {
                 weights.push(aveWeight);
             }
-            // set factor.weight
-            // Loop through all FACTORS
-            $.each(this.problem.factors, function(index, factor) {
-                factor.Weight = weights[index];
+            // set category.weight
+            // Loop through all CATEGORIES
+            $.each(this.problem.categories, function(index, category) {
+                category.Weight = weights[index];
             });
         }
     }
@@ -69,9 +69,9 @@ class ProblemManager {
     // Add alternative
     addAlternative(name) {
         this.problem.alternatives.push(name);
-        // ADD A WEIGHT TO EACH CRITERION OF EACH FACTOR
-        this.problem.factors.forEach((factor) => {
-            factor.criteria.forEach((criterion) => {
+        // ADD A WEIGHT TO EACH CRITERION OF EACH CATEGORY
+        this.problem.categories.forEach((category) => {
+            category.criteria.forEach((criterion) => {
                 criterion.alternativeWeights.push(0);
             });
         });
@@ -79,9 +79,9 @@ class ProblemManager {
     // Remove last alternative
     removeAlternative() {
         this.problem.alternatives.pop();
-        // REMOVE LAST WEIGHT FROM EACH CRITERION OF EACH FACTOR
-        this.problem.factors.forEach((factor) => {
-            factor.criteria.forEach((criterion) => {
+        // REMOVE LAST WEIGHT FROM EACH CRITERION OF EACH CATEGORY
+        this.problem.categories.forEach((category) => {
+            category.criteria.forEach((criterion) => {
                 criterion.alternativeWeights.pop();
             });
         });
@@ -91,30 +91,31 @@ class ProblemManager {
         return this.problem.alternatives.length;
     }
 
-    // Add factor
-    addFactor(name) {
-        // DEEP COPY Factor to avoid referencing issues
-        var newFactor = jQuery.extend(true, {}, Factor);
-        newFactor.name = name;
+    // Add category
+    addCategory(name) {
+        // DEEP COPY Category to avoid referencing issues
+        var newCategory = jQuery.extend(true, {}, Category);
+        newCategory.name = name;
         // Add single criterion
-        this.addCriterionTo(newFactor, '');
-        this.problem.factors.push(newFactor);
+        this.addCriterionTo(newCategory, '');
+        this.problem.categories.push(newCategory);
     }
-    // Remove last factor
-    removeFactor() {
-        this.problem.factors.pop();
+    // Remove last category
+    removeCategory() {
+        this.problem.categories.pop();
     }
-    // Return length of Factors array
-    getFactorLength() {
-        return this.problem.factors.length;
+    // Return length of Categories array
+    getCategoryLength() {
+        console.log(this.problem);
+        return this.problem.categories.length;
     }
-    // Return factor of ID
-    getFactor(id) {
-        return this.problem.factors[id];
+    // Return category of ID
+    getCategory(id) {
+        return this.problem.categories[id];
     }
 
-    // Add Criterion to factor
-    addCriterionTo(factor, name) {
+    // Add Criterion to category
+    addCriterionTo(category, name) {
         // Create new criterion
         // DEEP COPY Criterion to avoid referencing issues
         var newCriterion = jQuery.extend(true, {}, Criterion);
@@ -127,11 +128,11 @@ class ProblemManager {
         for (var i = 0; i < newCriterion.alternativeWeights.length; i++) {
             newCriterion.alternativeWeights[i] = 0;
         }
-        factor.criteria.push(newCriterion);
+        category.criteria.push(newCriterion);
     }
-    // Remove last criteria from factor
-    removeCriterionFrom(factor) {
-        factor.criteria.pop();
+    // Remove last criteria from category
+    removeCriterionFrom(category) {
+        category.criteria.pop();
     }
 
     // SAVE FUNCTIONS
@@ -177,116 +178,109 @@ class ProblemManager {
         this.addAlternative('Supplier B');
         this.addAlternative('Supplier C');
 
-        this.addFactor('Financial');
-        var factor = this.problem.factors[0];
-        var tmpCriteria = factor.criteria[0];
+        this.addCategory('Financial');
+        var category = this.problem.categories[0];
+        var tmpCriteria = category.criteria[0];
         tmpCriteria.name = "Criteria 1A"
         tmpCriteria.weight = 30;
         tmpCriteria.alternativeWeights = [80, 0, 0];
-        this.addCriterionTo(factor, "Criteria 1B");
-        tmpCriteria = factor.criteria[1];
+        this.addCriterionTo(category, "Criteria 1B");
+        tmpCriteria = category.criteria[1];
         tmpCriteria.weight = 40;
         tmpCriteria.alternativeWeights = [60, 20, 20];
-        this.addCriterionTo(factor, "Criteria 1C");
-        tmpCriteria = factor.criteria[2];
+        this.addCriterionTo(category, "Criteria 1C");
+        tmpCriteria = category.criteria[2];
         tmpCriteria.weight = 10;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        this.addCriterionTo(factor, "Criteria 1D");
-        tmpCriteria = factor.criteria[3];
+        this.addCriterionTo(category, "Criteria 1D");
+        tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 20;
         tmpCriteria.alternativeWeights = [40, 20, 30];
-        factor.Weight = 15;
+        category.Weight = 15;
 
 
-        this.addFactor('Operational');
-        factor = this.problem.factors[1];
-        tmpCriteria = factor.criteria[0];
+        this.addCategory('Operational');
+        category = this.problem.categories[1];
+        tmpCriteria = category.criteria[0];
         tmpCriteria.name = "Criteria 2A"
         tmpCriteria.weight = 100;
         tmpCriteria.alternativeWeights = [0, 0, 100];
-        this.addCriterionTo(factor, "Criteria 2B");
-        tmpCriteria = factor.criteria[1];
+        this.addCriterionTo(category, "Criteria 2B");
+        tmpCriteria = category.criteria[1];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        this.addCriterionTo(factor, "Criteria 2C");
-        tmpCriteria = factor.criteria[2];
+        this.addCriterionTo(category, "Criteria 2C");
+        tmpCriteria = category.criteria[2];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        this.addCriterionTo(factor, "Criteria 2D");
-        tmpCriteria = factor.criteria[3];
+        this.addCriterionTo(category, "Criteria 2D");
+        tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [60, 40, 0];
-        factor.Weight = 30;
+        category.Weight = 30;
 
-        this.addFactor('Strategic Benefit');
-        var factor = this.problem.factors[2];
-        var tmpCriteria = factor.criteria[0];
+        this.addCategory('Strategic Benefit');
+        var category = this.problem.categories[2];
+        var tmpCriteria = category.criteria[0];
         tmpCriteria.name = "Criteria 1A"
         tmpCriteria.weight = 50;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        this.addCriterionTo(factor, "Criteria 1B");
-        tmpCriteria = factor.criteria[1];
+        this.addCriterionTo(category, "Criteria 1B");
+        tmpCriteria = category.criteria[1];
         tmpCriteria.weight = 20;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        this.addCriterionTo(factor, "Criteria 1C");
-        tmpCriteria = factor.criteria[2];
+        this.addCriterionTo(category, "Criteria 1C");
+        tmpCriteria = category.criteria[2];
         tmpCriteria.weight = 20;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        this.addCriterionTo(factor, "Criteria 1D");
-        tmpCriteria = factor.criteria[3];
+        this.addCriterionTo(category, "Criteria 1D");
+        tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 10;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        factor.Weight = 20;
+        category.Weight = 20;
 
-        this.addFactor('Technical');
-        var factor = this.problem.factors[3];
-        var tmpCriteria = factor.criteria[0];
+        this.addCategory('Technical');
+        var category = this.problem.categories[3];
+        var tmpCriteria = category.criteria[0];
         tmpCriteria.name = "Criteria 1A"
         tmpCriteria.weight = 100;
         tmpCriteria.alternativeWeights = [50, 30, 0];
-        this.addCriterionTo(factor, "Criteria 1B");
-        tmpCriteria = factor.criteria[1];
+        this.addCriterionTo(category, "Criteria 1B");
+        tmpCriteria = category.criteria[1];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [0, 0, 0];
-        this.addCriterionTo(factor, "Criteria 1C");
-        tmpCriteria = factor.criteria[2];
+        this.addCriterionTo(category, "Criteria 1C");
+        tmpCriteria = category.criteria[2];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [0, 0, 0];
-        this.addCriterionTo(factor, "Criteria 1D");
-        tmpCriteria = factor.criteria[3];
+        this.addCriterionTo(category, "Criteria 1D");
+        tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [0, 0, 0];
-        factor.Weight = 10;
+        category.Weight = 10;
 
-        this.addFactor('Risk');
-        var factor = this.problem.factors[4];
-        var tmpCriteria = factor.criteria[0];
+        this.addCategory('Risk');
+        var category = this.problem.categories[4];
+        var tmpCriteria = category.criteria[0];
         tmpCriteria.name = "Criteria 1A"
         tmpCriteria.weight = 10;
         tmpCriteria.alternativeWeights = [60, 20, 0];
-        this.addCriterionTo(factor, "Criteria 1B");
-        tmpCriteria = factor.criteria[1];
+        this.addCriterionTo(category, "Criteria 1B");
+        tmpCriteria = category.criteria[1];
         tmpCriteria.weight = 20;
         tmpCriteria.alternativeWeights = [60, 0, 40];
-        this.addCriterionTo(factor, "Criteria 1C");
-        tmpCriteria = factor.criteria[2];
+        this.addCriterionTo(category, "Criteria 1C");
+        tmpCriteria = category.criteria[2];
         tmpCriteria.weight = 30;
         tmpCriteria.alternativeWeights = [50, 50, 0];
-        this.addCriterionTo(factor, "Criteria 1D");
-        tmpCriteria = factor.criteria[3];
+        this.addCriterionTo(category, "Criteria 1D");
+        tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 40;
         tmpCriteria.alternativeWeights = [40, 30, 30];
-        factor.Weight = 25;
+        category.Weight = 25;
 
         // Force update for TESTING
         this.update();
     }
 
 }
-
-// Round number to x decimal places (and return a number not a string)
-// Call using .toFixedNumber(3) for 3 decimal places
-// Number.prototype.toFixedNumber = function(x, base) {
-//     var pow = Math.pow(base || 10, x);
-//     return +(Math.round(this * pow) / pow);
-// }

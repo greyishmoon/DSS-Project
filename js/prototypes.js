@@ -7,6 +7,12 @@
 //     return +(Math.round(this * pow) / pow);
 // }
 
+// Call using .toFixedNumber(3) for 3 decimal places
+Number.prototype.toFixedNumber = function(x, base) {
+    var pow = Math.pow(base || 10, x);
+    return +(Math.round(this * pow) / pow);
+}
+
 Storage.prototype.setObject = function(key, value) {
     this.setItem(key, JSON.stringify(value));
 }
