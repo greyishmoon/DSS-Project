@@ -220,7 +220,7 @@ function removeCriteria(event) {
     // Capture which factor to add criteria too
     var factorId = $(event.currentTarget).attr('data-id');
     // Remove last criteria from array
-    dataManager.removeCriterionFrom(data.getFactor(factorId));
+    dataManager.removeCriterionFrom(dataManager.getFactor(factorId));
     // Update interface
     update();
 }
