@@ -10,9 +10,8 @@ var Problem = {
     MdashH: 0, // M dash H value for category (row 63)
     MlH: 0, // Ml H value for category (row 66)
     Beliefs: [], // array of Beliefs relating to each Alternative (row 71)
-    BeliefPercentages: [], // array of Beliefs stored as percentages
     Ignorance: 0, // level of ignorance associated with Alternatives of this Category (row 77)
-    IgnorancePercentage: 0 // level of ignorance stored as a percentage
+    IgnoranceSplit: 0       // level of ignorance (%) divided equallyt between number of alternatives
 }
 
 // Project categories being assessed
@@ -28,9 +27,7 @@ var Category = {
     MdashH: 0, // M dash H value for category (row 63)
     MlH: 0, // Ml H value for category (row 66)
     Beliefs: [], // array of Beliefs relating to each Alternative (row 71)
-    BeliefPercentages: [], // array of Beliefs stored as percentages
     Ignorance: 0, // level of ignorance associated with Alternatives of this Category (row 77)
-    IgnorancePercentage: 0, // level of ignorance stored as a percentage
 
     // SUMMARY PAGE RESULTS
     Mni: [], // array of M n,i relating to each category (summary sheet row 41)

@@ -21,3 +21,17 @@ Storage.prototype.getObject = function(key) {
     var value = this.getItem(key);
     return value && JSON.parse(value);
 }
+
+// Ractive helpers
+var helpers = Ractive.defaults.data;
+
+helpers.percent = function ( num ) {
+    return (num * 100).toFixedNumber(1);
+};
+
+// EXAMPLE
+helpers.sort = function ( array ) {
+    return array.slice().sort( function ( a, b ) {
+        return a - b;
+    });
+};

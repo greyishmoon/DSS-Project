@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/0.3.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+
+## [Unreleased] - 06-06-2018
+### Added
+- Extra summary tab
+* Moved Analysis Summary and Assessment Aggregation to Summary tab
+* Added 'Next' button to progress to Results tab
+- Percent Ractive helper function
+* Altered all display only cells to convert direct from calcs to percentages
+* (could not dual binding working, so input cells still left to store % and be converted in model calcs)
+### Removed
+- All stored percentage results value from problem.js data structure
+* Removed all associated calcs from model
+
 ## [Unreleased] - 05-06-2018
 ### Fixed
 - Ractive numbers being saved as strings in

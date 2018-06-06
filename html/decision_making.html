@@ -63,9 +63,10 @@
 				<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
 					<a class="mdl-layout__tab is-active" href="#page-1">Problem Setup</a>
 					<a class="mdl-layout__tab" href="#page-2">Data Entry</a>
-					<a class="mdl-layout__tab" href="#page-3">Results</a>
-					<a class="mdl-layout__tab" href="#page-4">Instructions</a>
-					<a class="mdl-layout__tab mdl-color--red-400" href="#page-5">Save / Load</a>
+					<a class="mdl-layout__tab" href="#page-3">Summary</a>
+					<a class="mdl-layout__tab" href="#page-4">Results</a>
+					<a class="mdl-layout__tab" href="#page-5">Instructions</a>
+					<a class="mdl-layout__tab mdl-color--red-400" href="#page-6">Save / Load</a>
 				</div>
 			</header>
 
@@ -131,7 +132,7 @@
 									<tr>
 										<td class="mdl-data-table__cell--non-numeric narrow">
 											<div class="mdl-textfield mdl-js-textfield">
-												<input class="mdl-textfield__input alternative" type="text" value="{{.}}">
+												<input class="mdl-textfield__input alternative" type="text" value="{{this}}">
 												<label class="mdl-textfield__label">Alternative...</label>
 											</div>
 										</td>
@@ -157,9 +158,6 @@
 								</tr>
 							</tbody>
 						</table>
-
-
-
 
 						<!-- Criteria Categories -->
 						<h4>Criteria Categories</h4>
@@ -217,15 +215,21 @@
 							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-400" type="button" id="scroll-up-btn">Top></button>
 						</div> -->
 
+						<!-- Goto DATA ENTRY -->
 						<div>
 							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" type="button" id="go-tab-1-btn">Next ></button>
 						</div>
 
 					</div>
 
-
-
 				</section>
+
+
+
+
+
+
+
 
 
 				<!-- DATA ENTRY PAGE ************************************************* -->
@@ -260,7 +264,7 @@
 										{{#each alternatives}}
 										<!-- For testing paste 14charsaaaaaax into Alt names -->
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
-											<h6>{{.}}</h6><b>%</b>
+											<h6>{{this}}</h6><b>%</b>
 										</th>
 										{{/each}}
 										<!-- Final header -->
@@ -288,7 +292,7 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{.}}">
+												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{this}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -328,13 +332,21 @@
 
 					<!-- Next Tab button -->
 					<br>
+					<!-- Goto SUMMARY PAGE -->
 					<div>
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" type="button" id="go-tab-2-btn">Next ></button>
 					</div>
 
 				</section>
 
-				<!-- RESULTS PAGE **************************************************** -->
+
+
+
+
+
+
+
+				<!-- SUMMARY PAGE **************************************************** -->
 				<section class="mdl-layout__tab-panel" id="page-3">
 					<div class="page-content">
 
@@ -362,7 +374,7 @@
 										{{#each alternatives}}
 										<!-- For testing paste 14charsaaaaaax into Alt names -->
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
-											<h6>{{.}}</h6>
+											<h6>{{this}}</h6>
 										</th>
 										{{/each}}
 
@@ -384,14 +396,14 @@
 											<h6>{{name}}</h6>
 										</td>
 										<!-- Display Belief from problem.category.Beliefs -->
-										{{#each BeliefPercentages}}
+										{{#each Beliefs}}
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h6>{{.}}</h6>
+											<h6>{{percent(this)}}</h6>
 										</td>
 										{{/each}}
 										<!-- Final cell - display Ignorance for each category -->
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hllightGray">
-											<h6>{{IgnorancePercentage}}</h6>
+											<h6>{{percent(Ignorance)}}</h6>
 										</td>
 									</tr>
 									{{/each}}
@@ -455,6 +467,26 @@
 
 						</script>
 
+					</div>
+
+					<!-- Next Tab button -->
+					<br>
+					<!-- Goto RESULTS PAGE -->
+					<div>
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" type="button" id="go-tab-3-btn">Next ></button>
+					</div>
+
+				</section>
+
+
+
+
+
+
+
+				<!-- RESULTS PAGE *********************************************** -->
+				<section class="mdl-layout__tab-panel" id="page-4">
+					<div class="page-content">
 						<h5>Aggregated Degrees of Belief</h5>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
@@ -472,7 +504,7 @@
 										{{#each alternatives}}
 										<!-- For testing paste 14charsaaaaaax into Alt names -->
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
-											<h6>{{.}}</h6>
+											<h6>{{this}}</h6>
 										</th>
 										{{/each}}
 
@@ -488,14 +520,14 @@
 									<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
 									<tr>
 										<!-- Display Belief from problem.category.Beliefs -->
-										{{#each BeliefPercentages}}
+										{{#each Beliefs}}
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h6>{{.}}</h6>
+											<h6>{{percent(this)}}</h6>
 										</td>
 										{{/each}}
 										<!-- Final cell - display Ignorance for each category -->
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hllightGray">
-											<h6>{{IgnorancePercentage}}</h6>
+											<h6>{{percent(Ignorance)}}</h6>
 										</td>
 									</tr>
 								</tbody>
@@ -506,13 +538,45 @@
 						<h5>Distributed Ignorance</h5>
 						<p>Table to be implemented</p>
 
+						<!-- TARGET ractiveSummary -->
+						<div id="target-distributed-ignorance-table"></div>
+
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-distributed-ignorance-table" type="text/ractive">
+
+							<!-- Create summery table for all categories/alternatives showing degrees of belief -->
+							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
+								<thead>
+									<tr>
+										<!-- Repeat headers for each Alternative -->
+										{{#each alternatives}}
+										<!-- For testing paste 14charsaaaaaax into Alt names -->
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+											<h6>{{this}}</h6>
+										</th>
+										{{/each}}
+									</tr>
+								</thead>
+
+								<tbody>
+									<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
+									<tr>
+										<!-- Display Belief from problem.category.Beliefs -->
+										{{#each Beliefs}}
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+											<h6>{{percent(this + IgnoranceSplit)}}</h6>
+										</td>
+										{{/each}}
+									</tr>
+								</tbody>
+							</table>
+
+						</script>
 					</div>
 				</section>
 
-
-
 				<!-- INSTRUCTIONS PAGE *********************************************** -->
-				<section class="mdl-layout__tab-panel" id="page-4">
+				<section class="mdl-layout__tab-panel" id="page-5">
 					<div class="page-content">
 						<h4>Instructions</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
@@ -520,7 +584,7 @@
 				</section>
 
 				<!-- SAVE / LOAD PAGE ************************************************ -->
-				<section class="mdl-layout__tab-panel" id="page-5">
+				<section class="mdl-layout__tab-panel" id="page-6">
 					<div class="page-content">
 						<h4>Save / Load</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>

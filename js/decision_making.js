@@ -2,7 +2,7 @@
 
 var data; // Manager holding the Problem data object
 // Ractive components
-var ractiveTitle, ractiveAlternatives, ractiveCategorys, ractiveData, ractiveSummary, ractiveCategoryWeights, ractiveAggregatedBeliefs;
+var ractiveTitle, ractiveAlternatives, ractiveCategorys, ractiveData, ractiveSummary, ractiveCategoryWeights, ractiveAggregatedBeliefs, ractiveDistributedIgnorance;
 
 var minAltCount = 1; // Number of alternatives - limited >=1 <=6
 var maxAltCount = 6;
@@ -75,6 +75,12 @@ function setRactives() {
         template: '#template-aggregated-beliefs-table',
         data: dataManager.problem
     });
+    // DISTRIBUTED IGNORANCE TABLE
+    ractiveDistributedIgnorance = new Ractive({
+        target: '#target-distributed-ignorance-table',
+        template: '#template-distributed-ignorance-table',
+        data: dataManager.problem
+    });
 }
 
 // Initialise listeners etc when project is loaded
@@ -109,6 +115,7 @@ function onProjectLoad() {
     // Next button on each tab to simulate click on tab
     $('#go-tab-1-btn').on('click', goTab1);
     $('#go-tab-2-btn').on('click', goTab2);
+    $('#go-tab-3-btn').on('click', goTab3);
     // Scroll to top buttons (if needed)
     $("#scroll-up-btn").click(scrollToTop);
 
@@ -239,22 +246,19 @@ function removeCriteria(event) {
 // Simulate click on MDL tabs
 // Problem Setup
 function goTab0() {
-    // alert("TEST");
     $(".mdl-layout__tab:eq(0) span").click ();
 }
 // Data Entry
 function goTab1() {
-    // alert("TEST");
     $(".mdl-layout__tab:eq(1) span").click ();
 }
 // Summary
 function goTab2() {
-    // alert("TEST");
     $(".mdl-layout__tab:eq(2) span").click ();
 }
 // Results
 function goTab3() {
-    // alert("TEST");
+    alert("TEST");
     $(".mdl-layout__tab:eq(3) span").click ();
 }
 // Instructions
@@ -301,6 +305,7 @@ function update() {
     ractiveSummary.update();
     ractiveCategoryWeights.update();
     ractiveAggregatedBeliefs.update();
+    ractiveDistributedIgnorance.update();
 
     // Update data object - initiates results calculations
     // TODO *** POTENTIALLY NEED TO MOVE TO TAB CLICKED TO AVOID RECURSIVE LOOP WITH RESULTS FORM CHANGING FROM DATA UPDATE

@@ -228,16 +228,12 @@ class DSS_model {
             if (this.debug) console.log("\nCALC Beliefs - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
             var belief_array = [];
-            var belief_percentages = [];
             // Loop for each ALTERNATIVE, calculate belief and push to belief_array
             $.each(data.alternatives, function(indexAlt, alternative) {
                 var belief_result = category.Malt[indexAlt] / (1 - category.MlH);
                 belief_array.push(belief_result);
-                belief_percentages.push((belief_result * 100).toFixedNumber(1));
             });
             category.Beliefs = belief_array;
-            category.BeliefPercentages = belief_percentages;
-            if (this.debug) console.log("category.Beliefs: " + category.Beliefs);
 
         });
     }
@@ -252,7 +248,6 @@ class DSS_model {
             if (this.debug) console.log("\nCALC Ignorance - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             var ignorance_result = category.MdashH / (1 - category.MlH);
             category.Ignorance = ignorance_result;
-            category.IgnorancePercentage = (ignorance_result * 100).toFixedNumber(1);
             if (this.debug) console.log("category.Ignorance: " + category.Ignorance);
         });
 
@@ -412,17 +407,14 @@ class DSS_model {
         var data = this.data;
 
         var belief_array = [];
-        var belief_percentages = [];
 
         // Loop for each ALTERNATIVE to capture criteria data
         $.each(data.alternatives, function(index, alternative) {
 
             var belief_result = (data.Malt[index] / (1 - data.MlH));
             belief_array.push(belief_result);
-            belief_percentages.push((belief_result * 100).toFixedNumber(1));
         });
         data.Beliefs = belief_array;
-        data.BeliefPercentages = belief_percentages;
         if (this.debug) console.log("data.Beliefs: " + data.Beliefs);
     }
 
@@ -431,8 +423,12 @@ class DSS_model {
         if (this.debug) console.log("\nCALC Aggregated Ignorance - PROJECT - >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         var data = this.data;
         data.Ignorance = data.MdashH / (1 - data.MlH);
-        data.IgnorancePercentage = (data.Ignorance * 100).toFixedNumber(1)
         if (this.debug) console.log("data.Ignorance: " + data.Ignorance);
+
+        // Calculate and save distributed ignorance divided by number of alternatives
+        // For Distributed Ignorance table
+        data.IgnoranceSplit = data.Ignorance/data.alternatives.length;
+        console.log("YEAAAAA " + data.IgnoranceSplit);
     }
 
 
