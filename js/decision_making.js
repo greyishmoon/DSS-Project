@@ -7,6 +7,17 @@ var ractiveTitle, ractiveAlternatives, ractiveCategorys, ractiveData, ractiveSum
 var minAltCount = 1; // Number of alternatives - limited >=1 <=6
 var maxAltCount = 6;
 
+var simTabClicked = false; // Temporarily records if tab click is being simulated by code - used to stop recursive loop when redirecting pages to hichlight errors
+var delayInMillisecondsForward = 10; // timer for simTabClicked reset
+var delayInMillisecondsReset = 100; // timer for simTabClicked reset
+
+// dataEntryGroupFault - Records if there are any incorrect group totals on dta entry page ()
+// Supplier weights for each criteria should not exceed 100
+// criteria weights for a category should total 100
+var dataEntryGroupFault = false;
+// summaryWeightsFault - Records if there is an error in the aggregation weights on the summary page
+// Agregated weights for all categories should total 100
+var summaryWeightsFault = false
 
 $(document).ready(function() {
 
@@ -113,22 +124,20 @@ function onProjectLoad() {
 
     // TAB NAVIGATION
     // Next button on each tab to simulate click on tab
-    $('#go-tab-1-btn').on('click', goTab1);
-    $('#go-tab-2-btn').on('click', goTab2);
-    $('#go-tab-3-btn').on('click', goTab3);
+    $('.go-tab-1-btn').on('click', goTab1);
+    $('.go-tab-2-btn').on('click', goTab2);
+    $('.go-tab-3-btn').on('click', goTab3);
     // Scroll to top buttons (if needed)
     $("#scroll-up-btn").click(scrollToTop);
 
     // SET LISTENERS ON DYNAMIC CONTENT
     resetListeners();
-    print();
 
-    // FORCE CALCULATION OF EVEN CATEGORY WEIGHTS ON RESULTS PAGE
-    // ONLY to be run ONCE on initial project load
-    dataManager.forceCategoryWeightsCalc();
     update();
 
 }
+
+
 
 //////////////////// DYNAIMC LISTENERS /////////////////////
 // Remove and set listeners on dynamic content
@@ -151,12 +160,36 @@ function resetListeners() {
 }
 //////////////////// DYNAIMC LISTENERS /////////////////////
 
+function jsfunction() {
+    console.log(">>>>>>>>>>>>>>>>>>>>>>TAB FUNCTION <<<<<<<<<<<<<<<<");
+}
+
 // NAVIGATION
 function tabClicked() {
-    window.scrollTo(0, 0);
+    // If simulate tab click then return to break recursive loop - simTabClicked gets reset on a timer
+    if (simTabClicked) {
+        return;
+    }
+    // check for inconsistent data in Data Entry page and call Data Entry tab on delay
+    if (dataEntryGroupFault) {
+        setTimeout(goTab2, delayInMillisecondsForward);
+    }
+    // check for inconsistent data in Summary page and call Summary tab on delay
+    if (summaryWeightsFault) {
+        setTimeout(goTab3, delayInMillisecondsForward);
+    }
+
+
+
+    //window.scrollTo(0, 0);
     // TODO - TEMP ADDITION TO UPDATE DATA ON TAB CHANGE - MAY BE ABLE TO REMOVE IF NO PROBLEM CALLING DATA.UPDATE FROM THIS.UPDATE
     updateData()
     console.log("TAB CLICKED");
+}
+
+function resetTabClick() {
+    console.log("TIMER RESET");
+    simTabClicked = false;
 }
 
 
@@ -199,6 +232,8 @@ function addCategory() {
     // << IF LIMIT TO NUMBER OF CATEGORIES, ADD HERE
     // Enable remove button
     enableButton("#remove-category");
+    // Reset aggregated weights on Summary page
+    dataManager.forceCategoryWeightsCalc();
     // Update interface
     update();
 }
@@ -213,6 +248,8 @@ function removeCategory() {
     }
     // Enable add button
     enableButton("#add-category");
+    // Reset aggregated weights on Summary page
+    dataManager.forceCategoryWeightsCalc();
     // Update interface
     update();
 }
@@ -223,9 +260,10 @@ function removeCategory() {
 function addCriteria(event) {
     // Capture which category to add criteria too
     var categoryId = parseInt($(event.currentTarget).attr('data-id'));
+    console.log("categoryId: " + categoryId);
     // Add criteria to data model
     console.log('category name: ' + dataManager.getCategory(0));
-    dataManager.addCriterionTo(dataManager.getCategory(categoryId),'');
+    dataManager.addCriterionTo(dataManager.getCategory(categoryId), '');
     // Update interface
     update();
 }
@@ -246,47 +284,90 @@ function removeCriteria(event) {
 // Simulate click on MDL tabs
 // Problem Setup
 function goTab0() {
-    $(".mdl-layout__tab:eq(0) span").click ();
+    $(".mdl-layout__tab:eq(0) span").click();
 }
 // Data Entry
 function goTab1() {
-    $(".mdl-layout__tab:eq(1) span").click ();
+
+    $(".mdl-layout__tab:eq(1) span").click();
 }
 // Summary
 function goTab2() {
-    $(".mdl-layout__tab:eq(2) span").click ();
+    // set simTabClicked and timer to reset
+    simTabClicked = true;
+    setTimeout(resetTabClick, delayInMillisecondsReset);
+
+    if (dataEntryGroupFault) {
+        $(".mdl-layout__tab:eq(1) span").click();
+        showDataEntryWarningDialogue();
+    } else {
+        $(".mdl-layout__tab:eq(2) span").click();
+    }
+
 }
 // Results
 function goTab3() {
-    alert("TEST");
-    $(".mdl-layout__tab:eq(3) span").click ();
+    // set simTabClicked and timer to reset
+    simTabClicked = true;
+    setTimeout(resetTabClick, delayInMillisecondsReset);
+
+    if (summaryWeightsFault) {
+        $(".mdl-layout__tab:eq(2) span").click();
+        showSummaryWarningDialogue();
+    } else {
+        $(".mdl-layout__tab:eq(3) span").click();
+    }
 }
 // Instructions
 function goTab4() {
     // alert("TEST");
-    $(".mdl-layout__tab:eq(4) span").click ();
+    $(".mdl-layout__tab:eq(4) span").click();
 }
 // Save/Load
 function goTab5() {
     // alert("TEST");
-    $(".mdl-layout__tab:eq(5) span").click ();
+    $(".mdl-layout__tab:eq(5) span").click();
+}
+
+// DIALOGUES
+// Warning dialog for inconsistent data on Data Entry page
+function showDataEntryWarningDialogue() {
+    showDialog({
+        title: 'WARNING: Inconsistent data',
+        text: 'Elements on this page need correcting: \nRows of criteria weights should NOT EXCEED 100 \nColumns of category weights must TOTAL 100 \nProblem groups highlighted in red'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    })
+}
+// Warning dialog for inconsistent data on Summary page
+function showSummaryWarningDialogue() {
+    showDialog({
+        title: 'WARNING: Inconsistent data',
+        text: 'Elements on this page need correcting: \nThe aggregated category weights must TOTAL 100 \nProblem groups highlighted in red'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    })
 }
 
 // TODO complete scroll fix
 // references https://codepen.io/mdlhut/pen/BNeoVa https://codepen.io/exam/pen/ZbvLPO
 var scrollTo = function(top) {
-  var content = $(".page-content");
-  var target = top ? 0 : $(".page-content").height();
-  content.stop().animate({ scrollTop: target }, "slow");
+    var content = $(".page-content");
+    var target = top ? 0 : $(".page-content").height();
+    content.stop().animate({
+        scrollTop: target
+    }, "slow");
 };
 
 var scrollToTop = function() {
-  scrollTo(true);
-  console.log(("SCROLL UP"));
+    scrollTo(true);
+    console.log(("SCROLL UP"));
 };
 
 var scrollToBottom = function() {
-  scrollTo(false);
+    scrollTo(false);
 };
 
 ////////////////// NAVIGATION /////////////////
@@ -307,24 +388,25 @@ function update() {
     ractiveAggregatedBeliefs.update();
     ractiveDistributedIgnorance.update();
 
-    // Update data object - initiates results calculations
-    // TODO *** POTENTIALLY NEED TO MOVE TO TAB CLICKED TO AVOID RECURSIVE LOOP WITH RESULTS FORM CHANGING FROM DATA UPDATE
-    //data.update();
+    // TODO - remove
+    dialog = $('dialog');
 
     // Upgrade all added MDL elements
     upgradeMDL();
     // Reset listeners on all dynamic content
     resetListeners();
 
-    // TODO - implement saving to local storage
     // Initiate save to localStorage on every data change
     saveLocal();
 
     // Log updated data object
     console.log(dataManager.problem);
 
+    // Update interface - check group totals and alter table colours warning of problems
+    updateInterface();
+
     // Test Print
-    print();
+    //print();
 }
 
 // Save data to localStorage
@@ -337,6 +419,71 @@ function updateData() {
     dataManager.update();
     update();
 }
+
+// Check group totals and alter table colours warning of problems
+function updateInterface() {
+    // record of criteria errors on Data Entry page (by category # and criteria #)
+    var criteriaErrors = [];
+    // record of category weight errors on Data Entry page (by category #)
+    var categoryErrors = [];
+
+    // reset warning flags
+    dataEntryGroupFault = false;
+    summaryWeightsFault = false;
+
+    //      NOTES - forms of classes added to table cells
+    //      Supplier weight rows
+    //      ......... category# criteria# ............ (# numbered from 0)
+    //      Category weight columns
+    //      ......... category# weight ............ (# numbered from 0)
+    //      Aggregated weight column
+    //      ......... aggregatedWeight ............ (# numbered from 0)
+
+    // Check supplier weights for each criteria - record problem groups
+    criteriaErrors = dataManager.checkCriteriaWeights();
+
+    // reset all criteria weights colours to green
+    $('.criteriaReset').addClass('hlGreen').removeClass('hlWarningRed');
+
+    // set cell colours for problem rows to red
+    // loop over each error
+    for (var i = 0; i < criteriaErrors.length; i++) {
+        $('.category' + criteriaErrors[i].category + '.criteria' + criteriaErrors[i].criteria).addClass('hlWarningRed').removeClass('hlBlue');
+    }
+
+    // Check weights total for each category - record problem categories
+    categoryErrors = dataManager.checkCategoryWeights();
+
+    // set cell colours for problem columns to red
+    for (var i = 0; i < dataManager.getCategoryLength(); i++) {
+        // If category number is present, change category#.weight to red
+        if (jQuery.inArray(i, categoryErrors) !== -1) {
+            $('.category' + i + '.weight').addClass('hlWarningRed').removeClass('hlBlue');
+        } else {
+            $('.category' + i + '.weight').addClass('hlBlue').removeClass('hlWarningRed');
+        }
+    }
+
+    // set dataEntryGroupFault flag to TRUE if criteriaErrors or categoryErrors have recorded any problems
+    if (criteriaErrors.length > 0 || categoryErrors.length > 0) {
+        dataEntryGroupFault = true;
+
+    }
+    console.log("dataEntryGroupFault: " + dataEntryGroupFault);
+
+    // check aggregation weights total - set summaryWeightsFault to TRUE if problem
+    // (checkAggregatedWeightsOk() returns true if total 100 so negate)
+    summaryWeightsFault = !dataManager.checkAggregatedWeightsOk();
+
+    // set cell colours for aggregation weights column to red
+    if (summaryWeightsFault) {
+        $('.aggregatedWeight').addClass('hlWarningRed').removeClass('hlGreen');
+    } else {
+        $('.aggregatedWeight.hlWarningRed').addClass('hlGreen').removeClass('hlWarningRed');
+    }
+}
+
+
 /////////////////// UPDATE ////////////////////
 
 //////////////// LOAD / SAVE //////////////////
@@ -346,6 +493,8 @@ function resetProject() {
     dataManager.resetProject();
     // Reset ractive bindings
     setRactives();
+    // FORCE CALCULATION OF EVEN CATEGORY WEIGHTS ON RESULTS PAGE
+    dataManager.forceCategoryWeightsCalc();
     update();
 }
 

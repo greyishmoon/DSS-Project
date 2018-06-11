@@ -18,7 +18,7 @@ var Problem = {
 var Category = {
     name: "",
     criteria: [], // List of criteria associated with each category
-    Weight: 0, // Weight of each category (for summary tables)
+    weight: 0, // Weight of each category (aggregated for summary tables)
 
     // RESULTS
     // Storage of results calculations for each Category

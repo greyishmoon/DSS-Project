@@ -35,35 +35,30 @@ class ProblemManager {
         this.model.resultsCalc(this.problem);
     }
 
-    // Force avergaing of Category weights for summary page
-    // ONLY to be run ONCE on initial project load
+    // Force averaging of Category weights for summary page
+    // ONLY to be run when number of categories is changed or a empty project is loaded
     forceCategoryWeightsCalc() {
-        // Only calculate if all weights are zero
-        var weightsEmpty = true;
-        $.each(this.problem.categories, function(index, category) {
-            if (category.Weight > 0) {
-                weightsEmpty = false;
-            }
-        });
-
-        if (weightsEmpty) {
-            var aveWeight = (100 / this.problem.categories.length).toFixedNumber(0);
-            var extra = 100 - (aveWeight * this.problem.categories.length);
-            console.log("AVERAGE WEIGHT: " + aveWeight);
-            console.log("AVERAGE extra: " + extra);
-            var weights = [];
-            // push first weight plus extra
-            weights.push(aveWeight + extra);
-            // fill rest of weights with aveWeight
-            for (var i = 1; i < this.problem.categories.length; i++) {
+        // Calc average weight
+        var aveWeight = Math.floor(100 / this.problem.categories.length);
+        // calc remainder
+        var extra = 100 % this.problem.categories.length;
+        console.log("AVERAGE WEIGHT: " + aveWeight);
+        console.log("AVERAGE extra: " + extra);
+        var weights = [];
+        // Push average weights to weights, add one if any extra remeaining to distibute remainder evenly
+        for (var i = 0; i < this.problem.categories.length; i++) {
+            if (extra > 0) {
+                weights.push(aveWeight + 1);
+                extra--;
+            } else {
                 weights.push(aveWeight);
             }
-            // set category.weight
-            // Loop through all CATEGORIES
-            $.each(this.problem.categories, function(index, category) {
-                category.Weight = weights[index];
-            });
         }
+        // set category.weight
+        $.each(this.problem.categories, function(index, category) {
+            category.weight = weights[index];
+        });
+
     }
 
     // Add alternative
@@ -106,8 +101,11 @@ class ProblemManager {
     }
     // Return length of Categories array
     getCategoryLength() {
-        console.log(this.problem);
         return this.problem.categories.length;
+    }
+    // Return length of criteria array of Category index number (from zero)
+    getCriteriaLength(categoryIndex) {
+        return this.problem.categories[categoryIndex].criteria.length;
     }
     // Return category of ID
     getCategory(id) {
@@ -116,6 +114,8 @@ class ProblemManager {
 
     // Add Criterion to category
     addCriterionTo(category, name) {
+        console.log("category: " + category);
+        console.log("name: " + name);
         // Create new criterion
         // DEEP COPY Criterion to avoid referencing issues
         var newCriterion = jQuery.extend(true, {}, Criterion);
@@ -177,6 +177,65 @@ class ProblemManager {
         return total + num;
     }
 
+    // Check values of aggregated weight total 100 - return TRUE if = 100
+    checkAggregatedWeightsOk() {
+        var total = 0;
+        // Loop over every category
+        for (var i = 0; i < this.problem.categories.length; i++) {
+            // Sum weights for each category
+            total += this.problem.categories[i].weight;
+        }
+        // return TRUE if total = 100
+        return (total === 100) ? true : false;
+    }
+
+    // Check values of all criteria weights in a category total 100
+    // return array of category indexes where total weight != 100
+    checkCategoryWeights() {
+        var faultsIndex = [];
+        // Loop over each category
+        for (var cat = 0; cat < this.problem.categories.length; cat++) {
+            // Loop over each criteria
+            var total = 0;
+            for (var crit = 0; crit < this.problem.categories[cat].criteria.length; crit++) {
+                // Sum weights for each category
+                total += this.problem.categories[cat].criteria[crit].weight;
+            }
+            // If total != 100 push category nuber to faultsIndex
+            if (total !== 100)
+                faultsIndex.push(cat);
+        }
+        // return collection of failed category indexes
+        return faultsIndex;
+    }
+
+    // Check values of an array of criteria weights
+    // return array of objects {Category: #, criterion: #} of problem criteria rows
+    // ARRAY_TO_BE_SUMMED.reduce(this.getSum);
+    checkCriteriaWeights() {
+        var faultsIndex = [];
+        // Loop over each category
+        for (var cat = 0; cat < this.problem.categories.length; cat++) {
+            // Loop over each criteria
+            var total = 0;
+            for (var crit = 0; crit < this.problem.categories[cat].criteria.length; crit++) {
+                // Sum weights for each category
+                var array = this.problem.categories[cat].criteria[crit].alternativeWeights;
+                var arraySum = this.problem.categories[cat].criteria[crit].alternativeWeights.reduce(this.getSum);
+
+                // If total > 100 push category nuber to faultsIndex
+                if (arraySum > 100)
+                    faultsIndex.push({category: cat, criteria: crit});
+            }
+
+
+
+        }
+        
+        // return collection of failed category indexes
+        return faultsIndex;
+    }
+
     ////////////////// TESTING //////////////////////
     // load test problem
     loadTestProblem() {
@@ -206,7 +265,7 @@ class ProblemManager {
         tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 20;
         tmpCriteria.alternativeWeights = [40, 20, 30];
-        category.Weight = 15;
+        category.weight = 15;
 
 
         this.addCategory('Operational');
@@ -227,7 +286,7 @@ class ProblemManager {
         tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [60, 40, 0];
-        category.Weight = 30;
+        category.weight = 30;
 
         this.addCategory('Strategic Benefit');
         var category = this.problem.categories[2];
@@ -247,7 +306,7 @@ class ProblemManager {
         tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 10;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        category.Weight = 20;
+        category.weight = 20;
 
         this.addCategory('Technical');
         var category = this.problem.categories[3];
@@ -267,7 +326,7 @@ class ProblemManager {
         tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [0, 0, 0];
-        category.Weight = 10;
+        category.weight = 10;
 
         this.addCategory('Risk');
         var category = this.problem.categories[4];
@@ -287,7 +346,7 @@ class ProblemManager {
         tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 40;
         tmpCriteria.alternativeWeights = [40, 30, 30];
-        category.Weight = 25;
+        category.weight = 25;
 
         // Force update for TESTING
         this.update();

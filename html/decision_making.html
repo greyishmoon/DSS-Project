@@ -22,12 +22,17 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<!-- Roboto font -->
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
+	<link href="../css/mdl-jquery-modal-dialog.css" rel="stylesheet" type="text/css">
 
 	<link href="../css/dss.css" rel="stylesheet" type="text/css">
 	<!-- <script src="../libs/jquery-3.2.1.min.js"></script> -->
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 	<!-- Ractive library TODO - change from CDN-->
 	<script src="https://cdn.jsdelivr.net/npm/ractive"></script>
+	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
+	<script src="../libs/mdl-jquery-modal-dialog.js"></script>
+
 
 	<!-- Prototypes and general helper functions -->
 	<script src="../js/prototypes.js"></script>
@@ -52,292 +57,178 @@
 <body>
 	<!-- <div class="container"> -->
 
-		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-			<header class="mdl-layout__header">
-				<div class="mdl-layout__header-row">
-					<!-- Title -->
-					<span class="mdl-layout-title">Decision Making</span>
-				</div>
-				<!-- Tabs -->
-				<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-					<a class="mdl-layout__tab is-active" href="#page-1">Problem Setup</a>
-					<a class="mdl-layout__tab" href="#page-2">Data Entry</a>
-					<a class="mdl-layout__tab" href="#page-3">Summary</a>
-					<a class="mdl-layout__tab" href="#page-4">Results</a>
-					<a class="mdl-layout__tab" href="#page-5">Instructions</a>
-					<a class="mdl-layout__tab mdl-color--red-400" href="#page-6">Save / Load</a>
-				</div>
-			</header>
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title">Decision Making</span>
+			</div>
+			<!-- Tabs -->
+			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+				<a class="mdl-layout__tab is-active" href="#page-1">Problem Setup</a>
+				<a class="mdl-layout__tab" href="#page-2">Data Entry</a>
+				<a class="mdl-layout__tab" href="#page-3">Summary</a>
+				<a class="mdl-layout__tab" href="#page-4">Results</a>
+				<a class="mdl-layout__tab" href="#page-5">Instructions</a>
+				<a class="mdl-layout__tab mdl-color--red-400" href="#page-6">Save / Load</a>
+			</div>
+		</header>
 
 
-			<!-- CONTENT ************************************************************* -->
-			<main class="mdl-layout__content">
+		<!-- CONTENT ************************************************************* -->
+		<main class="mdl-layout__content">
 
-				<!-- PROBLEM SETUP PAGE ********************************************** -->
-				<section class="mdl-layout__tab-panel is-active" id="page-1">
-					<div class="page-content">
+			<!-- PROBLEM SETUP PAGE ********************************************** -->
+			<section class="mdl-layout__tab-panel is-active" id="page-1">
+				<div class="page-content">
 
-						<!-- Problem Setup -->
-						<h4>Problem Setup</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<!-- Problem Setup -->
+					<h4>Problem Setup</h4>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<!-- Project Title -->
+					<!-- Project Title -->
 
-						<!-- TARGET ractiveTitle -->
-						<div id="target-title-table"></div>
+					<!-- TARGET ractiveTitle -->
+					<div id="target-title-table"></div>
 
-						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-title-table" type="text/ractive">
+					<!-- TEMPLATE ractiveAlternatives -->
+					<script id="template-title-table" type="text/ractive">
 
-							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+							<tr>
+								<td class="narrow">
+									<h5>Problem Title: </h5>
+								</td>
+								<td class="mdl-data-table__cell--non-numeric fillWidth narrow">
+									<div class="mdl-textfield mdl-js-textfield">
+										<input class="mdl-textfield__input" type="text" id="problem-title" value="{{title}}">
+										<label class="mdl-textfield__label">Problem Title...</label>
+									</div>
+								</td>
+							</tr>
+						</table>
+
+					</script>
+
+					<!-- Problem Alternatives -->
+					<h4>Alternative solutions</h4>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+
+					<!-- TARGET ractiveAlternatives -->
+					<div id="target-alternatives-table"></div>
+
+					<!-- TEMPLATE ractiveAlternatives -->
+					<script id="template-alternatives-table" type="text/ractive">
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="alternative-table">
+							<thead>
 								<tr>
-									<td class="narrow">
-										<h5>Problem Title: </h5>
-									</td>
-									<td class="mdl-data-table__cell--non-numeric fillWidth narrow">
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Alternatives</h5>
+									</th>
+								</tr>
+							</thead>
+							<!-- TODO Limit Alternative names to 14 chars -->
+
+							<tbody>
+								{{#each alternatives:i}}
+								<tr>
+									<td class="mdl-data-table__cell--non-numeric narrow">
 										<div class="mdl-textfield mdl-js-textfield">
-											<input class="mdl-textfield__input" type="text" id="problem-title" value="{{title}}">
-											<label class="mdl-textfield__label">Problem Title...</label>
+											<input class="mdl-textfield__input alternative" type="text" value="{{this}}">
+											<label class="mdl-textfield__label">Alternative...</label>
 										</div>
 									</td>
 								</tr>
-							</table>
-
-						</script>
-
-						<!-- Problem Alternatives -->
-						<h4>Alternative solutions</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
-
-
-						<!-- TARGET ractiveAlternatives -->
-						<div id="target-alternatives-table"></div>
-
-						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-alternatives-table" type="text/ractive">
-
-							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="alternative-table">
-								<thead>
-									<tr>
-										<th class="mdl-data-table__cell--non-numeric">
-											<h5>Alternatives</h5>
-										</th>
-									</tr>
-								</thead>
-								<!-- TODO Limit Alternative names to 14 chars -->
-
-								<tbody>
-									{{#each alternatives:i}}
-									<tr>
-										<td class="mdl-data-table__cell--non-numeric narrow">
-											<div class="mdl-textfield mdl-js-textfield">
-												<input class="mdl-textfield__input alternative" type="text" value="{{this}}">
-												<label class="mdl-textfield__label">Alternative...</label>
-											</div>
-										</td>
-									</tr>
-									{{/each}}
-								</tbody>
-							</table>
-
-						</script>
-
-
-
-						<!-- Buttons layout table -->
-						<table class="button-table narrow">
-							<tbody>
-								<tr>
-									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-alternative">Add Alternative</button>
-									</td>
-									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="remove-alternative" style="float: right">Remove Alternative</button>
-									</td>
-								</tr>
+								{{/each}}
 							</tbody>
 						</table>
 
-						<!-- Criteria Categories -->
-						<h4>Criteria Categories</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					</script>
 
-						<!-- TARGET ractiveAlternatives -->
-						<div id="target-categories-table"></div>
 
-						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-categories-table" type="text/ractive">
 
-							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="categories-table">
-								<thead>
-									<tr>
-										<th class="mdl-data-table__cell--non-numeric">
-											<h5>Categories</h5>
-										</th>
-									</tr>
-								</thead>
+					<!-- Buttons layout table -->
+					<table class="button-table narrow">
+						<tbody>
+							<tr>
+								<td>
+									<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-alternative">Add Alternative</button>
+								</td>
+								<td>
+									<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="remove-alternative" style="float: right">Remove Alternative</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
-								<tbody>
-									{{#each categories:i}}
-									<tr>
-										<td class="mdl-data-table__cell--non-numeric narrow">
-											<div class="mdl-textfield mdl-js-textfield">
-												<input class="mdl-textfield__input category" type="text" value="{{name}}">
-												<label class="mdl-textfield__label">Category...</label>
-											</div>
-										</td>
-									</tr>
-									{{/each}}
-								</tbody>
-							</table>
-						</script>
+					<!-- Criteria Categories -->
+					<h4>Criteria Categories</h4>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<p>NOTE - Altering the number of Categories will reset the Aggregated Weights on the Summary page</p>
 
-						<!-- Buttons layout table -->
-						<table class="button-table narrow">
-							<tbody>
+					<!-- TARGET ractiveAlternatives -->
+					<div id="target-categories-table"></div>
+
+					<!-- TEMPLATE ractiveAlternatives -->
+					<script id="template-categories-table" type="text/ractive">
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="categories-table">
+							<thead>
 								<tr>
-									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-category">Add Category</button>
-									</td>
-									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="remove-category" style="float: right">Remove Category</button>
+									<th class="mdl-data-table__cell--non-numeric">
+										<h5>Categories</h5>
+									</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								{{#each categories:i}}
+								<tr>
+									<td class="mdl-data-table__cell--non-numeric narrow">
+										<div class="mdl-textfield mdl-js-textfield">
+											<input class="mdl-textfield__input category" type="text" value="{{name}}">
+											<label class="mdl-textfield__label">Category...</label>
+										</div>
 									</td>
 								</tr>
+								{{/each}}
 							</tbody>
 						</table>
+					</script>
 
-						<!-- Next Tab button -->
-						<br>
+					<!-- Buttons layout table -->
+					<table class="button-table narrow">
+						<tbody>
+							<tr>
+								<td>
+									<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-category">Add Category</button>
+								</td>
+								<td>
+									<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="remove-category" style="float: right">Remove Category</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
-						<!-- TODO - remove test scroll button -->
-						<!-- <div>
+					<!-- Next Tab button -->
+					<br>
+
+					<!-- TODO - remove test scroll button -->
+					<!-- <div>
 							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-400" type="button" id="scroll-up-btn">Top></button>
 						</div> -->
 
-						<!-- Goto DATA ENTRY -->
-						<div>
-							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" type="button" id="go-tab-1-btn">Next ></button>
-						</div>
-
-					</div>
-
-				</section>
-
-
-
-
-
-
-
-
-
-				<!-- DATA ENTRY PAGE ************************************************* -->
-				<section class="mdl-layout__tab-panel" id="page-2">
-					<div class="page-content">
-						<h4>Data Entry</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
-
-						<!-- Problem Categories -->
-						<h4>Categories Criteria</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
-
-						<!-- TARGET ractiveAlternatives -->
-						<div id="target-data-table"></div>
-
-
-
-						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-data-table" type="text/ractive">
-
-							<!-- Create full table for each Category -->
-							{{#each categories:i}}
-							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
-								<thead>
-									<tr>
-										<!-- First header with Category name -->
-										<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
-											<h5>{{name}} Criteria</h5>
-										</th>
-
-										<!-- Repeat headers for each Alternative -->
-										{{#each alternatives}}
-										<!-- For testing paste 14charsaaaaaax into Alt names -->
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
-											<h6>{{this}}</h6><b>%</b>
-										</th>
-										{{/each}}
-										<!-- Final header -->
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
-											<h5>Weight</h5>%
-										</th>
-
-									</tr>
-								</thead>
-
-								<tbody>
-									<!-- ALTERNATIVES ROWS ADDED DYNAMICALLY HERE -->
-									<!-- Create row for each Criteria -->
-									{{#each criteria}}
-									<tr>
-										<!-- First cell - Criteria name field -->
-										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
-											<div class="mdl-textfield mdl-js-textfield">
-												<input class="mdl-textfield__input" type="text" value="{{name}}">
-												<label class="mdl-textfield__label">Criteria...</label>
-											</div>
-										</td>
-										<!-- Create wieght input cell for each alternative -->
-										{{#each alternativeWeights}}
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
-											<div class="mdl-textfield mdl-js-textfield number">
-												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{this}}">
-												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
-											</div>
-										</td>
-										{{/each}}
-
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number  hlBlue" id="lastNumber">
-											<div class="mdl-textfield mdl-js-textfield number">
-												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{weight}}">
-												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
-											</div>
-										</td>
-									</tr>
-									{{/each}}
-								</tbody>
-							</table>
-
-							<!-- Buttons layout table -->
-							<table class="button-table">
-								<tbody>
-									<tr>
-										<td>
-											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored add-criteria" type="button" data-id="{{i}}" id='add-criteria{{i}}'>Add Criteria {{i}}</button>
-										</td>
-										<td>
-											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored remove-criteria" type="button" style="float: right" data-id="{{i}}" id='remove-criteria{{i}}' {{#if criteria.length<=1}} disabled='true' {{/if}}>Remove Criteria</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<br /> {{/each}}
-
-						</script>
-					</div>
-
-					<!-- Next Tab button -->
-					<br>
-					<!-- Goto SUMMARY PAGE -->
+					<!-- Goto DATA ENTRY -->
 					<div>
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" type="button" id="go-tab-2-btn">Next ></button>
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500 go-tab-1-btn" type="button">Next ></button>
 					</div>
 
-				</section>
+				</div>
+
+			</section>
 
 
 
@@ -346,255 +237,379 @@
 
 
 
-				<!-- SUMMARY PAGE **************************************************** -->
-				<section class="mdl-layout__tab-panel" id="page-3">
-					<div class="page-content">
 
-						<!-- Analysis Summary table -->
+			<!-- DATA ENTRY PAGE ************************************************* -->
+			<section class="mdl-layout__tab-panel" id="page-2">
+				<div class="page-content">
+					<h4>Data Entry</h4>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<h4>Analysis Summary</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<!-- Problem Categories -->
+					<h4>Categories Criteria</h4>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<!-- TARGET ractiveSummary -->
-						<div id="target-summary-table"></div>
+					<!-- TARGET ractiveAlternatives -->
+					<div id="target-data-table"></div>
 
-						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-summary-table" type="text/ractive">
 
-							<!-- Create summery table for all categories/alternatives showing degrees of belief -->
-							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
-								<thead>
-									<tr>
-										<!-- First header with Category name -->
-										<th class="mdl-data-table__cell--non-numeric width300">
-											<h6>Degrees of Belief</h6>
-										</th>
 
-										<!-- Repeat headers for each Alternative -->
-										{{#each alternatives}}
-										<!-- For testing paste 14charsaaaaaax into Alt names -->
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
-											<h6>{{this}}</h6>
-										</th>
-										{{/each}}
+					<!-- TEMPLATE ractiveAlternatives -->
+					<script id="template-data-table" type="text/ractive">
 
-										<!-- Final header for Ignorance -->
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGray number">
-											<h6>Ignorance</h6>
-										</th>
+						<!-- Create full table for each Category -->
+						{{#each categories: catIndex}}
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
+							<thead>
+								<tr>
+									<!-- First header with Category name -->
+									<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
+										<h5>{{name}} Criteria</h5>
+									</th>
 
-									</tr>
-								</thead>
-
-								<tbody>
-									<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
-									<!-- Create row for each Category -->
-									{{#each categories}}
-									<tr>
-										<!-- First cell - Category name field -->
-										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
-											<h6>{{name}}</h6>
-										</td>
-										<!-- Display Belief from problem.category.Beliefs -->
-										{{#each Beliefs}}
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h6>{{percent(this)}}</h6>
-										</td>
-										{{/each}}
-										<!-- Final cell - display Ignorance for each category -->
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hllightGray">
-											<h6>{{percent(Ignorance)}}</h6>
-										</td>
-									</tr>
+									<!-- Repeat headers for each Alternative -->
+									{{#each alternatives: altIndex}}
+									<!-- For testing paste 14charsaaaaaax into Alt names -->
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+										<h6>{{this}}</h6><b>%</b>
+									</th>
 									{{/each}}
-								</tbody>
-							</table>
+									<!-- Final header -->
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
+										<h5>Weight</h5>%
+									</th>
 
-						</script>
+								</tr>
+							</thead>
 
-						<!-- Analysis Summary table -->
-
-						<h4>Assessment Aggregation</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
-
-						<!-- TARGET ractiveSummary -->
-						<div id="target-category-weights-table"></div>
-
-						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-category-weights-table" type="text/ractive">
-							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
-								<thead>
-									<tr>
-										<!-- First header with Category name -->
-										<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
-											<h5>Category</h5>
-										</th>
-
-										<!-- Final header -->
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
-											<h5>Weight</h5>%
-										</th>
-
-									</tr>
-								</thead>
-
-								<tbody>
-									<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
-									<!-- Create row for each Category -->
-									{{#each categories}}
-									<tr>
-										<!-- First cell - Category name field -->
-										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
-											<h6>{{name}}</h6>
-										</td>
-										<!-- Create wieght input cell for each category -->
-
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
-											<div class="mdl-textfield mdl-js-textfield number">
-												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number summaryInput" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{Weight}}">
-												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
-											</div>
-										</td>
-
-
-									</tr>
+							<tbody>
+								<!-- ALTERNATIVES ROWS ADDED DYNAMICALLY HERE -->
+								<!-- Create row for each Criteria -->
+								{{#each criteria: critIndex}}
+								<tr>
+									<!-- First cell - Criteria name field -->
+									<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
+										<div class="mdl-textfield mdl-js-textfield">
+											<input class="mdl-textfield__input" type="text" value="{{name}}">
+											<label class="mdl-textfield__label">Criteria...</label>
+										</div>
+									</td>
+									<!-- Create wieght input cell for each alternative -->
+									{{#each alternativeWeights}}
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} criteria{{critIndex}} criteriaReset hlGreen">
+										<div class="mdl-textfield mdl-js-textfield number">
+											<!-- Input validation - numbers 0-100 -->
+											<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{this}}">
+											<label class="mdl-textfield__label">0-100</label>
+											<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+										</div>
+									</td>
 									{{/each}}
 
-								</tbody>
-							</table>
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlBlue" id="lastNumber">
+										<div class="mdl-textfield mdl-js-textfield number">
+											<!-- Input validation - numbers 0-100 -->
+											<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{weight}}">
+											<label class="mdl-textfield__label">0-100</label>
+											<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+										</div>
+									</td>
+								</tr>
+								{{/each}}
+							</tbody>
+						</table>
 
-						</script>
+						<!-- Buttons layout table -->
+						<table class="button-table">
+							<tbody>
+								<tr>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored add-criteria" type="button" data-id="{{catIndex}}" id='add-criteria{{catIndex}}'>Add Criteria {{catIndex}}</button>
+									</td>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored remove-criteria" type="button" style="float: right" data-id="{{catIndex}}" id='remove-criteria{{catIndex}}' {{#if criteria.length<=1}} disabled='true' {{/if}}>Remove Criteria</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<br /> {{/each}}
 
-					</div>
+					</script>
+				</div>
 
-					<!-- Next Tab button -->
-					<br>
-					<!-- Goto RESULTS PAGE -->
-					<div>
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" type="button" id="go-tab-3-btn">Next ></button>
-					</div>
-
-				</section>
-
+				<!-- Next Tab button -->
+				<br>
+				<!-- Goto SUMMARY PAGE -->
+				<div>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500 go-tab-2-btn" type="button">Next ></button>
+				</div>
 
 
 
 
+				<button id="show-action" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+    Show Action
+</button>
 
 
-				<!-- RESULTS PAGE *********************************************** -->
-				<section class="mdl-layout__tab-panel" id="page-4">
-					<div class="page-content">
-						<h5>Aggregated Degrees of Belief</h5>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<!-- TARGET ractiveSummary -->
-						<div id="target-aggregated-beliefs-table"></div>
+			</section>
 
-						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-aggregated-beliefs-table" type="text/ractive">
 
-							<!-- Create summery table for all categories/alternatives showing degrees of belief -->
-							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
-								<thead>
-									<tr>
-										<!-- Repeat headers for each Alternative -->
-										{{#each alternatives}}
-										<!-- For testing paste 14charsaaaaaax into Alt names -->
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
-											<h6>{{this}}</h6>
-										</th>
-										{{/each}}
 
-										<!-- Final header for Ignorance -->
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGray number">
-											<h6>Ignorance</h6>
-										</th>
 
-									</tr>
-								</thead>
 
-								<tbody>
-									<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
-									<tr>
-										<!-- Display Belief from problem.category.Beliefs -->
-										{{#each Beliefs}}
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h6>{{percent(this)}}</h6>
-										</td>
-										{{/each}}
-										<!-- Final cell - display Ignorance for each category -->
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hllightGray">
-											<h6>{{percent(Ignorance)}}</h6>
-										</td>
-									</tr>
-								</tbody>
-							</table>
 
-						</script>
 
-						<h5>Distributed Ignorance</h5>
-						<p>Table to be implemented</p>
 
-						<!-- TARGET ractiveSummary -->
-						<div id="target-distributed-ignorance-table"></div>
+			<!-- SUMMARY PAGE **************************************************** -->
+			<section class="mdl-layout__tab-panel" id="page-3">
+				<div class="page-content">
 
-						<!-- TEMPLATE ractiveAlternatives -->
-						<script id="template-distributed-ignorance-table" type="text/ractive">
+					<!-- Analysis Summary table -->
 
-							<!-- Create summery table for all categories/alternatives showing degrees of belief -->
-							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
-								<thead>
-									<tr>
-										<!-- Repeat headers for each Alternative -->
-										{{#each alternatives}}
-										<!-- For testing paste 14charsaaaaaax into Alt names -->
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
-											<h6>{{this}}</h6>
-										</th>
-										{{/each}}
-									</tr>
-								</thead>
+					<h4>Analysis Summary</h4>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-								<tbody>
-									<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
-									<tr>
-										<!-- Display Belief from problem.category.Beliefs -->
-										{{#each Beliefs}}
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h6>{{percent(this + IgnoranceSplit)}}</h6>
-										</td>
-										{{/each}}
-									</tr>
-								</tbody>
-							</table>
+					<!-- TARGET ractiveSummary -->
+					<div id="target-summary-table"></div>
 
-						</script>
-					</div>
-				</section>
+					<!-- TEMPLATE ractiveAlternatives -->
+					<script id="template-summary-table" type="text/ractive">
 
-				<!-- INSTRUCTIONS PAGE *********************************************** -->
-				<section class="mdl-layout__tab-panel" id="page-5">
-					<div class="page-content">
-						<h4>Instructions</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
-					</div>
-				</section>
+						<!-- Create summery table for all categories/alternatives showing degrees of belief -->
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
+							<thead>
+								<tr>
+									<!-- First header with Category name -->
+									<th class="mdl-data-table__cell--non-numeric width300">
+										<h6>Degrees of Belief</h6>
+									</th>
 
-				<!-- SAVE / LOAD PAGE ************************************************ -->
-				<section class="mdl-layout__tab-panel" id="page-6">
-					<div class="page-content">
-						<h4>Save / Load</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
-					</div>
-					<h4>Clear current project: WARNING - All unsaved data will be lost</h4>
-					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="reset">RESET PROJECT</button>
-				</section>
-			</main>
+									<!-- Repeat headers for each Alternative -->
+									{{#each alternatives}}
+									<!-- For testing paste 14charsaaaaaax into Alt names -->
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+										<h6>{{this}}</h6>
+									</th>
+									{{/each}}
 
-		</div>
+									<!-- Final header for Ignorance -->
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGray number">
+										<h6>Ignorance</h6>
+									</th>
+
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
+								<!-- Create row for each Category -->
+								{{#each categories}}
+								<tr>
+									<!-- First cell - Category name field -->
+									<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
+										<h6>{{name}}</h6>
+									</td>
+									<!-- Display Belief from problem.category.Beliefs -->
+									{{#each Beliefs}}
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+										<h6>{{percent(this)}}</h6>
+									</td>
+									{{/each}}
+									<!-- Final cell - display Ignorance for each category -->
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hllightGray">
+										<h6>{{percent(Ignorance)}}</h6>
+									</td>
+								</tr>
+								{{/each}}
+							</tbody>
+						</table>
+
+					</script>
+
+					<!-- Analysis Summary table -->
+
+					<h4>Assessment Aggregation</h4>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+					<!-- TARGET ractiveSummary -->
+					<div id="target-category-weights-table"></div>
+
+					<!-- TEMPLATE ractiveAlternatives -->
+					<script id="template-category-weights-table" type="text/ractive">
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
+							<thead>
+								<tr>
+									<!-- First header with Category name -->
+									<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
+										<h5>Category</h5>
+									</th>
+
+									<!-- Final header -->
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
+										<h5>Weight</h5>%
+									</th>
+
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
+								<!-- Create row for each Category -->
+								{{#each categories}}
+								<tr>
+									<!-- First cell - Category name field -->
+									<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
+										<h6>{{name}}</h6>
+									</td>
+									<!-- Create wieght input cell for each category -->
+
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number aggregatedWeight hlGreen">
+										<div class="mdl-textfield mdl-js-textfield number">
+											<!-- Input validation - numbers 0-100 -->
+											<input class="mdl-textfield__input number summaryInput" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{weight}}">
+											<label class="mdl-textfield__label">0-100</label>
+											<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+										</div>
+									</td>
+
+
+								</tr>
+								{{/each}}
+
+							</tbody>
+						</table>
+
+					</script>
+
+				</div>
+
+				<!-- Next Tab button -->
+				<br>
+				<!-- Goto RESULTS PAGE -->
+				<div>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500 go-tab-3-btn" type="button">Next ></button>
+				</div>
+
+			</section>
+
+
+
+
+
+
+
+			<!-- RESULTS PAGE *********************************************** -->
+			<section class="mdl-layout__tab-panel" id="page-4">
+				<div class="page-content">
+					<h5>Aggregated Degrees of Belief</h5>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+					<!-- TARGET ractiveSummary -->
+					<div id="target-aggregated-beliefs-table"></div>
+
+					<!-- TEMPLATE ractiveAlternatives -->
+					<script id="template-aggregated-beliefs-table" type="text/ractive">
+
+						<!-- Create summery table for all categories/alternatives showing degrees of belief -->
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
+							<thead>
+								<tr>
+									<!-- Repeat headers for each Alternative -->
+									{{#each alternatives}}
+									<!-- For testing paste 14charsaaaaaax into Alt names -->
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+										<h6>{{this}}</h6>
+									</th>
+									{{/each}}
+
+									<!-- Final header for Ignorance -->
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGray number">
+										<h6>Ignorance</h6>
+									</th>
+
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<!-- Display Belief from problem.category.Beliefs -->
+									{{#each Beliefs}}
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+										<h6>{{percent(this)}}</h6>
+									</td>
+									{{/each}}
+									<!-- Final cell - display Ignorance for each category -->
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hllightGray">
+										<h6>{{percent(Ignorance)}}</h6>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</script>
+
+					<h5>Distributed Ignorance</h5>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+					<!-- TARGET ractiveSummary -->
+					<div id="target-distributed-ignorance-table"></div>
+
+					<!-- TEMPLATE ractiveAlternatives -->
+					<script id="template-distributed-ignorance-table" type="text/ractive">
+
+						<!-- Create summery table for all categories/alternatives showing degrees of belief -->
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
+							<thead>
+								<tr>
+									<!-- Repeat headers for each Alternative -->
+									{{#each alternatives}}
+									<!-- For testing paste 14charsaaaaaax into Alt names -->
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+										<h6>{{this}}</h6>
+									</th>
+									{{/each}}
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- CATEGORIES ROWS ADDED DYNAMICALLY HERE -->
+								<tr>
+									<!-- Display Belief from problem.category.Beliefs -->
+									{{#each Beliefs}}
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+										<h6>{{percent(this + IgnoranceSplit)}}</h6>
+									</td>
+									{{/each}}
+								</tr>
+							</tbody>
+						</table>
+
+					</script>
+				</div>
+			</section>
+
+			<!-- INSTRUCTIONS PAGE *********************************************** -->
+			<section class="mdl-layout__tab-panel" id="page-5">
+				<div class="page-content">
+					<h4>Instructions</h4>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+				</div>
+			</section>
+
+			<!-- SAVE / LOAD PAGE ************************************************ -->
+			<section class="mdl-layout__tab-panel" id="page-6">
+				<div class="page-content">
+					<h4>Save / Load</h4>
+					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+				</div>
+				<h4>Clear current project: WARNING - All unsaved data will be lost</h4>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="reset">RESET PROJECT</button>
+			</section>
+		</main>
+
+	</div>
 
 	<!-- </div> -->
 

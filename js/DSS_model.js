@@ -274,7 +274,7 @@ class DSS_model {
 
             // Loop over each belief value for Mni
             for (var i = 0; i < category.Beliefs.length; i++) {
-                aggMni_results.push(category.Beliefs[i] * (category.Weight / 100));
+                aggMni_results.push(category.Beliefs[i] * (category.weight / 100));
             }
             category.Mni = aggMni_results;
 
@@ -286,11 +286,11 @@ class DSS_model {
 
             // CALCULATE Ml for each CATEGORY ////////////////////////////////////
             // 1-(category weight (convert from percentage)
-            category.Ml = 1 - (category.Weight * 0.01);
+            category.Ml = 1 - (category.weight * 0.01);
 
             // CALCULATE Mdash for each CATEGORY ////////////////////////////////////
             // category weight * (1-(sum(alternative beliefs)))
-            var Mdash_result = (category.Weight * 0.01) * (1 - (category.Beliefs.reduce(_this.getSum)));
+            var Mdash_result = (category.weight * 0.01) * (1 - (category.Beliefs.reduce(_this.getSum)));
             category.Mdash = Mdash_result;
 
             if (this.debug) console.log("MNI: " + category.Mni);
@@ -428,7 +428,6 @@ class DSS_model {
         // Calculate and save distributed ignorance divided by number of alternatives
         // For Distributed Ignorance table
         data.IgnoranceSplit = data.Ignorance/data.alternatives.length;
-        console.log("YEAAAAA " + data.IgnoranceSplit);
     }
 
 

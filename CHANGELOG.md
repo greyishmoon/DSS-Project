@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/0.3.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 11-06-2018
+### Added
+- Data entry validation on Data Entry page
+* criteria weights and category weights checked for viable totals
+* Cells coloured red on problem groups
+* Modal dialogue and page redirection pack to problem page is unresolved problems
+- As above for aggregated weights on Summary page
+
+## [Unreleased] - 08-06-2018
+### Added
+- force aggregated weights on Summary page to reset to equal values if number of Categories changed
+### Altered
+- forceCategoryWeightsCalc() - distributed extra evenly over initial weights
 
 ## [Unreleased] - 06-06-2018
 ### Added
