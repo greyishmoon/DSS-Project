@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-var data; // Manager holding the Problem data object
+var dataManager; // Manager holding the Problem data object
 // Ractive components
 var ractiveTitle, ractiveAlternatives, ractiveCategorys, ractiveData, ractiveSummary, ractiveCategoryWeights, ractiveAggregatedBeliefs, ractiveDistributedIgnorance;
 
@@ -119,8 +119,68 @@ function onProjectLoad() {
         disableButton("#remove-category");
     }
     // LOAD/SAVE PAGE
+    // Save project button
+    $('#saveProject').on('click', saveProject);
+    // Load project button - load when file selected in file browser
+    //$("#loadProject").change(loadProject);
+
+    // $("#loadProject").change(function() {
+    //     console.log("photo file has been chosen")
+    //     //grab the first image in the fileList
+    //     //in this example we are only loading one file.
+    //     console.log($("#fileSelector").files[0].size)
+    //     // renderImage(this.files[0])
+    //
+    // });
+
+    // $("#fileToLoad").change(function() {
+    //     alert("XXXXXX");
+    //
+    // });
+
+    // Load file from file selecter (unable to get JQuery change() to trigger)
+    document.getElementById("fileSelector").onchange = function() {
+        // Get file
+        var fileToLoad = this.files[0];
+        // Load file (callback to loadProject(JSON) below for validation)
+        loadFileAsJSobject(fileToLoad, loadProject);
+    };
+
+    // document.getElementById("fileToLoad").onchange = function() {
+    //     console.log(document.getElementById("loadProject").files[0].name);
+    // };
+    //
+    // document.getElementById("uploadBtn").onchange = function() {
+    //     console.log("TRIGGGEERRRRRED");
+    //     console.log(this.files[0].name);
+    // };
+
+    // $('#uploadBtn').change(function() {
+    //     console.log("TRIGGGEERRRRRED");
+    // });
+
+
+    // $("#uploadBtn").change(function() {
+    //     alert("XXXXXX");
+    // });
+
+    //         document.getElementById("uploadBtn").onchange = function () {
+    //     console.log(this.files[0].name);
+    // };
+
+    $("#the-photo-file-field").change(function() {
+        console.log("photo file has been chosen")
+        //grab the first image in the fileList
+        //in this example we are only loading one file.
+        console.log(this.files[0].size)
+
+    });
+
+
     // Reset project button
     $('#reset').on('click', resetProject);
+    // TODO - remove for production - emergency reset button emergency-reset
+    $('#emergency-reset').on('click', resetProject);
 
     // TAB NAVIGATION
     // Next button on each tab to simulate click on tab
@@ -338,13 +398,23 @@ function showDataEntryWarningDialogue() {
         negative: {
             title: 'Continue'
         }
-    })
+    });
 }
 // Warning dialog for inconsistent data on Summary page
 function showSummaryWarningDialogue() {
     showDialog({
         title: 'WARNING: Inconsistent data',
         text: 'Elements on this page need correcting: \nThe aggregated category weights must TOTAL 100 \nProblem groups highlighted in red'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for inconsistent data on Summary page
+function showProjectResetDialogue() {
+    showDialog({
+        title: 'Project Reset',
+        text: 'Project has been successfuly reset'.split('\n').join('<br>'),
         negative: {
             title: 'Continue'
         }
@@ -488,14 +558,60 @@ function updateInterface() {
 
 //////////////// LOAD / SAVE //////////////////
 
+// Save project data model (JS object) as JSON file to local file system
+function saveProject() {
+    // Construct filename
+    var fileName = dataManager.problem.title + '-DSS-Problem';
+
+    saveOBJECTasJSONfile(dataManager.getData(), fileName);
+
+    showDialog({
+        title: 'Project saved',
+        text: 'Project saved as <b>' + fileName + '.json</b> to your browsers <b>DOWNLOADS</b> folder \n\n <b>Manually move .json file to permenant location for storage.</b>'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+
+
+
+// Load project selected in file selector window
+function loadProject(JSONfromFile) {
+    // test for incorrect file type by catchin JSON parse
+    try {
+        var dataFromFile = JSON.parse(JSONfromFile)
+    } catch (e) {
+        showDialog({
+            title: 'WARNING: Incorrect file type',
+            text: 'Reselect a <b>.json</b> file type:\nCurrent project unchanged'.split('\n').join('<br>'),
+            negative: {
+                title: 'Continue'
+            }
+        });
+        return null;
+    }
+
+    console.log(dataFromFile.type);
+    // Check for valid project type
+    if (dataFromFile.type === 'decision_making') {
+        dataManager.setData(dataFromFile);
+        // Reset ractive bindings
+        setRactives();
+    } else {
+        console.log("ITS WRONG!!!!!!");
+    }
+}
+
 // Reset project and clear all current data from memory and local Storage
 function resetProject() {
     dataManager.resetProject();
     // Reset ractive bindings
     setRactives();
     // FORCE CALCULATION OF EVEN CATEGORY WEIGHTS ON RESULTS PAGE
-    dataManager.forceCategoryWeightsCalc();
+    // dataManager.forceCategoryWeightsCalc();
     update();
+    showProjectResetDialogue();
 }
 
 

@@ -1,3 +1,5 @@
+// from https://github.com/oRRs/mdl-jquery-modal-dialog
+
 function showLoading() {
     // remove existing loaders
     $('.loading-container').remove();

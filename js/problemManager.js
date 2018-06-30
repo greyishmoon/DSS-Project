@@ -114,8 +114,6 @@ class ProblemManager {
 
     // Add Criterion to category
     addCriterionTo(category, name) {
-        console.log("category: " + category);
-        console.log("name: " + name);
         // Create new criterion
         // DEEP COPY Criterion to avoid referencing issues
         var newCriterion = jQuery.extend(true, {}, Criterion);
@@ -170,6 +168,18 @@ class ProblemManager {
     }
 
     // HELPER FUNCTIONS
+
+    getData(){
+        return this.problem;
+    }
+
+    setData(jsObject) {
+        //Set current data object to new jsObject
+        this.problem = jsObject;
+        // Save to localData to replace previous project
+        // saveLocal();
+
+    }
 
     // Return sum of array -
     // Call using - ARRAY_TO_BE_SUMMED.reduce(this.getSum); OR ARRAY_TO_BE_SUMMED.reduce(_this.getSum); from within anonymous function
@@ -231,7 +241,7 @@ class ProblemManager {
 
 
         }
-        
+
         // return collection of failed category indexes
         return faultsIndex;
     }
@@ -239,9 +249,11 @@ class ProblemManager {
     ////////////////// TESTING //////////////////////
     // load test problem
     loadTestProblem() {
+        console.log("=====================TEST PROBLEM======================");
         // DEEP COPY Problem to avoid referencing issues
         this.problem = jQuery.extend(true, {}, Problem);
-        this.problem.title = "Test Problem"
+        this.problem.type = "decision_making";
+        this.problem.title = "Test Problem";
 
         this.addAlternative('Supplier A');
         this.addAlternative('Supplier B');

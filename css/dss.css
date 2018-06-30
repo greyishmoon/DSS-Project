@@ -150,7 +150,9 @@ width: 50px;
 }  */
 
 
-
+label.input-custom-file input[type=file] {
+  display: none;
+}
 
 
 

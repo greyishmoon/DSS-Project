@@ -1,5 +1,6 @@
 // Stores all decision making project data
 var Problem = {
+    type: "decision_making",
     title: "",
     alternatives: [], // List of alternative suppliers
     categories: [], // List of project categories being assessed
