@@ -105,38 +105,18 @@ function onProjectLoad() {
     $('#add-alternative').on('click', addAlternative);
     // Remove last alternative
     $('#remove-alternative').on('click', removeAlternative);
-    // Disable remove button on load if count <= min number
-    if (dataManager.getAltLength() <= minAltCount) {
-        disableButton("#remove-alternative");
-    }
+
     // DATA ENTRY
     // Add category
     $('#add-category').on('click', addCategory);
     // Remove last category
     $('#remove-category').on('click', removeCategory);
-    // Disable remove button on load if count <= min number
-    if (dataManager.getCategoryLength() <= 1) {
-        disableButton("#remove-category");
-    }
     // LOAD/SAVE PAGE
+    // Print to PDF
+    $('#printPDF').on('click', printPDF);
+
     // Save project button
     $('#saveProject').on('click', saveProject);
-    // Load project button - load when file selected in file browser
-    //$("#loadProject").change(loadProject);
-
-    // $("#loadProject").change(function() {
-    //     console.log("photo file has been chosen")
-    //     //grab the first image in the fileList
-    //     //in this example we are only loading one file.
-    //     console.log($("#fileSelector").files[0].size)
-    //     // renderImage(this.files[0])
-    //
-    // });
-
-    // $("#fileToLoad").change(function() {
-    //     alert("XXXXXX");
-    //
-    // });
 
     // Load file from file selecter (unable to get JQuery change() to trigger)
     document.getElementById("fileSelector").onchange = function() {
@@ -146,41 +126,13 @@ function onProjectLoad() {
         loadFileAsJSobject(fileToLoad, loadProject);
     };
 
-    // document.getElementById("fileToLoad").onchange = function() {
-    //     console.log(document.getElementById("loadProject").files[0].name);
-    // };
-    //
-    // document.getElementById("uploadBtn").onchange = function() {
-    //     console.log("TRIGGGEERRRRRED");
-    //     console.log(this.files[0].name);
-    // };
-
-    // $('#uploadBtn').change(function() {
-    //     console.log("TRIGGGEERRRRRED");
-    // });
-
-
-    // $("#uploadBtn").change(function() {
-    //     alert("XXXXXX");
-    // });
-
-    //         document.getElementById("uploadBtn").onchange = function () {
-    //     console.log(this.files[0].name);
-    // };
-
-    $("#the-photo-file-field").change(function() {
-        console.log("photo file has been chosen")
-        //grab the first image in the fileList
-        //in this example we are only loading one file.
-        console.log(this.files[0].size)
-
-    });
-
-
     // Reset project button
-    $('#reset').on('click', resetProject);
+    $('#reset-button').on('click', resetProject);
     // TODO - remove for production - emergency reset button emergency-reset
-    $('#emergency-reset').on('click', resetProject);
+    $('.emergency-reset').on('click', resetProject);
+
+    // Load example project button
+    $('#loadExample-button').on('click', loadExampleProject);
 
     // TAB NAVIGATION
     // Next button on each tab to simulate click on tab
@@ -252,18 +204,50 @@ function resetTabClick() {
     simTabClicked = false;
 }
 
+// Check all buttons and enable/disable based on conditions - called by update
+function checkButtons() {
+    // Problem Setup page
+    // Alternatives data entry
+    // Disable remove button on load if count <= min number
+    if (dataManager.getAltLength() <= minAltCount) {
+        disableButton("#remove-alternative");
+    }
+    // Enable remove button if count > minAltCount
+    if (dataManager.getAltLength() > minAltCount) {
+        enableButton("#remove-alternative");
+    }
+    // Disable add button if count >= max number
+    if (dataManager.getAltLength() >= maxAltCount) {
+        disableButton("#add-alternative");
+        // Enable remove button
+        enableButton("#remove-alternative");
+    }
+    // Enable add button if count < maxAltCount
+    if (dataManager.getAltLength() < maxAltCount) {
+        enableButton("#add-alternative");
+    }
+    // Categories data entry
+    // << IF LIMIT TO NUMBER OF CATEGORIES, ADD HERE
+    // Enable remove button
+    if (dataManager.getCategoryLength() > 1) {
+        enableButton("#remove-category");
+    }
+    // Disable remove button if count <= min number
+    if (dataManager.getCategoryLength() <= 1) {
+        disableButton("#remove-category");
+    }
+
+
+
+
+}
+
 
 //////////////// ALTERNATIVES ////////////////
 // Adds alternative with blank name
 function addAlternative() {
     // Add alternative to data model
     dataManager.addAlternative('');
-    // Disable add button if count >= max number
-    if (dataManager.getAltLength() >= maxAltCount) {
-        disableButton("#add-alternative");
-    }
-    // Enable remove button
-    enableButton("#remove-alternative");
     // Update interface
     update();
 }
@@ -272,12 +256,6 @@ function addAlternative() {
 function removeAlternative() {
     // Remove last alternative from array
     dataManager.removeAlternative();
-    // Disable remove button if count <= min number
-    if (dataManager.getAltLength() <= minAltCount) {
-        disableButton("#remove-alternative");
-    }
-    // Enable add button
-    enableButton("#add-alternative");
     // Update interface
     update();
 }
@@ -289,9 +267,6 @@ function removeAlternative() {
 function addCategory() {
     // Add category to data model
     dataManager.addCategory('');
-    // << IF LIMIT TO NUMBER OF CATEGORIES, ADD HERE
-    // Enable remove button
-    enableButton("#remove-category");
     // Reset aggregated weights on Summary page
     dataManager.forceCategoryWeightsCalc();
     // Update interface
@@ -302,12 +277,6 @@ function addCategory() {
 function removeCategory() {
     // Remove last category from array
     dataManager.removeCategory();
-    // Disable remove button if count <= min number
-    if (dataManager.getCategoryLength() <= 1) {
-        disableButton("#remove-category");
-    }
-    // Enable add button
-    enableButton("#add-category");
     // Reset aggregated weights on Summary page
     dataManager.forceCategoryWeightsCalc();
     // Update interface
@@ -389,38 +358,6 @@ function goTab5() {
     $(".mdl-layout__tab:eq(5) span").click();
 }
 
-// DIALOGUES
-// Warning dialog for inconsistent data on Data Entry page
-function showDataEntryWarningDialogue() {
-    showDialog({
-        title: 'WARNING: Inconsistent data',
-        text: 'Elements on this page need correcting: \nRows of criteria weights should NOT EXCEED 100 \nColumns of category weights must TOTAL 100 \nProblem groups highlighted in red'.split('\n').join('<br>'),
-        negative: {
-            title: 'Continue'
-        }
-    });
-}
-// Warning dialog for inconsistent data on Summary page
-function showSummaryWarningDialogue() {
-    showDialog({
-        title: 'WARNING: Inconsistent data',
-        text: 'Elements on this page need correcting: \nThe aggregated category weights must TOTAL 100 \nProblem groups highlighted in red'.split('\n').join('<br>'),
-        negative: {
-            title: 'Continue'
-        }
-    });
-}
-// Warning dialog for inconsistent data on Summary page
-function showProjectResetDialogue() {
-    showDialog({
-        title: 'Project Reset',
-        text: 'Project has been successfuly reset'.split('\n').join('<br>'),
-        negative: {
-            title: 'Continue'
-        }
-    })
-}
-
 // TODO complete scroll fix
 // references https://codepen.io/mdlhut/pen/BNeoVa https://codepen.io/exam/pen/ZbvLPO
 var scrollTo = function(top) {
@@ -471,6 +408,9 @@ function update() {
 
     // Log updated data object
     console.log(dataManager.problem);
+
+    // Check data entry buttons and enable/disable where necessary
+    checkButtons();
 
     // Update interface - check group totals and alter table colours warning of problems
     updateInterface();
@@ -556,22 +496,260 @@ function updateInterface() {
 
 /////////////////// UPDATE ////////////////////
 
-//////////////// LOAD / SAVE //////////////////
+//////////// PRINT / LOAD / SAVE //////////////
+
+// Print project reults to PDF
+function printPDF() {
+    // X and Y values of cursor - incerement Y for each line of text and set to bottom of table with pdf.autoTable.previous.finalY + Yincrement
+    var pdfX = 20;
+    var pdfY = 40;
+    var Yincrement = 20;
+    var buffer = 20;
+    var columnStyles = {}; // properties for dynamic column styles
+    var resultsColumnStyles = {};
+    var firstColumnWidth = 100;
+    var dataColumnWidth = 67;
+    var summaryColumnWidth = 80;
+    var lastColumnWidth = 48;
+    var tableFontSize = 8;
+
+    // Generate new document
+    // var pdf = new jsPDF('p', 'pt', 'a4');
+    var pdf = new jsPDF({
+        orientation: 'p',
+        unit: 'pt',
+        format: 'a4'
+    });
+
+    // Heading
+    pdf.setFontStyle('bold');
+    pdf.text("Decision Making Report", pdfX, pdfY);
+    // Project title
+    pdf.setFontStyle('normal');
+    pdf.setFontSize(14);
+    pdf.text("Project title: " + dataManager.problem.title, pdfX, pdfY += Yincrement);
+
+    // Data inputs
+    pdf.setFontStyle('bold');
+    pdf.text("Data Inputs", pdfX, pdfY += Yincrement);
+
+    // DATA ENTRY TABLES
+    // Construct and print each category table
+    var cats = dataManager.problem.categories;
+
+    // generate array of alternatives to append to header row
+    var alternativeNames = []; // array storing list of alternative names
+    for (var i = 0; i < dataManager.problem.alternatives.length; i++) {
+        alternativeNames.push(dataManager.problem.alternatives[i]);
+        // set column widths for each alternative
+        columnStyles[i + 1] = {
+            columnWidth: dataColumnWidth
+        };
+    }
+
+    // Complete first and last column widths
+    columnStyles[0] = {
+        columnWidth: firstColumnWidth
+    };
+    columnStyles[alternativeNames.length + 1] = {
+        columnWidth: lastColumnWidth
+    };
+
+    // console.log("COLUMNSTYLES");
+    // console.log(columnStyles);
+
+
+    // Generate and print data input table for each category
+    for (var i = 0; i < cats.length; i++) {
+        // Temp store current working category
+        var cat = cats[i];
+        var rows = []; // stores array of rows
+
+        // Construct header row
+        var header = [];
+        header.push(cat.name)
+        // add alternatives
+        header = header.concat(alternativeNames);
+        // append with 'Weights'
+        header.push('Weight');
+
+        // generate row for each criteria
+        for (var j = 0; j < cat.criteria.length; j++) {
+            // Temp store current working criteria
+            var crit = cat.criteria[j];
+            var criteriaRow = []; // stores name, weights + category weights
+            // Push criteria name
+            criteriaRow.push(crit.name);
+            // push weight for each alternative
+            for (var k = 0; k < alternativeNames.length; k++) {
+                criteriaRow.push(crit.alternativeWeights[k]);
+            }
+            // Push criteria weight for category
+            criteriaRow.push(crit.weight);
+
+            // push completed criteria row to rows results array for printing
+            rows.push(criteriaRow);
+        }
+
+        // PRINT TABLE
+        pdf.autoTable(header, rows, {
+            startY: pdfY + Yincrement,
+            showHeader: 'firstPage',
+            tableWidth: 'wrap',
+            margin: {
+                left: 20
+            },
+            styles: {
+                fontSize: tableFontSize,
+                overflow: 'linebreak'
+            },
+            columnStyles: columnStyles
+        });
+        // Record bottom of table
+        pdfY = pdf.autoTable.previous.finalY;
+
+        // console.log("HEADER ROW - " + cat.name);
+        // console.log(header);
+        // console.log("FINAL ROWS - " + cat.name);
+        // console.log(rows);
+    }
+
+    // RESULTS
+    // new page
+    pdf.addPage();
+    pdfY = 40;
+    pdf.setFontSize(16);
+    pdf.text("Results: " + dataManager.problem.title, pdfX, pdfY);
+
+    // Agregated results table
+    pdf.setFontSize(14);
+    pdf.text("Analysis Summary", pdfX, pdfY += Yincrement);
+    var elem = document.getElementById("summary-table");
+    var res = pdf.autoTableHtmlToJson(elem);
+
+    // PRINT TABLE
+    pdf.autoTable(res.columns, res.data, {
+        startY: pdfY + Yincrement,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        margin: {
+            left: 20
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak'
+        },
+        columnStyles: columnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+    // Assessment Agregation data inputs
+    pdf.text("Assessment Aggregation data inputs", pdfX, pdfY += Yincrement + buffer);
+
+    // header for table
+    header = ["Category", "Weight"];
+    rows = [];
+    // construct rows - category name + weight
+    for (var i = 0; i < cats.length; i++) {
+        var row = [];
+        row.push(cats[i].name);
+        row.push(cats[i].weight);
+        rows.push(row);
+    }
+
+    // PRINT TABLE
+    pdf.autoTable(header, rows, {
+        startY: pdfY + Yincrement,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        margin: {
+            left: 20
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak'
+        },
+        columnStyles: columnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+
+    //Set results column widths
+    for (var i = 0; i < alternativeNames.length; i++) {
+        // set column widths for each alternative
+        resultsColumnStyles[i] = {
+            columnWidth: summaryColumnWidth
+        };
+    }
+    resultsColumnStyles[alternativeNames.length] = {
+        columnWidth: 65
+    };
+
+
+    // Aggregated Degrees of Belief table
+    pdf.text("Aggregated Degrees of Belief", pdfX, pdfY += Yincrement + buffer);
+
+    var elem = document.getElementById("aggregated-beliefs-table");
+    var res = pdf.autoTableHtmlToJson(elem);
+
+
+    // PRINT TABLE
+    pdf.autoTable(res.columns, res.data, {
+        startY: pdfY + Yincrement,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        margin: {
+            left: 20
+        },
+        styles: {
+            fontSize: 10,
+            overflow: 'linebreak'
+        },
+        columnStyles: resultsColumnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+    // Distributed Ignorance table
+    pdf.text("Distributed Ignorance", pdfX, pdfY += Yincrement + buffer);
+
+    elem = document.getElementById("distributed-ignorance-table");
+    res = pdf.autoTableHtmlToJson(elem);
+
+    // PRINT TABLE
+    pdf.autoTable(res.columns, res.data, {
+        startY: pdfY + Yincrement,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        margin: {
+            left: 20
+        },
+        styles: {
+            fontSize: 10,
+            overflow: 'linebreak'
+        },
+        columnStyles: resultsColumnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+    pdf.save(dataManager.problem.title + ' Decision Making Report.pdf');
+
+    showProjectPrintedDialogue(dataManager.problem.title);
+}
 
 // Save project data model (JS object) as JSON file to local file system
 function saveProject() {
     // Construct filename
     var fileName = dataManager.problem.title + '-DSS-Problem';
-
+    // Save file
     saveOBJECTasJSONfile(dataManager.getData(), fileName);
-
-    showDialog({
-        title: 'Project saved',
-        text: 'Project saved as <b>' + fileName + '.json</b> to your browsers <b>DOWNLOADS</b> folder \n\n <b>Manually move .json file to permenant location for storage.</b>'.split('\n').join('<br>'),
-        negative: {
-            title: 'Continue'
-        }
-    });
+    showProjectSavedDialogue(fileName);
 }
 
 
@@ -582,24 +760,26 @@ function loadProject(JSONfromFile) {
     try {
         var dataFromFile = JSON.parse(JSONfromFile)
     } catch (e) {
-        showDialog({
-            title: 'WARNING: Incorrect file type',
-            text: 'Reselect a <b>.json</b> file type:\nCurrent project unchanged'.split('\n').join('<br>'),
-            negative: {
-                title: 'Continue'
-            }
-        });
+        // Incorrect file type
+        console.log("Load fail: Not JSON file");
+        showProjectLoadFileFailDialogue();
         return null;
     }
 
-    console.log(dataFromFile.type);
     // Check for valid project type
     if (dataFromFile.type === 'decision_making') {
+        // correct prooject type
+        // Set data model to loaded data
         dataManager.setData(dataFromFile);
         // Reset ractive bindings
         setRactives();
+        // Initiate save to localStorage
+        saveLocal();
+        showProjectLoadSuccessDialogue();
     } else {
-        console.log("ITS WRONG!!!!!!");
+        // incorrect project type
+        console.log("Load fail: Incorrect project type");
+        showProjectLoadTypeFailDialogue();
     }
 }
 
@@ -608,14 +788,118 @@ function resetProject() {
     dataManager.resetProject();
     // Reset ractive bindings
     setRactives();
-    // FORCE CALCULATION OF EVEN CATEGORY WEIGHTS ON RESULTS PAGE
-    // dataManager.forceCategoryWeightsCalc();
     update();
     showProjectResetDialogue();
 }
 
+// Load example project
+function loadExampleProject() {
+    dataManager.loadExample();
+    // Reset ractive bindings
+    setRactives();
+    update();
+    showProjectExampleLoadedDialogue();
+}
+
 
 //////////////// LOAD / SAVE //////////////////
+
+////////////////// DIALOGS ///////////////////
+
+// DIALOGUES
+// Warning dialog for inconsistent data on Data Entry page
+function showDataEntryWarningDialogue() {
+    showDialog({
+        title: 'WARNING: Inconsistent data',
+        text: 'Elements on this page need correcting: \nRows of criteria weights should NOT EXCEED 100 \nColumns of category weights must TOTAL 100 \nProblem groups highlighted in red'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for inconsistent data on Summary page
+function showSummaryWarningDialogue() {
+    showDialog({
+        title: 'WARNING: Inconsistent data',
+        text: 'Elements on this page need correcting: \nThe aggregated category weights must TOTAL 100 \nProblem groups highlighted in red.'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project printed
+function showProjectPrintedDialogue(title) {
+    showDialog({
+        title: 'Report PDF generated',
+        text: 'Report saved as <b>' + title + ' Decision Making Report.pdf</b> to your browsers <b>DOWNLOADS</b> folder.'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project saved
+function showProjectSavedDialogue(fileName) {
+    showDialog({
+        title: 'Project saved',
+        text: 'Project saved as <b>' + fileName + '.json</b> to your browsers <b>DOWNLOADS</b> folder \n\n <b>Manually move .json file to permenant location for storage.</b>'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project load file fail
+function showProjectLoadFileFailDialogue() {
+    showDialog({
+        title: 'WARNING: Incorrect file type',
+        text: 'Reselect a <b>.json</b> file type:\nCurrent project unchanged'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project load file fail
+function showProjectLoadTypeFailDialogue() {
+    showDialog({
+        title: 'WARNING: Incorrect project type',
+        text: 'Reselect a &lt;ProjectTitle&gt;<b>-DSS-Problem</b>.json file:\nCurrent project unchanged'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project load file fail
+function showProjectLoadSuccessDialogue() {
+    showDialog({
+        title: 'Project loaded',
+        text: '<b>' + dataManager.problem.title + '</b> project loaded successfuly',
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project reset
+function showProjectResetDialogue() {
+    showDialog({
+        title: 'Project Reset',
+        text: 'Project has been successfuly reset'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    })
+}
+// Warning dialog for example project loaded
+function showProjectExampleLoadedDialogue() {
+    showDialog({
+        title: 'Example Project Loaded',
+        text: 'Example project has been successfuly loaded'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    })
+}
+
+
+////////////////// DIALOGS ///////////////////
 
 ///////// GENERAL HELPER FUNCTIONS ////////////
 
@@ -630,25 +914,13 @@ function upgradeMDL() {
 function enableButton(buttonID) {
     // enable HTML button
     $(buttonID).attr("disabled", false);
-    // enable MDL styling
-    // $(buttonID).removeClass("mdl-button--disabled")
-    // //
-    // componentHandler.upgradeElement($(buttonID));
 }
 
 // Disable MDL button using buttonID
 function disableButton(buttonID) {
-    var button = document.getElementById('remove-alternative');
-    //var button = $(buttonID);
-    //   // enable HTML button
     $(buttonID).attr("disabled", true);
-    //   // enable MDL styling
-    //   button.addClass("mdl-button--disabled")
-    //   //
-    //   componentHandler.upgradeElement(button);
 }
 ///////// GENERAL HELPER FUNCTIONS ////////////
-
 
 ///////// DEBUG FUNCTIONS /////////////
 

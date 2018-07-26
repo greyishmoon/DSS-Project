@@ -20,13 +20,11 @@ class ProblemManager {
     initialiseProblem() {
         // Create empty copy of Problem data object
         this.problem = jQuery.extend(true, {}, Problem);
-
-        this.addAlternative('');
+        console.log("EMPTY PROJECT IN INITIALISE");
+        console.log(this.problem);
         this.addCategory('');
+        this.addAlternative('');
 
-        // TODO - REMOVE TEST PROBLEM
-        // Load test problem with data from DSS OUTSOURCING stylesheet
-        this.loadTestProblem();
     }
 
     // Update problem - perform calculations to generate results
@@ -91,8 +89,17 @@ class ProblemManager {
         // DEEP COPY Category to avoid referencing issues
         var newCategory = jQuery.extend(true, {}, Category);
         newCategory.name = name;
+        // init category weight
+        if (this.problem.categories.length <= 0) {
+            // If first category in problem set category weight to 100
+            // to avoid immediate validation problems in Assessmnet Aggregation table
+            newCategory.weight = 100;
+        } else {
+            // Otherwise set to zero
+            newCategory.weight = 0;
+        }
         // Add single criterion
-        this.addCriterionTo(newCategory, '');
+        this.addCriterionTo(newCategory, 'test');
         this.problem.categories.push(newCategory);
     }
     // Remove last category
@@ -118,14 +125,24 @@ class ProblemManager {
         // DEEP COPY Criterion to avoid referencing issues
         var newCriterion = jQuery.extend(true, {}, Criterion);
         newCriterion.name = name;
-        // init criterion weight to 0
-        newCriterion.weight = 0;
+        // set first alternativeWeight
+        newCriterion.alternativeWeights[0] = 80;
+        // init criterion weight
+        if (category.criteria.length <= 0) {
+            // If first crierion in category set category weight to 100
+            // to avoid immediate validation problems
+            newCriterion.weight = 100;
+        } else {
+            // Otherwise set to zero
+            newCriterion.weight = 0;
+        }
         // init alternativeWeights count to number of Alternatives + set to 0
         newCriterion.alternativeWeights.length = this.getAltLength();
         // (NOTE cannot use forEach as setting length does not initialise array elements)
         for (var i = 0; i < newCriterion.alternativeWeights.length; i++) {
             newCriterion.alternativeWeights[i] = 0;
         }
+
         category.criteria.push(newCriterion);
     }
     // Remove last criteria from category
@@ -147,15 +164,13 @@ class ProblemManager {
         if (this.problem.categories == null) {
             // This is incorrectly stored data structure from before factor to category renaming
             // Clear locaStorage and load test problem
-            localStorage.clear();
-            sessionStorage.clear();
+            this.clearLocal();
             this.initialiseProblem();
         }
     }
 
     // Clear local Storage
     clearLocal() {
-        console.log("local BEFORE: " + localStorage.getObject('problemData'));
         localStorage.clear();
         sessionStorage.clear();
 
@@ -165,6 +180,15 @@ class ProblemManager {
     resetProject() {
         this.clearLocal();
         this.initialiseProblem();
+    }
+
+    // Load example project
+    loadExample() {
+        this.clearLocal();
+        // this.resetProject();
+        // Create empty copy of Problem data object
+        this.problem = jQuery.extend(true, {}, Problem);
+        this.loadExampleProblem();
     }
 
     // HELPER FUNCTIONS
@@ -248,12 +272,10 @@ class ProblemManager {
 
     ////////////////// TESTING //////////////////////
     // load test problem
-    loadTestProblem() {
-        console.log("=====================TEST PROBLEM======================");
-        // DEEP COPY Problem to avoid referencing issues
+    loadExampleProblem() {
+        // DEEP COPY new Problem to avoid referencing issues
         this.problem = jQuery.extend(true, {}, Problem);
-        this.problem.type = "decision_making";
-        this.problem.title = "Test Problem";
+        this.problem.title = "Example Problem";
 
         this.addAlternative('Supplier A');
         this.addAlternative('Supplier B');
@@ -303,18 +325,18 @@ class ProblemManager {
         this.addCategory('Strategic Benefit');
         var category = this.problem.categories[2];
         var tmpCriteria = category.criteria[0];
-        tmpCriteria.name = "Criteria 1A"
+        tmpCriteria.name = "Criteria 3A"
         tmpCriteria.weight = 50;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        this.addCriterionTo(category, "Criteria 1B");
+        this.addCriterionTo(category, "Criteria 3B");
         tmpCriteria = category.criteria[1];
         tmpCriteria.weight = 20;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        this.addCriterionTo(category, "Criteria 1C");
+        this.addCriterionTo(category, "Criteria 3C");
         tmpCriteria = category.criteria[2];
         tmpCriteria.weight = 20;
         tmpCriteria.alternativeWeights = [100, 0, 0];
-        this.addCriterionTo(category, "Criteria 1D");
+        this.addCriterionTo(category, "Criteria 3D");
         tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 10;
         tmpCriteria.alternativeWeights = [100, 0, 0];
@@ -323,18 +345,18 @@ class ProblemManager {
         this.addCategory('Technical');
         var category = this.problem.categories[3];
         var tmpCriteria = category.criteria[0];
-        tmpCriteria.name = "Criteria 1A"
+        tmpCriteria.name = "Criteria 4A"
         tmpCriteria.weight = 100;
         tmpCriteria.alternativeWeights = [50, 30, 0];
-        this.addCriterionTo(category, "Criteria 1B");
+        this.addCriterionTo(category, "Criteria 4B");
         tmpCriteria = category.criteria[1];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [0, 0, 0];
-        this.addCriterionTo(category, "Criteria 1C");
+        this.addCriterionTo(category, "Criteria 4C");
         tmpCriteria = category.criteria[2];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [0, 0, 0];
-        this.addCriterionTo(category, "Criteria 1D");
+        this.addCriterionTo(category, "Criteria 4D");
         tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 0;
         tmpCriteria.alternativeWeights = [0, 0, 0];
@@ -343,18 +365,18 @@ class ProblemManager {
         this.addCategory('Risk');
         var category = this.problem.categories[4];
         var tmpCriteria = category.criteria[0];
-        tmpCriteria.name = "Criteria 1A"
+        tmpCriteria.name = "Criteria 5A"
         tmpCriteria.weight = 10;
         tmpCriteria.alternativeWeights = [60, 20, 0];
-        this.addCriterionTo(category, "Criteria 1B");
+        this.addCriterionTo(category, "Criteria 5B");
         tmpCriteria = category.criteria[1];
         tmpCriteria.weight = 20;
         tmpCriteria.alternativeWeights = [60, 0, 40];
-        this.addCriterionTo(category, "Criteria 1C");
+        this.addCriterionTo(category, "Criteria 5C");
         tmpCriteria = category.criteria[2];
         tmpCriteria.weight = 30;
         tmpCriteria.alternativeWeights = [50, 50, 0];
-        this.addCriterionTo(category, "Criteria 1D");
+        this.addCriterionTo(category, "Criteria 5D");
         tmpCriteria = category.criteria[3];
         tmpCriteria.weight = 40;
         tmpCriteria.alternativeWeights = [40, 30, 30];
@@ -362,6 +384,9 @@ class ProblemManager {
 
         // Force update for TESTING
         this.update();
+
+        console.log("EXAMPLE PROBLEM");
+        console.log(this.problem);
     }
 
 }

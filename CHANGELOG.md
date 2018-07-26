@@ -4,7 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/0.3.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.1.4] - 01-07-2018
+### Added
+- PDF print to file
+* Saved in browser downloads folder
+### Fixed
+- Inconsistencies with add/remove buttons enabling/disabling
+- Set first criterion weight to 100 to avoid validation problems
+
 ## [Unreleased] - 11-06-2018
+### Added
+- Save functionality
+* Saved as .json file type
+* Saved in browser downloads folder
+- Load functionality
+* Validation of json file - rejected if not
+* Validation of correct project type - rejected if not
+
+## [0.1.3] - 11-06-2018
 ### Added
 - Data entry validation on Data Entry page
 * criteria weights and category weights checked for viable totals

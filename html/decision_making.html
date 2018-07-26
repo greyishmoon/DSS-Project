@@ -32,6 +32,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/ractive"></script>
 	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
 	<script src="../libs/mdl-jquery-modal-dialog.js"></script>
+	<!-- jsPDF - for generating PDFs - from https://github.com/MrRio/jsPDF -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
+	<!-- jsPDF plugin - jsPDF-AutoTable - for tables in jsPDF - from https://github.com/simonbengtsson/jsPDF-AutoTable -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.js"></script>
 
 
 	<!-- Prototypes and general helper functions -->
@@ -64,7 +68,7 @@
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
-				<span class="mdl-layout-title">Decision Making 0.1.3</span>
+				<span class="mdl-layout-title">Decision Making 0.1.4</span>
 			</div>
 			<!-- Tabs -->
 			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -233,8 +237,8 @@
 				<br />
 				<!-- TODO - remove for production -->
 				<h5>EMERGENCY RESET</h5>
-				<p>Only use to reset project is development changes break browsers previous local save</p>
-				<button id="emergency-reset" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">RESET PROJECT</button>
+				<p>Only use to reset project if development changes break browsers previous local save</p>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent emergency-reset">RESET PROJECT</button>
 
 			</section>
 
@@ -266,7 +270,7 @@
 
 						<!-- Create full table for each Category -->
 						{{#each categories: catIndex}}
-						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-{{catIndex}}-table">
 							<thead>
 								<tr>
 									<!-- First header with Category name -->
@@ -382,7 +386,7 @@
 								<tr>
 									<!-- First header with Category name -->
 									<th class="mdl-data-table__cell--non-numeric width300">
-										<h6>Degrees of Belief</h6>
+										<h6>Category / Alternative</h6>
 									</th>
 
 									<!-- Repeat headers for each Alternative -->
@@ -437,7 +441,7 @@
 
 					<!-- TEMPLATE ractiveAlternatives -->
 					<script id="template-category-weights-table" type="text/ractive">
-						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-1-table">
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp" id="aggregated-weights-table">
 							<thead>
 								<tr>
 									<!-- First header with Category name -->
@@ -491,6 +495,11 @@
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500 go-tab-3-btn" type="button">Next ></button>
 				</div>
 
+				<!-- TODO - remove for production -->
+				<h5>EMERGENCY RESET</h5>
+				<p>Only use to reset project if development changes break browsers previous local save</p>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent emergency-reset">RESET PROJECT</button>
+
 			</section>
 
 
@@ -512,7 +521,7 @@
 					<script id="template-aggregated-beliefs-table" type="text/ractive">
 
 						<!-- Create summery table for all categories/alternatives showing degrees of belief -->
-						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp" id="aggregated-beliefs-table">
 							<thead>
 								<tr>
 									<!-- Repeat headers for each Alternative -->
@@ -560,7 +569,7 @@
 					<script id="template-distributed-ignorance-table" type="text/ractive">
 
 						<!-- Create summery table for all categories/alternatives showing degrees of belief -->
-						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp summary-table" id="summary-table">
+						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp" id="distributed-ignorance-table">
 							<thead>
 								<tr>
 									<!-- Repeat headers for each Alternative -->
@@ -604,6 +613,10 @@
 					<h4>IMPORTANT</h4>
 					<p>Please run this application in the <b><em>Chrome</em></b> browser for full file management functionality.</p>
 
+					<h4>Print to PDF</h4>
+					<p>Print project results to PDF - saved by project title to browser downloads folder.</p>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="printPDF">Print PDF</button>
+
 					<h4>Save Project</h4>
 					<p>The problem will be saved as <b>&lt;ProjectTitle&gt;-DSS-Problem.json</b> to your browsers <b>download folder</b>. After saving please manually move file to a permenant location for storage.</p>
 					<p>NOTE - Due to browser security previous saves of this project WILL NOT be overwritten automatically. Multiple saves of the same name will be appended (2)(3)(4) etc.</p>
@@ -620,16 +633,12 @@
 						LOAD PROJECT<input type="file" id="fileSelector" accept=".json"></label>
 
 
-					<!-- <input type="file" id="fileToLoad" accept=".json">
-
-					<Label class="input-custom-file mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="loadProject">
-						LOAD PROJECT<input type="file" id="uploadBtn"></label> -->
-
-					<!-- <div class="mdl-button mdl-button--primary mdl-button--icon mdl-button--file"><input type="file" id="uploadBtn">
-					</div> -->
-
 					<h4>Clear current project: WARNING - All unsaved data will be lost</h4>
-					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="reset">RESET PROJECT</button>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="reset-button">RESET PROJECT</button>
+
+					<h4>Load example project: WARNING - All unsaved data will be lost</h4>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
+
 				</div>
 
 			</section>
