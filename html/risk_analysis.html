@@ -22,15 +22,30 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<!-- Roboto font -->
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
+	<link href="../css/mdl-jquery-modal-dialog.css" rel="stylesheet" type="text/css">
 
-	<link href="../css/index.css" rel="stylesheet" type="text/css">
-	<script src="../libs/jquery-3.2.1.min.js"></script>
-	<!-- Project object definition -->
-	<script src="../js/project.js"></script>
-	<!-- DSS model script -->
-	<!-- <script src="js/model.js"></script> -->
+	<link href="../css/dss.css" rel="stylesheet" type="text/css">
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<!-- Ractive library TODO - change from CDN-->
+	<script src="https://cdn.jsdelivr.net/npm/ractive"></script>
+	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
+	<script src="../libs/mdl-jquery-modal-dialog.js"></script>
+	<!-- jsPDF - for generating PDFs - from https://github.com/MrRio/jsPDF -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
+	<!-- jsPDF plugin - jsPDF-AutoTable - for tables in jsPDF - from https://github.com/simonbengtsson/jsPDF-AutoTable -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.js"></script>
+
+
+	<!-- Prototypes and general helper functions -->
+	<script src="../js/prototypes.js"></script>
+	<!-- Project data object template -->
+	<script src="../js/projectTemplate.js"></script>
+	<!-- Project manager object - interaction between web page and problem data object -->
+	<script src="../js/projectManager.js"></script>
+
 	<!-- Main page script -->
-	<script src="../js/index.js"></script>
+	<script src="../js/risk_analysis.js"></script>
 
 
 
@@ -49,12 +64,12 @@
 			<header class="mdl-layout__header">
 				<div class="mdl-layout__header-row">
 					<!-- Title -->
-					<span class="mdl-layout-title">Risk Analysis</span>
+					<span class="mdl-layout-title">Risk Analysis 0.1.5</span>
 				</div>
 				<!-- Tabs -->
 				<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
 					<a class="mdl-layout__tab is-active" href="#page-1">Project Setup</a>
-					<a class="mdl-layout__tab" href="#page-2">Risk Categories</a>
+					<a class="mdl-layout__tab" href="#page-2">Risk Characteristics</a>
 					<a class="mdl-layout__tab" href="#page-3">Impact Assessment</a>
 					<a class="mdl-layout__tab" href="#page-4">Results</a>
 					<a class="mdl-layout__tab" href="#page-5">Summary</a>
@@ -75,358 +90,241 @@
 						<h4>Project Setup</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<form class="" action="index.html" method="post">
 
-							<!-- Project Title -->
-							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp project-setup">
+						<!-- Project Title -->
+						<!-- TARGET ractiveTitle -->
+						<div id="target-title-table"></div>
+
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-title-table" type="text/ractive">
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
 								<tr>
-									<td class="project-setup left">
-										<h5>Project Title: </h5></td>
-									<td class="mdl-data-table__cell--non-numeric project-setup right">
+									<td class="narrow">
+										<h5>Project Title: </h5>
+									</td>
+									<td class="mdl-data-table__cell--non-numeric fillWidth narrow">
 										<div class="mdl-textfield mdl-js-textfield">
-											<input class="mdl-textfield__input" type="text" id="project-title" value="">
-											<label class="mdl-textfield__label" for="project-title">Project Title...</label>
+											<input class="mdl-textfield__input" type="text" id="problem-title" value="{{name}}">
+											<label class="mdl-textfield__label">Project Title...</label>
 										</div>
 									</td>
 								</tr>
 								<!-- Project Cost -->
 								<tr>
-									<td>
-										<h5>Project Cost: £</h5></td>
-									<td class="mdl-data-table__cell--non-numeric">
-										<div class="mdl-textfield mdl-js-textfield" align="left">
-											<input class="mdl-textfield__input" type="text" id="project-cost" pattern="-?[0-9]*(\.[0-9]+)?" value="" textalign="left">
-											<label class="mdl-textfield__label" for="project-cost">Initial Project Cost...</label>
-											<span class="mdl-textfield__error">Input is not a number</span>
+									<td class="narrow">
+										<h5>Project Cost: £</h5>
+									</td>
+									<td class="mdl-data-table__cell fillWidth narrow">
+										<div class="mdl-textfield mdl-js-textfield">
+											<input class="mdl-textfield__input" type="text" id="project-cost" pattern="-?[0-9]*(\.[0-9]+)?" value={{cost}} textalign="left">
+											<label class="mdl-textfield__label">Project Cost...</label>
 										</div>
 									</td>
 								</tr>
 							</table>
 
-							<!-- Project Risk Categories -->
-							<h4>Project Risk Categories</h4>
-							<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+						</script>
 
-							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp project-setup" id="category-table">
+
+						<!-- Risk Categories -->
+						<h4>Risk Categories</h4>
+						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<!-- TARGET ractiveAlternatives -->
+						<div id="target-categories-table"></div>
+
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-categories-table" type="text/ractive">
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow" id="categories-table">
 								<thead>
 									<tr>
-										<th class="mdl-data-table__cell--non-numeric risk-cats left">
-											<h5>Risk Category Title</h5>
-										</th>
-										<th class="mdl-data-table__cell--center risk-cats right">
-											<h6>Remove</h6>
+										<th class="mdl-data-table__cell--non-numeric">
+											<h5>Categories</h5>
 										</th>
 									</tr>
 								</thead>
 
 								<tbody>
-									<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
-								</tbody>
-							</table>
-
-							<!-- Buttons layout table -->
-							<table class="button-table-cats">
-								<tbody>
+									{{#each categories:i}}
 									<tr>
-										<td class="mdl-data-table__cell--non-numeric">
-											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-category">Add Category</button>
-										</td>
-										<td>
-											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="delete-categories" style="float: right">Remove Categories</button>
+										<td class="mdl-data-table__cell--non-numeric narrow">
+											<div class="mdl-textfield mdl-js-textfield">
+												<input class="mdl-textfield__input category" type="text" value="{{name}}">
+												<label class="mdl-textfield__label">Category...</label>
+											</div>
 										</td>
 									</tr>
+									{{/each}}
 								</tbody>
 							</table>
+						</script>
 
-
+						<!-- Buttons layout table -->
+						<table class="button-table narrow">
+							<tbody>
+								<tr>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="add-category">Add Category</button>
+									</td>
+									<td>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="remove-category" style="float: right">Remove Category</button>
+									</td>
+								</tr>
 							</tbody>
-							</table>
+						</table>
 
-						</form>
+						<!-- Goto RISK CHARACTERISTICS -->
+						<br>
+						<div>
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500 go-tab-1-btn" type="button">Next ></button>
+						</div>
+
 					</div>
 
-					<!-- TODO - REMOVE -->
-					<br><br><br>
-					<div id="test-div">
-					</div>
 				</section>
+
+
+
+
+
+
 
 
 				<!-- RISK CATEGORIES CONTENT ***************************************** -->
 				<section class="mdl-layout__tab-panel" id="page-2">
 					<div class="page-content">
 						<!-- Project Risks -->
-						<h4>Risk Categories</h4>
+						<h4>Risk Characteristics</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
-							<thead>
-								<tr>
-									<th class="mdl-data-table__cell--non-numeric">
-										<h5>Financial</h5>
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Risk weight
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Likelihood of Occurrence
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Coefficient of Project Features
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Controllability
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Dependency
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Probability
-									</th>
-									<th class="mdl-data-table__cell--center">
-										<h6>Remove</h6>
-									</th>
-								</tr>
-							</thead>
 
-							<tbody>
-								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
-								<tr>
-									<td class='mdl-data-table__cell--non-numeric'>
-										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value='Program delivery'><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
-									</td>
-									<td class='mdl-data-table__cell--center'>1</td>
-									<td class='mdl-data-table__cell--center'>2</td>
-									<td class='mdl-data-table__cell--center'>3</td>
-									<td class='mdl-data-table__cell--center'>4</td>
-									<td class='mdl-data-table__cell--center'>5</td>
-									<td class='mdl-data-table__cell--center'>6</td>
-									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
-								</tr>
-
-								<tr>
-									<td class='mdl-data-table__cell--non-numeric'>
-										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value='Design growth'><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
-									</td>
-									<td class='mdl-data-table__cell--center'>1</td>
-									<td class='mdl-data-table__cell--center'>2</td>
-									<td class='mdl-data-table__cell--center'>3</td>
-									<td class='mdl-data-table__cell--center'>4</td>
-									<td class='mdl-data-table__cell--center'>5</td>
-									<td class='mdl-data-table__cell--center'>6</td>
-									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
-								</tr>
-
-								<tr>
-									<td class='mdl-data-table__cell--non-numeric'>
-										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value='Sub-contractor pricing'><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
-									</td>
-									<td class='mdl-data-table__cell--center'>1</td>
-									<td class='mdl-data-table__cell--center'>2</td>
-									<td class='mdl-data-table__cell--center'>3</td>
-									<td class='mdl-data-table__cell--center'>4</td>
-									<td class='mdl-data-table__cell--center'>5</td>
-									<td class='mdl-data-table__cell--center'>6</td>
-									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
-								</tr>
-							</tbody>
-						</table>
-						<!-- Buttons layout table -->
-						<table class="button-table-risks">
-							<tbody>
-								<tr>
-									<td class="mdl-data-table__cell--non-numeric">
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-risk">Add Risk</button>
-									</td>
-									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="delete-risks" style="float: right">Remove Risks</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-
-						<!-- TEMP MOCK TABLE -->
-						<br />
-						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
-							<thead>
-								<tr>
-									<th class="mdl-data-table__cell--non-numeric">
-										<h5>Technical & Operational</h5>
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Risk weight
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Likelihood of Occurrence
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Coefficient of Project Features
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Controllability
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Dependency
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Probability
-									</th>
-									<th class="mdl-data-table__cell--center">
-										<h6>Remove</h6>
-									</th>
-								</tr>
-							</thead>
-
-							<tbody>
-								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
-								<tr>
-									<td class='mdl-data-table__cell--non-numeric'>
-										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
-									</td>
-									<td class='mdl-data-table__cell--center'>1</td>
-									<td class='mdl-data-table__cell--center'>2</td>
-									<td class='mdl-data-table__cell--center'>3</td>
-									<td class='mdl-data-table__cell--center'>4</td>
-									<td class='mdl-data-table__cell--center'>5</td>
-									<td class='mdl-data-table__cell--center'>6</td>
-									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
-								</tr>
-
-								<tr>
-									<td class='mdl-data-table__cell--non-numeric'>
-										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
-									</td>
-									<td class='mdl-data-table__cell--center'>1</td>
-									<td class='mdl-data-table__cell--center'>2</td>
-									<td class='mdl-data-table__cell--center'>3</td>
-									<td class='mdl-data-table__cell--center'>4</td>
-									<td class='mdl-data-table__cell--center'>5</td>
-									<td class='mdl-data-table__cell--center'>6</td>
-									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
-								</tr>
-
-								<tr>
-									<td class='mdl-data-table__cell--non-numeric'>
-										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
-									</td>
-									<td class='mdl-data-table__cell--center'>1</td>
-									<td class='mdl-data-table__cell--center'>2</td>
-									<td class='mdl-data-table__cell--center'>3</td>
-									<td class='mdl-data-table__cell--center'>4</td>
-									<td class='mdl-data-table__cell--center'>5</td>
-									<td class='mdl-data-table__cell--center'>6</td>
-									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
-								</tr>
-							</tbody>
-						</table>
-						<!-- Buttons layout table -->
-						<table class="button-table-risks">
-							<tbody>
-								<tr>
-									<td class="mdl-data-table__cell--non-numeric">
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-risk">Add Risk</button>
-									</td>
-									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="delete-risks" style="float: right">Remove Risks</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-
-						<br />
-						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-table" id="risk-table">
-							<thead>
-								<tr>
-									<th class="mdl-data-table__cell--non-numeric">
-										<h5>Managerial & Legal</h5>
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Risk weight
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Likelihood of Occurrence
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Coefficient of Project Features
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Controllability
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Dependency
-									</th>
-									<th class="mdl-data-table__cell--center">
-										Probability
-									</th>
-									<th class="mdl-data-table__cell--center">
-										<h6>Remove</h6>
-									</th>
-								</tr>
-							</thead>
-
-							<tbody>
-								<!-- CATEGORY ROWS ADDED DYNAMICALLY HERE -->
-								<tr>
-									<td class='mdl-data-table__cell--non-numeric'>
-										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
-									</td>
-									<td class='mdl-data-table__cell--center'>1</td>
-									<td class='mdl-data-table__cell--center'>2</td>
-									<td class='mdl-data-table__cell--center'>3</td>
-									<td class='mdl-data-table__cell--center'>4</td>
-									<td class='mdl-data-table__cell--center'>5</td>
-									<td class='mdl-data-table__cell--center'>6</td>
-									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
-								</tr>
-
-								<tr>
-									<td class='mdl-data-table__cell--non-numeric'>
-										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
-									</td>
-									<td class='mdl-data-table__cell--center'>1</td>
-									<td class='mdl-data-table__cell--center'>2</td>
-									<td class='mdl-data-table__cell--center'>3</td>
-									<td class='mdl-data-table__cell--center'>4</td>
-									<td class='mdl-data-table__cell--center'>5</td>
-									<td class='mdl-data-table__cell--center'>6</td>
-									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
-								</tr>
-
-								<tr>
-									<td class='mdl-data-table__cell--non-numeric'>
-										<div class='mdl-textfield mdl-js-textfield'><input class='mdl-textfield__input' type='text' id='project-title' value=''><label class='mdl-textfield__label' for='project-title'>Risk Category...</label></div>
-									</td>
-									<td class='mdl-data-table__cell--center'>1</td>
-									<td class='mdl-data-table__cell--center'>2</td>
-									<td class='mdl-data-table__cell--center'>3</td>
-									<td class='mdl-data-table__cell--center'>4</td>
-									<td class='mdl-data-table__cell--center'>5</td>
-									<td class='mdl-data-table__cell--center'>6</td>
-									<td class='mdl-data-table__cell--center'><label class='mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select'><input type='checkbox' class='mdl-checkbox__input' name='categorySelect'/></label></td>
-								</tr>
-							</tbody>
-						</table>
-						<!-- Buttons layout table -->
-						<table class="button-table-risks">
-							<tbody>
-								<tr>
-									<td class="mdl-data-table__cell--non-numeric">
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="add-risk">Add Risk</button>
-									</td>
-									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" id="delete-risks" style="float: right">Remove Risks</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						<!-- TARGET ractiveAlternatives -->
+						<div id="target-risks-table"></div>
 
 
 
+						<!-- TEMPLATE ractiveAlternatives -->
+						<script id="template-risks-table" type="text/ractive">
+
+							<!-- Create full table for each Category -->
+							{{#each categories: catIndex}}
+							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp criteria-table" id="criteria-{{catIndex}}-table">
+								<thead>
+									<tr>
+										<!-- First header with Category name -->
+										<th class="mdl-data-table__cell--non-numeric width300 hlBlue wrap">
+											<h5>{{name}} Risks</h5>
+										</th>
+
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen200 wrap smallText">
+											Risk Weight<br /><b>%</b>
+										</th><th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen wrap smallText">
+											Likelihood of Occurrence<br /><b>%</b>
+										</th>
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen wrap smallText">
+											Coefficient of Project Features<br /><b>%</b>
+										</th>
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen wrap smallText">
+											Controllability<br /><b>%</b>
+										</th>
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen wrap smallText">
+											Dependency<br /><b>%</b>
+										</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<!-- RISK ROWS ADDED DYNAMICALLY HERE -->
+									<!-- Create row for each Risk -->
+									{{#each risks: riskIndex}}
+									<tr>
+										<!-- First cell - Criteria name field -->
+										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
+											<div class="mdl-textfield mdl-js-textfield">
+												<input class="mdl-textfield__input" type="text" value="{{name}}">
+												<label class="mdl-textfield__label">Risk...</label>
+											</div>
+										</td>
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen200" id="lastNumber">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{weight}}">
+												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+											</div>
+										</td>
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{occurrence}}">
+												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+											</div>
+										</td>
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{coefficient}}">
+												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+											</div>
+										</td>
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{controllability}}">
+												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+											</div>
+										</td>
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{dependency}}">
+												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+											</div>
+										</td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+
+							<!-- Buttons layout table -->
+							<table class="button-table">
+								<tbody>
+									<tr>
+										<td>
+											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored add-risk" type="button" data-id="{{catIndex}}" id='add-risk{{catIndex}}' {{#if risks.length>=6}} disabled='true' {{/if}}>Add Risk</button>
+										</td>
+										<td>
+											<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored remove-risk" type="button" style="float: right" data-id="{{catIndex}}" id='remove-risk{{catIndex}}' {{#if risks.length<=1}} disabled='true' {{/if}} >Remove Risk</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<br /> {{/each}}
+
+						</script>
 
 
+						<!-- Next Tab button -->
+						<br>
+						<!-- Goto IMPACT ASSESSMENT -->
+						<div>
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500 go-tab-2-btn" type="button">Next ></button>
+						</div>
 
 					</div>
 				</section>
+
+
+
+
+
+
 
 				<!-- IMPACT ASSESSMENT CONTENT *************************************** -->
 				<section class="mdl-layout__tab-panel" id="page-3">
@@ -761,7 +659,12 @@
 						</table>
 
 
-
+						<!-- Next Tab button -->
+						<br>
+						<!-- Goto RESULTS PAGE -->
+						<div>
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500 go-tab-3-btn" type="button">Next ></button>
+						</div>
 					</div>
 				</section>
 
@@ -1220,7 +1123,12 @@
 							</tbody>
 						</table>
 
-
+						<!-- Next Tab button -->
+						<br>
+						<!-- Goto SUMMARY PAGE -->
+						<div>
+							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500 go-tab-4-btn" type="button">Next ></button>
+						</div>
 					</div>
 				</section>
 

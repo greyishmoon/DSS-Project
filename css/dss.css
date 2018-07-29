@@ -47,8 +47,12 @@
   background: #FFFF8D;
 }
 .hlGreen{
-  /* MDL - mdl-color--green-A100 */
+  /* MDL - mdl-color--light-green-A100 */
   background: #CCFF90;
+}
+.hlGreen200{
+  /* MDL - mdl-color--light-green-A100 */
+  background: #B2FF59;
 }
 .hlPurple{
   /* MDL - mdl-color--purple-100 */
@@ -125,6 +129,15 @@ th.width300 {
 th.width150 {
   width: 150px;
   padding: 8px 8px;
+}
+/* wrap text in cell */
+th.wrap {
+    white-space: normal;
+    word-wrap:break-word
+}
+/* reduce size of header text */
+th.smallText {
+    font-size: 12px;
 }
 /* Center and reduce width for number inputs*/
 input.number {

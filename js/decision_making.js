@@ -2,16 +2,16 @@
 
 var dataManager; // Manager holding the Problem data object
 // Ractive components
-var ractiveTitle, ractiveAlternatives, ractiveCategorys, ractiveData, ractiveSummary, ractiveCategoryWeights, ractiveAggregatedBeliefs, ractiveDistributedIgnorance;
+var ractiveTitle, ractiveAlternatives, ractiveCategories, ractiveData, ractiveSummary, ractiveCategoryWeights, ractiveAggregatedBeliefs, ractiveDistributedIgnorance;
 
 var minAltCount = 1; // Number of alternatives - limited >=1 <=6
 var maxAltCount = 6;
 
-var simTabClicked = false; // Temporarily records if tab click is being simulated by code - used to stop recursive loop when redirecting pages to hichlight errors
+var simTabClicked = false; // Temporarily records if tab click is being simulated by code - used to stop recursive loop when redirecting pages to highlight errors
 var delayInMillisecondsForward = 10; // timer for simTabClicked reset
 var delayInMillisecondsReset = 100; // timer for simTabClicked reset
 
-// dataEntryGroupFault - Records if there are any incorrect group totals on dta entry page ()
+// dataEntryGroupFault - Records if there are any incorrect group totals on data entry page ()
 // Supplier weights for each criteria should not exceed 100
 // criteria weights for a category should total 100
 var dataEntryGroupFault = false;
@@ -21,14 +21,9 @@ var summaryWeightsFault = false
 
 $(document).ready(function() {
 
-    // Datamanager that stores problem data
-    dataManager = new ProblemManager();
 
-    // Initialse Ractive objects
-    setRactives();
 
-    // Run dynamic elements initialisation
-    onProjectLoad();
+
 
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -38,9 +33,35 @@ $(document).ready(function() {
         alert('File saving is not fully supported in this browser.');
     }
 
+    // Run dynamic elements initialisation
+    onProjectLoad();
+
 });
 
 ///////////////////////// ON LOAD //////////////////////////
+// Initialise listeners etc when project is loaded
+function onProjectLoad() {
+    // Datamanager that stores problem data
+    dataManager = new ProblemManager();
+
+    // Initialse Ractive objects
+    setRactives();
+
+    // SET LISTENERS ON DYNAMIC CONTENT
+    setListeners();
+
+    // Load file from file selecter (unable to get JQuery change() to trigger)
+    document.getElementById("fileSelector").onchange = function() {
+        // Get file
+        var fileToLoad = this.files[0];
+        // Load file (callback to loadProject(JSON) below for validation)
+        loadFileAsJSobject(fileToLoad, loadProject);
+    };
+
+    update();
+
+}
+
 // Set ractive data bindings
 function setRactives() {
     // Initialse Ractive objects
@@ -57,7 +78,7 @@ function setRactives() {
         data: dataManager.problem
     });
     // CATEGORIES TABLE
-    ractiveCategorys = new Ractive({
+    ractiveCategories = new Ractive({
         target: '#target-categories-table',
         template: '#template-categories-table',
         data: dataManager.problem
@@ -93,9 +114,12 @@ function setRactives() {
         data: dataManager.problem
     });
 }
+///////////////////////// ON LOAD //////////////////////////
 
-// Initialise listeners etc when project is loaded
-function onProjectLoad() {
+
+//////////////////// DYNAMIC LISTENERS /////////////////////
+// Set dynamic listeners
+function setListeners() {
     // LISTENERS
     // PROJECT
     // Tab button LISTENERS
@@ -118,14 +142,6 @@ function onProjectLoad() {
     // Save project button
     $('#saveProject').on('click', saveProject);
 
-    // Load file from file selecter (unable to get JQuery change() to trigger)
-    document.getElementById("fileSelector").onchange = function() {
-        // Get file
-        var fileToLoad = this.files[0];
-        // Load file (callback to loadProject(JSON) below for validation)
-        loadFileAsJSobject(fileToLoad, loadProject);
-    };
-
     // Reset project button
     $('#reset-button').on('click', resetProject);
     // TODO - remove for production - emergency reset button emergency-reset
@@ -141,18 +157,8 @@ function onProjectLoad() {
     $('.go-tab-3-btn').on('click', goTab3);
     // Scroll to top buttons (if needed)
     $("#scroll-up-btn").click(scrollToTop);
-
-    // SET LISTENERS ON DYNAMIC CONTENT
-    resetListeners();
-
-    update();
-
 }
-
-
-
-//////////////////// DYNAIMC LISTENERS /////////////////////
-// Remove and set listeners on dynamic content
+// Remove and reset listeners on dynamic content
 function resetListeners() {
     // CRITERIA
     // Remove all listeners on input fields
@@ -167,10 +173,10 @@ function resetListeners() {
     $('.remove-criteria').on('click', removeCriteria);
     // Input change listener - whenever focus leaves input update data object
     $('input').on('focusout', update);
-    // Input change listener - FOR INPUT CELLS ON RESULTS PAGE - to force data update
+    // Input change listener - FOR INPUT CELLS ON SUMMARY PAGE - to force data update
     $('input.summaryInput').on('focusout', updateData);
 }
-//////////////////// DYNAIMC LISTENERS /////////////////////
+//////////////////// DYNAMIC LISTENERS /////////////////////
 
 function jsfunction() {
     console.log(">>>>>>>>>>>>>>>>>>>>>>TAB FUNCTION <<<<<<<<<<<<<<<<");
@@ -195,8 +201,8 @@ function tabClicked() {
 
     //window.scrollTo(0, 0);
     // TODO - TEMP ADDITION TO UPDATE DATA ON TAB CHANGE - MAY BE ABLE TO REMOVE IF NO PROBLEM CALLING DATA.UPDATE FROM THIS.UPDATE
-    updateData()
-    console.log("TAB CLICKED");
+    updateData();
+    scrollToTop();
 }
 
 function resetTabClick() {
@@ -319,6 +325,7 @@ function goTab0() {
 function goTab1() {
 
     $(".mdl-layout__tab:eq(1) span").click();
+    scrollToTop();
 }
 // Summary
 function goTab2() {
@@ -331,6 +338,7 @@ function goTab2() {
         showDataEntryWarningDialogue();
     } else {
         $(".mdl-layout__tab:eq(2) span").click();
+        scrollToTop();
     }
 
 }
@@ -345,37 +353,21 @@ function goTab3() {
         showSummaryWarningDialogue();
     } else {
         $(".mdl-layout__tab:eq(3) span").click();
+        scrollToTop();
     }
 }
 // Instructions
 function goTab4() {
     // alert("TEST");
     $(".mdl-layout__tab:eq(4) span").click();
+    scrollToTop();
 }
 // Save/Load
 function goTab5() {
     // alert("TEST");
     $(".mdl-layout__tab:eq(5) span").click();
+    scrollToTop();
 }
-
-// TODO complete scroll fix
-// references https://codepen.io/mdlhut/pen/BNeoVa https://codepen.io/exam/pen/ZbvLPO
-var scrollTo = function(top) {
-    var content = $(".page-content");
-    var target = top ? 0 : $(".page-content").height();
-    content.stop().animate({
-        scrollTop: target
-    }, "slow");
-};
-
-var scrollToTop = function() {
-    scrollTo(true);
-    console.log(("SCROLL UP"));
-};
-
-var scrollToBottom = function() {
-    scrollTo(false);
-};
 
 ////////////////// NAVIGATION /////////////////
 
@@ -388,15 +380,12 @@ function update() {
     // Update ractive components
     ractiveTitle.update();
     ractiveAlternatives.update();
-    ractiveCategorys.update();
+    ractiveCategories.update();
     ractiveData.update();
     ractiveSummary.update();
     ractiveCategoryWeights.update();
     ractiveAggregatedBeliefs.update();
     ractiveDistributedIgnorance.update();
-
-    // TODO - remove
-    dialog = $('dialog');
 
     // Upgrade all added MDL elements
     upgradeMDL();
@@ -920,6 +909,24 @@ function enableButton(buttonID) {
 function disableButton(buttonID) {
     $(buttonID).attr("disabled", true);
 }
+
+// SCROLL FUNCTIONS
+// Force scroll up using scrollToTop();
+// Force scroll down using scrollToBottom();
+var scrollTo = function(top) {
+  var content = $(".mdl-layout__content");
+  var target = top ? 0 : $(".page-content").height();
+  content.stop().animate({ scrollTop: target }, "fast");
+};
+
+var scrollToTop = function() {
+  scrollTo(true);
+};
+
+var scrollToBottom = function() {
+  scrollTo(false);
+};
+
 ///////// GENERAL HELPER FUNCTIONS ////////////
 
 ///////// DEBUG FUNCTIONS /////////////

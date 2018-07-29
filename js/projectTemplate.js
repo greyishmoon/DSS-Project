@@ -1,21 +1,32 @@
-var project = {
-	name: "name",			// string - project name
-	cost: 60000,			// int - project cost in £
-	categories: [],			// array of categories
-	percentages: []
+const Project = {
+    name: "", // string - project name
+    cost: 0, // int - project cost in £
+    categories: [], // array of category objects
+    grades: [1, 2, 3] // 3 percentages to be applied to impact assessment for whole project - default 1,2,3
 }
 
-var category = {
-	name: "name",
-	risks: []
+const Category = {
+    name: "", // string - category name
+    risks: [], // array of risk objects
+    zeroAggregate: [0, 0, 0], // 3 aggregated results for zero risk impact
+    costAggregate: [0, 0, 0], // 3 aggregated results relating to project grades
+    durationAggregate: [0, 0, 0], // 3 aggregated results relating to project grades
+    qualityAggregate: [0, 0, 0], // 3 aggregated results relating to project grades
 }
 
-var risk = {
-	name: "name",
-	weight: 0,				// 0 - 1
-	occurance: 0,			// 0 - 1
-	coefficient: 0,			// 0 - 1
-	controllability: 0,		// 0 - 1
-	dependency: 0			// 0 - 1
+const Risk = {
+    name: "", // string - risk name
+    weight: 0, // 0 - 100
+    occurrence: 0, // 0 - 100
+    coefficient: 0, // 0 - 100
+    controllability: 0, // 0 - 100
+    dependency: 0, // 0 - 100
+    costImpact: [0, 0, 0], // 3 percentages relating to project grades
+    durationImpact: [0, 0, 0], // 3 percentages relating to project grades
+    qualityImpact: [0, 0, 0], // 3 percentages relating to project grades
+    zeroAssessment: [0, 0, 0], // 3 calculated results for zero risk impact
+    costAssessment: [0, 0, 0], // 3 calculated results relating to project grades
+    durationAssessment: [0, 0, 0], // 3 calculated results relating to project grades
+    qualityAssessment: [0, 0, 0], // 3 calculated results relating to project grades
 
 }

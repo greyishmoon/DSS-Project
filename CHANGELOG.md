@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/0.3.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.1.5] - 26-07-2018
+### Added
+- Scroll up on next buttons and tab clicks on decision making page
+- RISK ANALYSIS DEV
+- Problem data object definition and creation
+- Problem setup page
+- Ractive link
+- Risk categories table
+* Add / remove buttons
+* Buttons limited to 1-6 categories
+- Next page buttons
+* With scroll up function
+- Risk Characteristics tables
+- Limited # of Categories to 6
+- Limited # of Risks to 6
+
 ## [0.1.4] - 01-07-2018
 ### Added
 - PDF print to file
