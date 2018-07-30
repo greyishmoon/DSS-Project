@@ -135,6 +135,7 @@ function setListeners() {
     $('#add-category').on('click', addCategory);
     // Remove last category
     $('#remove-category').on('click', removeCategory);
+    
     // LOAD/SAVE PAGE
     // Print to PDF
     $('#printPDF').on('click', printPDF);

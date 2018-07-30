@@ -171,8 +171,7 @@ class ProblemManager {
 
     // Clear local Storage
     clearLocal() {
-        localStorage.clear();
-        sessionStorage.clear();
+        localStorage.setObject('problemData', null);
 
     }
 

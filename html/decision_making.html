@@ -68,7 +68,7 @@
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
-				<span class="mdl-layout-title">Decision Making 0.1.5</span>
+				<span class="mdl-layout-title">Decision Making 0.1.6</span>
 			</div>
 			<!-- Tabs -->
 			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -272,19 +272,19 @@
 							<thead>
 								<tr>
 									<!-- First header with Category name -->
-									<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
+									<th class="mdl-data-table__cell--non-numeric width300 hlBlue200">
 										<h5>{{name}} Criteria</h5>
 									</th>
 
 									<!-- Repeat headers for each Alternative -->
 									{{#each alternatives: altIndex}}
 									<!-- For testing paste 14charsaaaaaax into Alt names -->
-									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlGreen number">
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue number">
 										<h6>{{this}}</h6><b>%</b>
 									</th>
 									{{/each}}
 									<!-- Final header -->
-									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
+									<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue200">
 										<h5>Weight</h5>%
 									</th>
 
@@ -297,7 +297,7 @@
 								{{#each criteria: critIndex}}
 								<tr>
 									<!-- First cell - Criteria name field -->
-									<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
+									<td class="mdl-data-table__cell--non-numeric narrow hlGreen200">
 										<div class="mdl-textfield mdl-js-textfield">
 											<input class="mdl-textfield__input" type="text" value="{{name}}">
 											<label class="mdl-textfield__label">Criteria...</label>
@@ -315,7 +315,7 @@
 									</td>
 									{{/each}}
 
-									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlBlue" id="lastNumber">
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen200" id="lastNumber">
 										<div class="mdl-textfield mdl-js-textfield number">
 											<!-- Input validation - numbers 0-100 -->
 											<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{weight}}">
@@ -608,7 +608,6 @@
 			<!-- SAVE / LOAD PAGE ************************************************ -->
 			<section class="mdl-layout__tab-panel" id="page-6">
 				<div class="page-content">
-					<h4>IMPORTANT</h4>
 					<p>Please run this application in the <b><em>Chrome</em></b> browser for full file management functionality.</p>
 
 					<h4>Print to PDF</h4>

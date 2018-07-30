@@ -42,6 +42,10 @@
   /* MDL - mdl-color--blue-100 */
   background: #BBDEFB;
 }
+.hlBlue200 {
+  /* MDL - mdl-color--blue-200 */
+  background: #90CAF9;
+}
 .hlYellow {
   /* MDL - mdl-color--yellow-A100 */
   background: #FFFF8D;
@@ -51,8 +55,10 @@
   background: #CCFF90;
 }
 .hlGreen200{
-  /* MDL - mdl-color--light-green-A100 */
-  background: #B2FF59;
+  /* MDL - mdl-color--light-green-A200 */
+  /* background: #B2FF59; */
+  /* Custom solour to not be as harsh as green-A200 */
+  background: #bcff70;
 }
 .hlPurple{
   /* MDL - mdl-color--purple-100 */
@@ -61,6 +67,10 @@
 .hlRed{
   /* MDL - mdl-color--red-100 */
   background: #FFCDD2;
+}
+.hlLightGrey{
+  /* MDL - mdl-color--gray-100 */
+  background: #F5F5F5;
 }
 .hlWarningRed{
   /* MDL - mdl-color--red-400 */
@@ -79,6 +89,28 @@
 /* Menu button table - pad top*/
 td.menu {
     padding: 10px;
+}
+
+/****************** RISK ANALYSIS ****************/
+
+/* Impact assessmnet page */
+/* Impact table custom cell text */
+th.impact-header {
+    font-size: 16px;
+}
+th.blank, td.blank {
+    padding: 0px;
+    border: 0px;
+    width: 5px;
+    /* MDL - mdl-color--gray-100 */
+    background: #E0E0E0;
+}
+th.impact-column {
+    width: 200px;
+}
+th.width400 {
+  width: 400px;
+  padding: 8px 8px;
 }
 
 /****************** DECISION MAKING ****************/

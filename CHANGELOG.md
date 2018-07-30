@@ -4,10 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/0.3.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.1.6] - 30-07-2018
+### Altered
+- reformatted colours on data entry tables
+### Added
+- (RISK ANALYSIS TOOL)
+- Impact assessment tables
+* Grades of Impact table
+* Degrees of Belief table
+- Save/Load buttons
+- Reset project functionality
+- Load example project functionality
+- Example project based on spreadsheet (in projectManager)
+
+
 ## [0.1.5] - 26-07-2018
 ### Added
 - Scroll up on next buttons and tab clicks on decision making page
-- RISK ANALYSIS DEV
+- (RISK ANALYSIS TOOL)
 - Problem data object definition and creation
 - Problem setup page
 - Ractive link

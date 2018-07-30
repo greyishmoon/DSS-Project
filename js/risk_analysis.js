@@ -3,7 +3,7 @@
 var projectManager; // Manager holding the Problem data object
 var project; // Link to project data
 // Ractive components
-var ractiveTitle, ractiveCategories, ractiveRisks;
+var ractiveTitle, ractiveCategories, ractiveRisks, ractiveGrades, ractiveImpacts;
 
 var minCatCount = 1; // Number of categories - limited >=1 <=6
 var maxCatCount = 6;
@@ -68,6 +68,18 @@ function setRactives() {
         template: '#template-risks-table',
         data: project
     });
+	// GRADES OF IMPACT TABLE
+    ractiveGrades = new Ractive({
+        target: '#target-grades-table',
+        template: '#template-grades-table',
+        data: project
+    });
+	// DEGREES OF BELIEF IMPACT TABLE
+    ractiveImpacts = new Ractive({
+        target: '#target-impacts-table',
+        template: '#template-impacts-table',
+        data: project
+    });
 }
 
 // Initialise listeners etc when project is loaded
@@ -85,22 +97,38 @@ function onProjectLoad() {
 // Set dynamic listeners
 function setListeners() {
     // LISTENERS
-    // PROJECT
-    // Tab button LISTENERS
+    // TAB CLICK LISTENER
     $('.mdl-layout__tab').on('click', tabClicked);
-    // PROJECT SETUP
+
+	// TABLE CELL LISTENERS
+	// Input change listener - whenever focus leaves input update data object
+    $('input').on('focusout', update);
+    // Input change listener - FOR INPUT CELLS ON SUMMARY PAGE - to force data update
+    $('input.summaryInput').on('focusout', updateData);
+
+    // PROJECT SETUP PAGE
     // Add category
     $('#add-category').on('click', addCategory);
     // Remove last category
     $('#remove-category').on('click', removeCategory);
+
+	// RISK CHARACTERISTICS PAGE
     // Add risk to specific category - use class not ID due to repeats
     $('.add-risk').on('click', addRisk);
     // Remove last risk to specific category
     $('.remove-risk').on('click', removeRisk);
-    // Input change listener - whenever focus leaves input update data object
-    $('input').on('focusout', update);
-    // Input change listener - FOR INPUT CELLS ON SUMMARY PAGE - to force data update
-    $('input.summaryInput').on('focusout', updateData);
+
+	// LOAD/SAVE PAGE
+    // Print to PDF
+    $('#printPDF').on('click', printPDF);
+    // Save project button
+    $('#saveProject').on('click', saveProject);
+    // Reset project button
+    $('#reset-button').on('click', resetProject);
+    // TODO - remove for production - emergency reset button emergency-reset
+    $('.emergency-reset').on('click', resetProject);
+    // Load example project button
+    $('#loadExample-button').on('click', loadExampleProject);
 
     // TAB NAVIGATION
     // Next button on each tab to simulate click on tab
@@ -174,7 +202,6 @@ function tabClicked() {
     // }
 
     //updateData()
-    console.log("TAB CLICKED");
     scrollToTop();
 }
 
@@ -252,6 +279,8 @@ function updateRactives() {
     ractiveTitle.update();
     ractiveCategories.update();
     ractiveRisks.update();
+	ractiveGrades.update();
+	ractiveImpacts.update();
 }
 
 // UPDATE ractive model to display changes, upgrade MDL elements and reset listeners
@@ -266,7 +295,7 @@ function update() {
     resetListeners();
 
     // Initiate save to localStorage on every data change
-    //saveLocal();
+    saveLocal();
 
     // Log updated data object
     console.log(project);
@@ -275,7 +304,12 @@ function update() {
     checkButtons();
 
     // Update interface - check group totals and alter table colours warning of problems
-    //updateInterface();
+    // updateInterface();
+}
+
+// Save data to localStorage
+function saveLocal() {
+    projectManager.saveLocal();
 }
 
 // UPDATE DATA calculation - on tab change AND ractive changes on Results page
@@ -336,7 +370,145 @@ function removeRisk(event) {
 ///////////////////// RISKS /////////////////////
 
 
-///////// GENERAL HELPER FUNCTIONS ////////////
+///////////// PRINT / LOAD / SAVE ///////////////
+
+// Print project reults to PDF
+function printPDF() {
+	console.log("PRINT PDF - TO BE IMPEMENTED");
+}
+
+// Save project data model (JS object) as JSON file to local file system
+function saveProject() {
+	console.log("SAVE PROJECT - TO BE IMPEMENTED");
+}
+
+// Load project selected in file selector window
+function loadProject(JSONfromFile) {
+	console.log("LOAD PROJECT - TO BE IMPEMENTED");
+}
+
+// Reset project and clear all current data from memory and local Storage
+function resetProject() {
+	projectManager.resetProject();
+	// reset link to project data
+    project = projectManager.getProject();
+    // Reset ractive bindings
+    setRactives();
+    update();
+    showProjectResetDialogue();
+}
+
+// Load example project
+function loadExampleProject() {
+	projectManager.loadExample();
+	// reset link to project data
+    project = projectManager.getProject();
+    // Reset ractive bindings
+    setRactives();
+    update();
+    showProjectExampleLoadedDialogue();
+}
+
+///////////// PRINT / LOAD / SAVE ///////////////
+
+
+/////////////////// DIALOGS ////////////////////
+
+// Warning dialog for inconsistent data on Data Entry page
+function showDataEntryWarningDialogue() {
+    showDialog({
+        title: 'WARNING: Inconsistent data',
+        text: 'Elements on this page need correcting: \nRows of criteria weights should NOT EXCEED 100 \nColumns of category weights must TOTAL 100 \nProblem groups highlighted in red'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for inconsistent data on Summary page
+function showSummaryWarningDialogue() {
+    showDialog({
+        title: 'WARNING: Inconsistent data',
+        text: 'Elements on this page need correcting: \nThe aggregated category weights must TOTAL 100 \nProblem groups highlighted in red.'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project printed
+function showProjectPrintedDialogue(title) {
+    showDialog({
+        title: 'Report PDF generated',
+        text: 'Report saved as <b>' + title + ' Decision Making Report.pdf</b> to your browsers <b>DOWNLOADS</b> folder.'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project saved
+function showProjectSavedDialogue(fileName) {
+    showDialog({
+        title: 'Project saved',
+        text: 'Project saved as <b>' + fileName + '.json</b> to your browsers <b>DOWNLOADS</b> folder \n\n <b>Manually move .json file to permenant location for storage.</b>'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project load file fail
+function showProjectLoadFileFailDialogue() {
+    showDialog({
+        title: 'WARNING: Incorrect file type',
+        text: 'Reselect a <b>.json</b> file type:\nCurrent project unchanged'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project load file fail
+function showProjectLoadTypeFailDialogue() {
+    showDialog({
+        title: 'WARNING: Incorrect project type',
+        text: 'Reselect a &lt;ProjectTitle&gt;<b>-DSS-Problem</b>.json file:\nCurrent project unchanged'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project load file fail
+function showProjectLoadSuccessDialogue() {
+    showDialog({
+        title: 'Project loaded',
+        text: '<b>' + dataManager.problem.title + '</b> project loaded successfuly',
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for project reset
+function showProjectResetDialogue() {
+    showDialog({
+        title: 'Project Reset',
+        text: 'Project has been successfuly reset'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    })
+}
+// Warning dialog for example project loaded
+function showProjectExampleLoadedDialogue() {
+    showDialog({
+        title: 'Example Project Loaded',
+        text: 'Example project has been successfuly loaded'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    })
+}
+
+/////////////////// DIALOGS ////////////////////
+
+
+////////// GENERAL HELPER FUNCTIONS /////////////
 
 // Upgrade all MDL components after adding content
 function upgradeMDL() {
