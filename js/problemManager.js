@@ -5,7 +5,7 @@ class ProblemManager {
     constructor() {
 
         // Create Model object for calculations
-        this.model = new DSS_model();
+        this.model = new DSS_DM_model();
 
         // IF localStorage present, load storage, otherwise intialise problem
         if (localStorage.getItem('problemData') != null) {
@@ -18,13 +18,33 @@ class ProblemManager {
 
     // Create new data object and initialise
     initialiseProblem() {
-        // Create empty copy of Problem data object
-        this.problem = jQuery.extend(true, {}, Problem);
-        console.log("EMPTY PROJECT IN INITIALISE");
-        console.log(this.problem);
-        this.addCategory('');
-        this.addAlternative('');
+        // Clear local storage
+        this.clearLocal();
+        // Create empty copy of Problem data object and set this.project to it
+        this.setBlankProblem("BLANK PROBLEM");
+        // Save blank project to local storage
+        this.saveLocal();
 
+        // Create empty copy of Problem data object
+        // this.problem = jQuery.extend(true, {}, Problem);
+        // console.log("EMPTY PROJECT IN INITIALISE");
+        // console.log(this.problem);
+        // this.addCategory('');
+        // this.addAlternative('');
+
+    }
+
+    // Create blank problem and set this.problem
+    setBlankProblem(problemName) {
+        // Create blank project (deep copy clone) and name
+        this.problem = null;
+        this.problem = jQuery.extend(true, {}, Problem);
+        this.problem.name = problemName;
+        // Add single category
+        this.addCategory('');
+        // Add two alternatives
+        this.addAlternative('');
+        this.addAlternative('');
     }
 
     // Update problem - perform calculations to generate results
@@ -99,7 +119,7 @@ class ProblemManager {
             newCategory.weight = 0;
         }
         // Add single criterion
-        this.addCriterionTo(newCategory, 'test');
+        this.addCriterionTo(newCategory, '');
         this.problem.categories.push(newCategory);
     }
     // Remove last category
@@ -177,7 +197,6 @@ class ProblemManager {
 
     // Reset project and clear all current data from memory and local Storage
     resetProject() {
-        this.clearLocal();
         this.initialiseProblem();
     }
 
@@ -192,16 +211,13 @@ class ProblemManager {
 
     // HELPER FUNCTIONS
 
-    getData(){
+    getProblem(){
         return this.problem;
     }
 
-    setData(jsObject) {
+    setProblem(jsObject) {
         //Set current data object to new jsObject
         this.problem = jsObject;
-        // Save to localData to replace previous project
-        // saveLocal();
-
     }
 
     // Return sum of array -
@@ -274,7 +290,7 @@ class ProblemManager {
     loadExampleProblem() {
         // DEEP COPY new Problem to avoid referencing issues
         this.problem = jQuery.extend(true, {}, Problem);
-        this.problem.title = "Example Problem";
+        this.problem.name = "Example Problem";
 
         this.addAlternative('Supplier A');
         this.addAlternative('Supplier B');

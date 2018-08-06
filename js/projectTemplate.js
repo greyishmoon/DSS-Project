@@ -1,4 +1,5 @@
 const Project = {
+    type: "risk_analysis",
     name: "", // string - project name
     cost: 0, // int - project cost in £
     categories: [], // array of category objects
@@ -28,5 +29,10 @@ const Risk = {
     costAssessment: [0, 0, 0], // 3 calculated results relating to project grades
     durationAssessment: [0, 0, 0], // 3 calculated results relating to project grades
     qualityAssessment: [0, 0, 0], // 3 calculated results relating to project grades
+
+    // RESULTS
+    // Storage of results calculations for each
+    probability: 0, // Average for factors Coefficient of Project Features, Controllability + Dependency
+    Mni: [], // array of M n,i relating to each alternative (row 17) - alternative weight*Criterion weight
 
 }

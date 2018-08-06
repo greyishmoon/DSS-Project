@@ -41,8 +41,12 @@
 	<script src="../js/prototypes.js"></script>
 	<!-- Project data object template -->
 	<script src="../js/projectTemplate.js"></script>
+	<!-- DSS RA model script -->
+	<script src="../js/DSS_RA_model.js"></script>
 	<!-- Project manager object - interaction between web page and problem data object -->
 	<script src="../js/projectManager.js"></script>
+	<!-- Load/Save files -->
+	<script src="../js/fileManager.js"></script>
 
 	<!-- Main page script -->
 	<script src="../js/risk_analysis.js"></script>
@@ -64,7 +68,7 @@
 			<header class="mdl-layout__header">
 				<div class="mdl-layout__header-row">
 					<!-- Title -->
-					<span class="mdl-layout-title">Risk Analysis 0.1.6</span>
+					<span class="mdl-layout-title">Risk Analysis 0.1.7</span>
 				</div>
 				<!-- Tabs -->
 				<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -1064,12 +1068,12 @@
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="printPDF">Print PDF</button>
 
 					<h4>Save Project</h4>
-					<p>The problem will be saved as <b>&lt;ProjectTitle&gt;-DSS-Problem.json</b> to your browsers <b>download folder</b>. After saving please manually move file to a permenant location for storage.</p>
+					<p>The problem will be saved as <b>DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json</b> to your browsers <b>download folder</b>. After saving please manually move file to a permenant location for storage.</p>
 					<p>NOTE - Due to browser security previous saves of this project WILL NOT be overwritten automatically. Multiple saves of the same name will be appended (2)(3)(4) etc.</p>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" id="saveProject" type="button">SAVE PROJECT </button>
 
 					<h4>Load Project</h4>
-					<p>Navigate to folder project saves were moved to and select <b>&lt;ProjectTitle&gt;-DSS-Problem.json</b> - All unsaved data from current project will be lost.</p>
+					<p>Navigate to folder project saves were moved to and select <b>DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json</b> - All unsaved data from current project will be lost.</p>
 
 
 

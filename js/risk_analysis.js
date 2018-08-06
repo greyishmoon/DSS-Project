@@ -31,17 +31,6 @@ $(document).ready(function() {
         alert('File saving is not fully supported in this browser.');
     }
 
-    // projectManager that stores problem data
-    projectManager = new ProjectManager();
-    // create link to project data
-    project = projectManager.getProject();
-
-
-
-    // Initialse Ractive objects
-    setRactives();
-
-    // Run dynamic elements initialisation
     onProjectLoad();
 
 });
@@ -54,39 +43,45 @@ function setRactives() {
     ractiveTitle = new Ractive({
         target: '#target-title-table',
         template: '#template-title-table',
-        data: project
+        data: projectManager.getProject()
     });
     // CATEGORIES TABLE
     ractiveCategories = new Ractive({
         target: '#target-categories-table',
         template: '#template-categories-table',
-        data: project
+        data: projectManager.getProject()
     });
     // RISKS TABLE
     ractiveRisks = new Ractive({
         target: '#target-risks-table',
         template: '#template-risks-table',
-        data: project
+        data: projectManager.getProject()
     });
 	// GRADES OF IMPACT TABLE
     ractiveGrades = new Ractive({
         target: '#target-grades-table',
         template: '#template-grades-table',
-        data: project
+        data: projectManager.getProject()
     });
 	// DEGREES OF BELIEF IMPACT TABLE
     ractiveImpacts = new Ractive({
         target: '#target-impacts-table',
         template: '#template-impacts-table',
-        data: project
+        data: projectManager.getProject()
     });
 }
 
 // Initialise listeners etc when project is loaded
 function onProjectLoad() {
-    // SET LISTENERS ON DYNAMIC CONTENT
-    setListeners();
 
+    // projectManager that stores project data
+    projectManager = new ProjectManager();
+
+    // Initialse Ractive objects
+    setRactives();
+    // Set listeners on dynamic content
+    setListeners();
+    // Call update
     update();
 
 }
@@ -138,6 +133,14 @@ function setListeners() {
     $('.go-tab-4-btn').on('click', goTab4);
     // Scroll to top buttons (if needed)
     $("#scroll-up-btn").click(scrollToTop);
+
+    // Load file from file selecter listener (unable to get JQuery change() to trigger)
+    document.getElementById("fileSelector").onchange = function() {
+        // Get file
+        var fileToLoad = this.files[0];
+        // Load file (callback to loadProject(JSON) below for validation)
+        loadFileAsJSobject(fileToLoad, loadProject);
+    };
 }
 // Remove and reset listeners on dynamic content
 function resetListeners() {
@@ -201,7 +204,7 @@ function tabClicked() {
     //     setTimeout(goTab3, delayInMillisecondsForward);
     // }
 
-    //updateData()
+    updateData()
     scrollToTop();
 }
 
@@ -298,7 +301,7 @@ function update() {
     saveLocal();
 
     // Log updated data object
-    console.log(project);
+    console.log(projectManager.getProject());
 
     // Check data entry buttons and enable/disable where necessary
     checkButtons();
@@ -374,24 +377,51 @@ function removeRisk(event) {
 
 // Print project reults to PDF
 function printPDF() {
-	console.log("PRINT PDF - TO BE IMPEMENTED");
+	console.log("PRINT PDF - TO BE IMPLEMENTED");
 }
 
 // Save project data model (JS object) as JSON file to local file system
 function saveProject() {
-	console.log("SAVE PROJECT - TO BE IMPEMENTED");
+    let saveProject = projectManager.getProject();
+    // Construct filename
+    let fileName = 'DSS-Risk-Analysis-' + saveProject.name; //DSS-Problem
+    // Save file
+    saveOBJECTasJSONfile(saveProject, fileName);
+    showProjectSavedDialogue(fileName);
 }
 
 // Load project selected in file selector window
 function loadProject(JSONfromFile) {
-	console.log("LOAD PROJECT - TO BE IMPEMENTED");
+    // test for incorrect file type by catching JSON parse
+    try {
+        var dataFromFile = JSON.parse(JSONfromFile)
+    } catch (e) {
+        // Incorrect file type
+        console.log("Load fail: Not JSON file");
+        showProjectLoadFileFailDialogue();
+        return null;
+    }
+
+    // Check for valid project type
+    if (dataFromFile.type === 'risk_analysis') {
+        // correct prooject type
+        // Set data model to loaded data
+        projectManager.setProject(dataFromFile);
+        // Reset ractive bindings
+        setRactives();
+        // Update to initiate save to localStorage
+        update();
+        showProjectLoadSuccessDialogue();
+    } else {
+        // incorrect project type
+        console.log("Load fail: Incorrect project type");
+        showProjectLoadTypeFailDialogue();
+    }
 }
 
 // Reset project and clear all current data from memory and local Storage
 function resetProject() {
 	projectManager.resetProject();
-	// reset link to project data
-    project = projectManager.getProject();
     // Reset ractive bindings
     setRactives();
     update();
@@ -405,6 +435,7 @@ function loadExampleProject() {
     project = projectManager.getProject();
     // Reset ractive bindings
     setRactives();
+    // Update to initiate save to localStorage
     update();
     showProjectExampleLoadedDialogue();
 }
@@ -435,10 +466,10 @@ function showSummaryWarningDialogue() {
     });
 }
 // Warning dialog for project printed
-function showProjectPrintedDialogue(title) {
+function showProjectPrintedDialogue(name) {
     showDialog({
         title: 'Report PDF generated',
-        text: 'Report saved as <b>' + title + ' Decision Making Report.pdf</b> to your browsers <b>DOWNLOADS</b> folder.'.split('\n').join('<br>'),
+        text: 'Report saved as <b>' + name + ' Decision Making Report.pdf</b> to your browsers <b>DOWNLOADS</b> folder.'.split('\n').join('<br>'),
         negative: {
             title: 'Continue'
         }
@@ -468,7 +499,7 @@ function showProjectLoadFileFailDialogue() {
 function showProjectLoadTypeFailDialogue() {
     showDialog({
         title: 'WARNING: Incorrect project type',
-        text: 'Reselect a &lt;ProjectTitle&gt;<b>-DSS-Problem</b>.json file:\nCurrent project unchanged'.split('\n').join('<br>'),
+        text: 'Reselect a <b>DSS-Risk-Analysis-</b>&lt;ProjectTitle&gt;.json file:\nCurrent project unchanged'.split('\n').join('<br>'),
         negative: {
             title: 'Continue'
         }
@@ -478,7 +509,7 @@ function showProjectLoadTypeFailDialogue() {
 function showProjectLoadSuccessDialogue() {
     showDialog({
         title: 'Project loaded',
-        text: '<b>' + dataManager.problem.title + '</b> project loaded successfuly',
+        text: '<b>' + projectManager.getProject().name + '</b> project loaded successfuly',
         negative: {
             title: 'Continue'
         }

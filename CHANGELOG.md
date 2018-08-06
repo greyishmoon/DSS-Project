@@ -4,11 +4,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/0.3.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+##Terminology
+- RA = RISK ANALYSIS TOOL
+- DM = DECISION MAKING TOOL
+
+## [0.1.7] - 06-08-2018
+### Fixed
+#### DECISION MAKING
+- K calculation - changed from hard coded 2 to alternativeCount-1
+- Changed # of Alternatives on reset from 1 to 2
+- Limited # of Alternates between 2 and 5 inclusive
+- K calculation to scale with number of alternatives
+* which also fixed empty problem results errors
+- Moved 'Load Example' button to instructions page
+- Altered heading text on data entry page (Categories of Criteria)
+- Added date line to report
+- Altered margin widths on report
+
 ## [0.1.6] - 30-07-2018
 ### Altered
 - reformatted colours on data entry tables
+- DM - Altered save file name
+- DM - refactored save/load, title naming
 ### Added
-- (RISK ANALYSIS TOOL)
+- (RISK ANALYSIS TOOL - RA)
 - Impact assessment tables
 * Grades of Impact table
 * Degrees of Belief table
@@ -16,6 +35,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Reset project functionality
 - Load example project functionality
 - Example project based on spreadsheet (in projectManager)
+- Save to file
+- Load from file
 
 
 ## [0.1.5] - 26-07-2018

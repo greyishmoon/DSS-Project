@@ -42,8 +42,8 @@
 	<script src="../js/prototypes.js"></script>
 	<!-- Project object definition + manager-->
 	<script src="../js/problem.js"></script>
-	<!-- DSS model script -->
-	<script src="../js/DSS_model.js"></script>
+	<!-- DSS DM model script -->
+	<script src="../js/DSS_DM_model.js"></script>
 	<!-- Problem manager object - interaction between web page and problem data object -->
 	<script src="../js/problemManager.js"></script>
 	<!-- Load/Save files -->
@@ -68,7 +68,7 @@
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
-				<span class="mdl-layout-title">Decision Making 0.1.6</span>
+				<span class="mdl-layout-title">Decision Making 0.1.7</span>
 			</div>
 			<!-- Tabs -->
 			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -108,7 +108,7 @@
 								</td>
 								<td class="mdl-data-table__cell--non-numeric fillWidth narrow">
 									<div class="mdl-textfield mdl-js-textfield">
-										<input class="mdl-textfield__input" type="text" id="problem-title" value="{{title}}">
+										<input class="mdl-textfield__input" type="text" id="problem-title" value="{{name}}">
 										<label class="mdl-textfield__label">Problem Title...</label>
 									</div>
 								</td>
@@ -232,11 +232,12 @@
 
 				</div>
 
-				<br />
+
 				<!-- TODO - remove for production -->
+				<!-- <br />
 				<h5>EMERGENCY RESET</h5>
 				<p>Only use to reset project if development changes break browsers previous local save</p>
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent emergency-reset">RESET PROJECT</button>
+				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent emergency-reset">RESET PROJECT</button> -->
 
 			</section>
 
@@ -255,7 +256,7 @@
 					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
 					<!-- Problem Categories -->
-					<h4>Categories Criteria</h4>
+					<h4>Categories of Criteria</h4>
 					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
 					<!-- TARGET ractiveAlternatives -->
@@ -333,7 +334,7 @@
 							<tbody>
 								<tr>
 									<td>
-										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored add-criteria" type="button" data-id="{{catIndex}}" id='add-criteria{{catIndex}}'>Add Criteria {{catIndex}}</button>
+										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored add-criteria" type="button" data-id="{{catIndex}}" id='add-criteria{{catIndex}}'>Add Criteria</button>
 									</td>
 									<td>
 										<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored remove-criteria" type="button" style="float: right" data-id="{{catIndex}}" id='remove-criteria{{catIndex}}' {{#if criteria.length<=1}} disabled='true' {{/if}}>Remove Criteria</button>
@@ -493,11 +494,6 @@
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500 go-tab-3-btn" type="button">Next ></button>
 				</div>
 
-				<!-- TODO - remove for production -->
-				<h5>EMERGENCY RESET</h5>
-				<p>Only use to reset project if development changes break browsers previous local save</p>
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent emergency-reset">RESET PROJECT</button>
-
 			</section>
 
 
@@ -602,6 +598,11 @@
 				<div class="page-content">
 					<h4>Instructions</h4>
 					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+
+					<h4>Load example project: WARNING - All unsaved data will be lost</h4>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
+					
 				</div>
 			</section>
 
@@ -615,12 +616,12 @@
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="printPDF">Print PDF</button>
 
 					<h4>Save Project</h4>
-					<p>The problem will be saved as <b>&lt;ProjectTitle&gt;-DSS-Problem.json</b> to your browsers <b>download folder</b>. After saving please manually move file to a permenant location for storage.</p>
+					<p>The problem will be saved as <b>DSS-Decision-Making-&lt;ProjectTitle&gt;.json</b> to your browsers <b>download folder</b>. After saving please manually move file to a permenant location for storage.</p>
 					<p>NOTE - Due to browser security previous saves of this project WILL NOT be overwritten automatically. Multiple saves of the same name will be appended (2)(3)(4) etc.</p>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" id="saveProject" type="button">SAVE PROJECT </button>
 
 					<h4>Load Project</h4>
-					<p>Navigate to folder project saves were moved to and select <b>&lt;ProjectTitle&gt;-DSS-Problem.json</b> - All unsaved data from current project will be lost.</p>
+					<p>Navigate to folder project saves were moved to and select <b>DSS-Decision-Making-&lt;ProjectTitle&gt;.json</b> - All unsaved data from current project will be lost.</p>
 
 
 
@@ -633,8 +634,6 @@
 					<h4>Clear current project: WARNING - All unsaved data will be lost</h4>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="reset-button">RESET PROJECT</button>
 
-					<h4>Load example project: WARNING - All unsaved data will be lost</h4>
-					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
 
 				</div>
 

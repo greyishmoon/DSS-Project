@@ -5,12 +5,9 @@ class ProjectManager {
     constructor() {
 
         // Create Model object for calculations
-        //this.model = new DSS_model();
+        this.model = new DSS_RA_model();
 
-        // TEMP initialise problem - later remove for local storage check below
-        // this.initialiseProject();
-
-        // // IF localStorage present, load storage, otherwise intialise problem
+        // IF localStorage present, load storage, otherwise intialise problem
         if (localStorage.getItem('riskAnalysisData') != null) {
             this.loadLocal();
         } else {
@@ -24,9 +21,15 @@ class ProjectManager {
         // Clear local storage
         this.clearLocal();
         // Create empty copy of Problem data object and set this.project to it
-        this.setBlankProject("TEST PROJECT NAME 2");
+        this.setBlankProject("BLANK PROJECT");
         // Save blank project to local storage
         this.saveLocal();
+    }
+
+    // Update problem - perform calculations to generate results
+    update() {
+        // Pass current problem data object to DSS model for results calculations
+        this.model.resultsCalc(this.project);
     }
 
     // Create blank project and set this.project
@@ -36,11 +39,15 @@ class ProjectManager {
         this.project = JSON.parse(JSON.stringify(Project));
         this.project.name = projectName;
         // Add single category
-        this.addCategory("TEST CATEGORY");
+        this.addCategory("");
     }
     // Return project data object
     getProject() {
         return this.project;
+    }
+    setProject(jsObject) {
+        //Set current data object to new jsObject
+        this.project = jsObject;
     }
     // Add cetegory with categoryName
     addCategory(categoryName) {
@@ -51,7 +58,7 @@ class ProjectManager {
         let catSize = this.project.categories.push(newCat);
         // Add single Risk with weight = 100 (as new category need single Risk)
         let cat = this.getCategory(catSize-1);
-        this.addRiskTo(cat, "TEST RISK", 100);
+        this.addRiskTo(cat, "", 100);
         // Return added category
         return cat;
     }

@@ -1,11 +1,11 @@
 /*jshint esversion: 6 */
 
-var dataManager; // Manager holding the Problem data object
+var problemManager; // Manager holding the Problem data object
 // Ractive components
 var ractiveTitle, ractiveAlternatives, ractiveCategories, ractiveData, ractiveSummary, ractiveCategoryWeights, ractiveAggregatedBeliefs, ractiveDistributedIgnorance;
 
-var minAltCount = 1; // Number of alternatives - limited >=1 <=6
-var maxAltCount = 6;
+var minAltCount = 2; // Number of alternatives - limited >=2 <=5
+var maxAltCount = 5;
 
 var simTabClicked = false; // Temporarily records if tab click is being simulated by code - used to stop recursive loop when redirecting pages to highlight errors
 var delayInMillisecondsForward = 10; // timer for simTabClicked reset
@@ -20,11 +20,6 @@ var dataEntryGroupFault = false;
 var summaryWeightsFault = false
 
 $(document).ready(function() {
-
-
-
-
-
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
         // Great success! All the File APIs are supported.
@@ -41,8 +36,8 @@ $(document).ready(function() {
 ///////////////////////// ON LOAD //////////////////////////
 // Initialise listeners etc when project is loaded
 function onProjectLoad() {
-    // Datamanager that stores problem data
-    dataManager = new ProblemManager();
+    // problemManager that stores problem data
+    problemManager = new ProblemManager();
 
     // Initialse Ractive objects
     setRactives();
@@ -69,49 +64,49 @@ function setRactives() {
     ractiveTitle = new Ractive({
         target: '#target-title-table',
         template: '#template-title-table',
-        data: dataManager.problem
+        data: problemManager.problem
     });
     // ALTERNATIVES TABLE
     ractiveAlternatives = new Ractive({
         target: '#target-alternatives-table',
         template: '#template-alternatives-table',
-        data: dataManager.problem
+        data: problemManager.problem
     });
     // CATEGORIES TABLE
     ractiveCategories = new Ractive({
         target: '#target-categories-table',
         template: '#template-categories-table',
-        data: dataManager.problem
+        data: problemManager.problem
     });
     // DATA ENTRY TABLE
     ractiveData = new Ractive({
         target: '#target-data-table',
         template: '#template-data-table',
-        data: dataManager.problem
+        data: problemManager.problem
     });
     // SUMMARY TABLE
     ractiveSummary = new Ractive({
         target: '#target-summary-table',
         template: '#template-summary-table',
-        data: dataManager.problem
+        data: problemManager.problem
     });
     // CATEGORY WEIGHTS TABLE
     ractiveCategoryWeights = new Ractive({
         target: '#target-category-weights-table',
         template: '#template-category-weights-table',
-        data: dataManager.problem
+        data: problemManager.problem
     });
     // AGGREGATED BELIEFS TABLE
     ractiveAggregatedBeliefs = new Ractive({
         target: '#target-aggregated-beliefs-table',
         template: '#template-aggregated-beliefs-table',
-        data: dataManager.problem
+        data: problemManager.problem
     });
     // DISTRIBUTED IGNORANCE TABLE
     ractiveDistributedIgnorance = new Ractive({
         target: '#target-distributed-ignorance-table',
         template: '#template-distributed-ignorance-table',
-        data: dataManager.problem
+        data: problemManager.problem
     });
 }
 ///////////////////////// ON LOAD //////////////////////////
@@ -135,7 +130,7 @@ function setListeners() {
     $('#add-category').on('click', addCategory);
     // Remove last category
     $('#remove-category').on('click', removeCategory);
-    
+
     // LOAD/SAVE PAGE
     // Print to PDF
     $('#printPDF').on('click', printPDF);
@@ -216,31 +211,31 @@ function checkButtons() {
     // Problem Setup page
     // Alternatives data entry
     // Disable remove button on load if count <= min number
-    if (dataManager.getAltLength() <= minAltCount) {
+    if (problemManager.getAltLength() <= minAltCount) {
         disableButton("#remove-alternative");
     }
     // Enable remove button if count > minAltCount
-    if (dataManager.getAltLength() > minAltCount) {
+    if (problemManager.getAltLength() > minAltCount) {
         enableButton("#remove-alternative");
     }
     // Disable add button if count >= max number
-    if (dataManager.getAltLength() >= maxAltCount) {
+    if (problemManager.getAltLength() >= maxAltCount) {
         disableButton("#add-alternative");
         // Enable remove button
         enableButton("#remove-alternative");
     }
     // Enable add button if count < maxAltCount
-    if (dataManager.getAltLength() < maxAltCount) {
+    if (problemManager.getAltLength() < maxAltCount) {
         enableButton("#add-alternative");
     }
     // Categories data entry
     // << IF LIMIT TO NUMBER OF CATEGORIES, ADD HERE
     // Enable remove button
-    if (dataManager.getCategoryLength() > 1) {
+    if (problemManager.getCategoryLength() > 1) {
         enableButton("#remove-category");
     }
     // Disable remove button if count <= min number
-    if (dataManager.getCategoryLength() <= 1) {
+    if (problemManager.getCategoryLength() <= 1) {
         disableButton("#remove-category");
     }
 
@@ -254,7 +249,7 @@ function checkButtons() {
 // Adds alternative with blank name
 function addAlternative() {
     // Add alternative to data model
-    dataManager.addAlternative('');
+    problemManager.addAlternative('');
     // Update interface
     update();
 }
@@ -262,7 +257,7 @@ function addAlternative() {
 // Remove last row from alternative array
 function removeAlternative() {
     // Remove last alternative from array
-    dataManager.removeAlternative();
+    problemManager.removeAlternative();
     // Update interface
     update();
 }
@@ -273,9 +268,9 @@ function removeAlternative() {
 // Adds category with blank name
 function addCategory() {
     // Add category to data model
-    dataManager.addCategory('');
+    problemManager.addCategory('');
     // Reset aggregated weights on Summary page
-    dataManager.forceCategoryWeightsCalc();
+    problemManager.forceCategoryWeightsCalc();
     // Update interface
     update();
 }
@@ -283,9 +278,9 @@ function addCategory() {
 // Remove last row from Categories array
 function removeCategory() {
     // Remove last category from array
-    dataManager.removeCategory();
+    problemManager.removeCategory();
     // Reset aggregated weights on Summary page
-    dataManager.forceCategoryWeightsCalc();
+    problemManager.forceCategoryWeightsCalc();
     // Update interface
     update();
 }
@@ -298,8 +293,8 @@ function addCriteria(event) {
     var categoryId = parseInt($(event.currentTarget).attr('data-id'));
     console.log("categoryId: " + categoryId);
     // Add criteria to data model
-    console.log('category name: ' + dataManager.getCategory(0));
-    dataManager.addCriterionTo(dataManager.getCategory(categoryId), '');
+    console.log('category name: ' + problemManager.getCategory(0));
+    problemManager.addCriterionTo(problemManager.getCategory(categoryId), '');
     // Update interface
     update();
 }
@@ -309,7 +304,7 @@ function removeCriteria(event) {
     // Capture which category to add criteria too
     var categoryId = $(event.currentTarget).attr('data-id');
     // Remove last criteria from array
-    dataManager.removeCriterionFrom(dataManager.getCategory(categoryId));
+    problemManager.removeCriterionFrom(problemManager.getCategory(categoryId));
     // Update interface
     update();
 }
@@ -375,10 +370,8 @@ function goTab5() {
 
 /////////////////// UPDATE ////////////////////
 
-// UPDATE ractive model to display changes, upgrade MDL elements and reset listeners
-function update() {
-    console.log("UPDATE");
-    // Update ractive components
+// Update all ractive components - ADD NEW RACTIVES HERE
+function updateRactives() {
     ractiveTitle.update();
     ractiveAlternatives.update();
     ractiveCategories.update();
@@ -387,6 +380,13 @@ function update() {
     ractiveCategoryWeights.update();
     ractiveAggregatedBeliefs.update();
     ractiveDistributedIgnorance.update();
+}
+
+// UPDATE ractive model to display changes, upgrade MDL elements and reset listeners
+function update() {
+    console.log("UPDATE");
+    // Update ractive components
+    updateRactives();
 
     // Upgrade all added MDL elements
     upgradeMDL();
@@ -397,26 +397,23 @@ function update() {
     saveLocal();
 
     // Log updated data object
-    console.log(dataManager.problem);
+    console.log(problemManager.problem);
 
     // Check data entry buttons and enable/disable where necessary
     checkButtons();
 
     // Update interface - check group totals and alter table colours warning of problems
     updateInterface();
-
-    // Test Print
-    //print();
 }
 
 // Save data to localStorage
 function saveLocal() {
-    dataManager.saveLocal();
+    problemManager.saveLocal();
 }
 
 // UPDATE DATA calculation - on tab change AND ractive changes on Results page
 function updateData() {
-    dataManager.update();
+    problemManager.update();
     update();
 }
 
@@ -440,7 +437,7 @@ function updateInterface() {
     //      ......... aggregatedWeight ............ (# numbered from 0)
 
     // Check supplier weights for each criteria - record problem groups
-    criteriaErrors = dataManager.checkCriteriaWeights();
+    criteriaErrors = problemManager.checkCriteriaWeights();
 
     // reset all criteria weights colours to green
     $('.criteriaReset').addClass('hlGreen').removeClass('hlWarningRed');
@@ -452,10 +449,10 @@ function updateInterface() {
     }
 
     // Check weights total for each category - record problem categories
-    categoryErrors = dataManager.checkCategoryWeights();
+    categoryErrors = problemManager.checkCategoryWeights();
 
     // set cell colours for problem columns to red
-    for (var i = 0; i < dataManager.getCategoryLength(); i++) {
+    for (var i = 0; i < problemManager.getCategoryLength(); i++) {
         // If category number is present, change category#.weight to red
         if (jQuery.inArray(i, categoryErrors) !== -1) {
             $('.category' + i + '.weight').addClass('hlWarningRed').removeClass('hlBlue');
@@ -469,11 +466,10 @@ function updateInterface() {
         dataEntryGroupFault = true;
 
     }
-    console.log("dataEntryGroupFault: " + dataEntryGroupFault);
 
     // check aggregation weights total - set summaryWeightsFault to TRUE if problem
     // (checkAggregatedWeightsOk() returns true if total 100 so negate)
-    summaryWeightsFault = !dataManager.checkAggregatedWeightsOk();
+    summaryWeightsFault = !problemManager.checkAggregatedWeightsOk();
 
     // set cell colours for aggregation weights column to red
     if (summaryWeightsFault) {
@@ -490,9 +486,13 @@ function updateInterface() {
 
 // Print project reults to PDF
 function printPDF() {
+    // Default values
+    var TOP_MARGIN = 60;
+    var LEFT_MARGIN = 55;
+
     // X and Y values of cursor - incerement Y for each line of text and set to bottom of table with pdf.autoTable.previous.finalY + Yincrement
-    var pdfX = 20;
-    var pdfY = 40;
+    var pdfX = LEFT_MARGIN;
+    var pdfY = TOP_MARGIN;
     var Yincrement = 20;
     var buffer = 20;
     var columnStyles = {}; // properties for dynamic column styles
@@ -514,10 +514,13 @@ function printPDF() {
     // Heading
     pdf.setFontStyle('bold');
     pdf.text("Decision Making Report", pdfX, pdfY);
-    // Project title
+    // Project name
     pdf.setFontStyle('normal');
     pdf.setFontSize(14);
-    pdf.text("Project title: " + dataManager.problem.title, pdfX, pdfY += Yincrement);
+    pdf.text("Project title: " + problemManager.problem.name, pdfX, pdfY += Yincrement);
+    var today = new Date();
+    var date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
+    pdf.text("Report date: " + date, pdfX, pdfY += Yincrement);
 
     // Data inputs
     pdf.setFontStyle('bold');
@@ -525,12 +528,12 @@ function printPDF() {
 
     // DATA ENTRY TABLES
     // Construct and print each category table
-    var cats = dataManager.problem.categories;
+    var cats = problemManager.problem.categories;
 
     // generate array of alternatives to append to header row
     var alternativeNames = []; // array storing list of alternative names
-    for (var i = 0; i < dataManager.problem.alternatives.length; i++) {
-        alternativeNames.push(dataManager.problem.alternatives[i]);
+    for (var i = 0; i < problemManager.problem.alternatives.length; i++) {
+        alternativeNames.push(problemManager.problem.alternatives[i]);
         // set column widths for each alternative
         columnStyles[i + 1] = {
             columnWidth: dataColumnWidth
@@ -587,7 +590,7 @@ function printPDF() {
             showHeader: 'firstPage',
             tableWidth: 'wrap',
             margin: {
-                left: 20
+                left: pdfX
             },
             styles: {
                 fontSize: tableFontSize,
@@ -607,9 +610,10 @@ function printPDF() {
     // RESULTS
     // new page
     pdf.addPage();
-    pdfY = 40;
+    // Reset pdfY for
+    pdfY = TOP_MARGIN;
     pdf.setFontSize(16);
-    pdf.text("Results: " + dataManager.problem.title, pdfX, pdfY);
+    pdf.text("Results: " + problemManager.problem.name, pdfX, pdfY);
 
     // Agregated results table
     pdf.setFontSize(14);
@@ -623,7 +627,7 @@ function printPDF() {
         showHeader: 'firstPage',
         tableWidth: 'wrap',
         margin: {
-            left: 20
+            left: pdfX
         },
         styles: {
             fontSize: tableFontSize,
@@ -654,7 +658,7 @@ function printPDF() {
         showHeader: 'firstPage',
         tableWidth: 'wrap',
         margin: {
-            left: 20
+            left: pdfX
         },
         styles: {
             fontSize: tableFontSize,
@@ -692,7 +696,7 @@ function printPDF() {
         showHeader: 'firstPage',
         tableWidth: 'wrap',
         margin: {
-            left: 20
+            left: pdfX
         },
         styles: {
             fontSize: 10,
@@ -716,7 +720,7 @@ function printPDF() {
         showHeader: 'firstPage',
         tableWidth: 'wrap',
         margin: {
-            left: 20
+            left: pdfX
         },
         styles: {
             fontSize: 10,
@@ -728,17 +732,17 @@ function printPDF() {
     pdfY = pdf.autoTable.previous.finalY;
 
 
-    pdf.save(dataManager.problem.title + ' Decision Making Report.pdf');
+    pdf.save(problemManager.problem.name + ' Decision Making Report.pdf');
 
-    showProjectPrintedDialogue(dataManager.problem.title);
+    showProjectPrintedDialogue(problemManager.problem.name);
 }
 
 // Save project data model (JS object) as JSON file to local file system
 function saveProject() {
     // Construct filename
-    var fileName = dataManager.problem.title + '-DSS-Problem';
+    var fileName = 'DSS-Decision-Making-' + problemManager.problem.name; //DSS-Problem
     // Save file
-    saveOBJECTasJSONfile(dataManager.getData(), fileName);
+    saveOBJECTasJSONfile(problemManager.getProblem(), fileName);
     showProjectSavedDialogue(fileName);
 }
 
@@ -746,7 +750,7 @@ function saveProject() {
 
 // Load project selected in file selector window
 function loadProject(JSONfromFile) {
-    // test for incorrect file type by catchin JSON parse
+    // test for incorrect file type by catching JSON parse
     try {
         var dataFromFile = JSON.parse(JSONfromFile)
     } catch (e) {
@@ -760,11 +764,11 @@ function loadProject(JSONfromFile) {
     if (dataFromFile.type === 'decision_making') {
         // correct prooject type
         // Set data model to loaded data
-        dataManager.setData(dataFromFile);
+        problemManager.setProblem(dataFromFile);
         // Reset ractive bindings
         setRactives();
-        // Initiate save to localStorage
-        saveLocal();
+        // Update to initiate save to localStorage
+        update();
         showProjectLoadSuccessDialogue();
     } else {
         // incorrect project type
@@ -775,7 +779,7 @@ function loadProject(JSONfromFile) {
 
 // Reset project and clear all current data from memory and local Storage
 function resetProject() {
-    dataManager.resetProject();
+    problemManager.resetProject();
     // Reset ractive bindings
     setRactives();
     update();
@@ -784,7 +788,7 @@ function resetProject() {
 
 // Load example project
 function loadExampleProject() {
-    dataManager.loadExample();
+    problemManager.loadExample();
     // Reset ractive bindings
     setRactives();
     update();
@@ -796,7 +800,6 @@ function loadExampleProject() {
 
 ////////////////// DIALOGS ///////////////////
 
-// DIALOGUES
 // Warning dialog for inconsistent data on Data Entry page
 function showDataEntryWarningDialogue() {
     showDialog({
@@ -818,10 +821,10 @@ function showSummaryWarningDialogue() {
     });
 }
 // Warning dialog for project printed
-function showProjectPrintedDialogue(title) {
+function showProjectPrintedDialogue(name) {
     showDialog({
         title: 'Report PDF generated',
-        text: 'Report saved as <b>' + title + ' Decision Making Report.pdf</b> to your browsers <b>DOWNLOADS</b> folder.'.split('\n').join('<br>'),
+        text: 'Report saved as <b>' + name + ' Decision Making Report.pdf</b> to your browsers <b>DOWNLOADS</b> folder.'.split('\n').join('<br>'),
         negative: {
             title: 'Continue'
         }
@@ -851,7 +854,7 @@ function showProjectLoadFileFailDialogue() {
 function showProjectLoadTypeFailDialogue() {
     showDialog({
         title: 'WARNING: Incorrect project type',
-        text: 'Reselect a &lt;ProjectTitle&gt;<b>-DSS-Problem</b>.json file:\nCurrent project unchanged'.split('\n').join('<br>'),
+        text: 'Reselect a <b>DSS-Decision-Making-</b>&lt;ProjectTitle&gt;.json file:\nCurrent project unchanged'.split('\n').join('<br>'),
         negative: {
             title: 'Continue'
         }
@@ -861,7 +864,7 @@ function showProjectLoadTypeFailDialogue() {
 function showProjectLoadSuccessDialogue() {
     showDialog({
         title: 'Project loaded',
-        text: '<b>' + dataManager.problem.title + '</b> project loaded successfuly',
+        text: '<b>' + problemManager.problem.title + '</b> project loaded successfuly',
         negative: {
             title: 'Continue'
         }
@@ -929,36 +932,3 @@ var scrollToBottom = function() {
 };
 
 ///////// GENERAL HELPER FUNCTIONS ////////////
-
-///////// DEBUG FUNCTIONS /////////////
-
-// Print data object to test-div
-function print() {
-    var output = '';
-    output += '<br> Problem Title: ' + dataManager.problem.title;
-
-    // alternatives
-    dataManager.problem.alternatives.forEach(function(name, index) {
-        output += '<br> Alternative ' + (index + 1) + ': ' + name;
-    });
-
-    // categories
-    dataManager.problem.categories.forEach(function(category, index) {
-        output += '<br><br> Category ' + (index + 1) + ': ' + category.name;
-        // criteria
-        category.criteria.forEach(function(criterion) {
-            output += '<br> &nbsp;&nbsp; Criterion name: ' + criterion.name;
-            output += '<br> &nbsp;&nbsp; Criterion weight: ' + criterion.weight;
-            altWeightString = '<br> &nbsp;&nbsp; &nbsp;&nbsp; Alt weights: ';
-            // Alternative weights for Criterion
-            criterion.alternativeWeights.forEach(function(weight) {
-                altWeightString += weight + ", ";
-            });
-            output += altWeightString;
-        });
-    });
-
-
-    $('.test-div').html(output);
-
-}
