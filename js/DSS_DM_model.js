@@ -506,6 +506,11 @@ class DSS_DM_model {
         return +num.toFixedNumber(2);
     }
 
+    // convert from percentage - return number rounded to 2 dp
+    fromPercent(num) {
+        return _this.roundTo2(num *  0.01);
+    }
+
 
 }
 

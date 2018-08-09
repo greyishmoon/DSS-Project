@@ -100,6 +100,8 @@ class ProjectManager {
 
     // IF data stored - Load project data object from local storage (convert from JSON)
     loadLocal() {
+        // EMERGENCY RESET - TEMP UNCOMMENT this.initialiseProject();
+        // this.initialiseProject();
         this.project = localStorage.getObject('riskAnalysisData');
         // check for null categories project
         if (this.project.categories == null) {

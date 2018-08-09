@@ -8,6 +8,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+## [0.1.8] - 07-08-2018
+### Added
+- Calculations:
+* calcMvalues()
+* calcK()
+* calcMalternatives()
+* calcMdashH()
+* calcMlH()
+* calcBeliefs()
+- on Risk assessment tab
+* Category groups for tables
+* Aggregated Risk Assessment table
+* Unassigned Degrees of Belief table
+
+## [0.1.8] - 07-08-2018
+### Added
+- Risk assessment tab
+- Risk assessment tables
+- calcs for probability, zeroAssessment + 3 parameter Assessments
+
 ## [0.1.7] - 06-08-2018
 ### Fixed
 #### DECISION MAKING

@@ -68,7 +68,7 @@
   /* MDL - mdl-color--red-100 */
   background: #FFCDD2;
 }
-.hlLightGrey{
+.hlLightGray1{
   /* MDL - mdl-color--gray-100 */
   background: #F5F5F5;
 }
@@ -80,7 +80,7 @@
   /* MDL - mdl-color--grey-400 */
   background: #bdbdbd;
 }
-.hllightGray{
+.hlLightGray2{
   /* MDL - mdl-color--grey-200 */
   background: #e0e0e0;
 }
@@ -103,7 +103,7 @@ th.blank, td.blank {
     border: 0px;
     width: 5px;
     /* MDL - mdl-color--gray-100 */
-    background: #E0E0E0;
+    background: #F5F5F5;
 }
 th.impact-column {
     width: 200px;

@@ -3,7 +3,7 @@
 var projectManager; // Manager holding the Problem data object
 var project; // Link to project data
 // Ractive components
-var ractiveTitle, ractiveCategories, ractiveRisks, ractiveGrades, ractiveImpacts;
+var ractiveTitle, ractiveCategories, ractiveRisks, ractiveGrades, ractiveImpacts, ractiveAssessments;
 
 var minCatCount = 1; // Number of categories - limited >=1 <=6
 var maxCatCount = 6;
@@ -53,8 +53,8 @@ function setRactives() {
     });
     // RISKS TABLE
     ractiveRisks = new Ractive({
-        target: '#target-risks-table',
-        template: '#template-risks-table',
+        target: '#target-risk-characteristics-table',
+        template: '#template-risk-characteristics-table',
         data: projectManager.getProject()
     });
 	// GRADES OF IMPACT TABLE
@@ -63,10 +63,16 @@ function setRactives() {
         template: '#template-grades-table',
         data: projectManager.getProject()
     });
-	// DEGREES OF BELIEF IMPACT TABLE
+	// IMPACT ASSESSMENT TABLE (Degrees of Belief)
     ractiveImpacts = new Ractive({
-        target: '#target-impacts-table',
-        template: '#template-impacts-table',
+        target: '#target-impact-assessment-table',
+        template: '#template-impact-assessment-table',
+        data: projectManager.getProject()
+    });
+    // RISK ASSESSMENT TABLE
+    ractiveAssessments = new Ractive({
+        target: '#target-risk-assessment-table',
+        template: '#template-risk-assessment-table',
         data: projectManager.getProject()
     });
 }
@@ -131,6 +137,7 @@ function setListeners() {
     $('.go-tab-2-btn').on('click', goTab2);
     $('.go-tab-3-btn').on('click', goTab3);
     $('.go-tab-4-btn').on('click', goTab4);
+    $('.go-tab-5-btn').on('click', goTab5);
     // Scroll to top buttons (if needed)
     $("#scroll-up-btn").click(scrollToTop);
 
@@ -284,6 +291,7 @@ function updateRactives() {
     ractiveRisks.update();
 	ractiveGrades.update();
 	ractiveImpacts.update();
+    ractiveAssessments.update();
 }
 
 // UPDATE ractive model to display changes, upgrade MDL elements and reset listeners
