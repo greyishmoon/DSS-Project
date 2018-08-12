@@ -29,6 +29,10 @@ helpers.percent = function ( num ) {
     return (num * 100).toFixedNumber(1);
 };
 
+helpers.roundTo2 = function ( num ) {
+    return num.toFixedNumber(2);
+};
+
 // EXAMPLE
 helpers.sort = function ( array ) {
     return array.slice().sort( function ( a, b ) {

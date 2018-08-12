@@ -8,6 +8,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+## [0.1.8] - 13-08-2018
+### Added
+- Summary page calcs:
+* this.calcObjectiveMvalues();
+* this.calcObjectiveK();
+* this.calcObjectiveMalternatives();
+* this.calcObjectiveMdashH();
+* this.calcObjectiveMlH();
+* this.calcObjectiveBeliefs();
+* this.calcObjectiveRiskLevels();
+
+## [0.1.8] - 12-08-2018
+### Added
+- Risk assessment calcs:
+* this.calcAggregatedMvalues();
+* this.calcAggregatedK();
+* this.calcAggregatedMalternatives();
+* this.calcAggregatedMdashH();
+* this.calcAggregatedMlH();
+* this.calcAggregatedBeliefs();
+* this.calcAggregatedIgnorance();
+* this.calcRiskLevels();
+
 ## [0.1.8] - 07-08-2018
 ### Added
 - Calculations:

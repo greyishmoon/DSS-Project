@@ -3,7 +3,7 @@
 var projectManager; // Manager holding the Problem data object
 var project; // Link to project data
 // Ractive components
-var ractiveTitle, ractiveCategories, ractiveRisks, ractiveGrades, ractiveImpacts, ractiveAssessments;
+var ractiveTitle, ractiveCategories, ractiveRisks, ractiveGrades, ractiveImpacts, ractiveAssessments, ractiveCategoryweights;
 
 var minCatCount = 1; // Number of categories - limited >=1 <=6
 var maxCatCount = 6;
@@ -69,10 +69,16 @@ function setRactives() {
         template: '#template-impact-assessment-table',
         data: projectManager.getProject()
     });
-    // RISK ASSESSMENT TABLE
+    // RISK ASSESSMENT TABLE (RISK ASSESSMENT PAGE)
     ractiveAssessments = new Ractive({
         target: '#target-risk-assessment-table',
         template: '#template-risk-assessment-table',
+        data: projectManager.getProject()
+    });
+    // CATEGORY WEIGHTS TABLE (SUMMARY PAGE)
+    ractiveCategoryweights = new Ractive({
+        target: '#target-category-weights-table',
+        template: '#template-category-weights-table',
         data: projectManager.getProject()
     });
 }
@@ -292,6 +298,7 @@ function updateRactives() {
 	ractiveGrades.update();
 	ractiveImpacts.update();
     ractiveAssessments.update();
+    ractiveCategoryweights.update();
 }
 
 // UPDATE ractive model to display changes, upgrade MDL elements and reset listeners
@@ -335,7 +342,7 @@ function updateData() {
 // Adds category with blank name
 function addCategory() {
     // Add category to data model
-    projectManager.addCategory('');
+    projectManager.addCategory('', 0);
     // Reset aggregated weights on Summary page
     //projectManager.forceCategoryWeightsCalc();
     // Update interface

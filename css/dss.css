@@ -162,6 +162,11 @@ th.width150 {
   width: 150px;
   padding: 8px 8px;
 }
+/* Weight columns - for max 14 characters in criteria name */
+th.width100 {
+  width: 100px;
+  padding: 8px 8px;
+}
 /* wrap text in cell */
 th.wrap {
     white-space: normal;

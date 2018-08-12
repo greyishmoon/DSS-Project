@@ -3,7 +3,19 @@ const Project = {
     name: "", // string - project name
     cost: 0, // int - project cost in £
     categories: [], // array of category objects
-    grades: [1, 2, 3] // 3 percentages to be applied to impact assessment for whole project - default 1,2,3
+    grades: [1, 2, 3], // 3 percentages to be applied to impact assessment for whole project - default 1,2,3
+
+    // SUMMARY PAGE
+    ObjectiveWeights: [33,33,34], // Array to hold project level objective weights
+    K_obj: [0, 0, 0], // Array to hold project level K values (one for each area) (summary sheet row 86)
+    Malt_obj: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // array of (post K calc) M alt values for each grade in each area (0% - 3%) (summary sheet row 89)
+    MdashH_obj: [0, 0, 0], // MdashH for each area @ project level (summary sheet row 98)
+    MlH_obj: [0, 0, 0], // MlH for each area @ project level (summary sheet row 101)
+    Beliefs_obj: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // array of Beliefs values for each grade (0% - 3%) for each area in project  (Summary page row 104)
+    Ignorance_obj: [0, 0, 0], // Ignorance value for each area in project  (Summary page row 112)
+    RiskLevels_obj: [[0, 0, 0], [0, 0, 0], [0, 0, 0]], // Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Summary page row 133)
+
+    // RESULTS PAGE
 }
 
 const Category = {
@@ -13,14 +25,36 @@ const Category = {
     costAggregate: [0, 0, 0], // 3 aggregated results relating to project grades
     durationAggregate: [0, 0, 0], // 3 aggregated results relating to project grades
     qualityAggregate: [0, 0, 0], // 3 aggregated results relating to project grades
-    // RESULTS
-    // RISK ASSESSMENT PAGE (Used on)
+    AreaWeights: [33, 33, 34], // Weights for 3 areas (objectives) (Cost, Duration, Quality) - captured on Risk Assessment page
+
+    // RISK ASSESSMENT PAGE
     K: [0, 0, 0], // K value for each area in category (row 64)
-    Malt: [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],// array of (post K calc) M alt values relating to each area (nested array [0-2]) for each grade (Malt [0-3]  (row 66) - (Cost, Duration, Quality)
+    Malt: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // array of (post K calc) M alt values  relating to each area (Cost, Duration, Quality) for each grade (0% - 3%)  (row 66)
     MdashH: [0, 0, 0], // M dash H value for each area in category (row 75)
     MlH: [0, 0, 0], // Ml H value for each area in category (row 78)
-    Beliefs: [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]], // array of Beliefs values relating to each area (nested array [0-2]) for each grade (Malt [0-3]  (row 66) - (Cost, Duration, Quality) (row 83)
-    Ignorance: [0, 0, 0] // Ignorance value for each area in category (row 91)
+    Beliefs: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // array of Beliefs values relating to each area (Cost, Duration, Quality) for each grade (0% - 3%)  (row 83)
+    Ignorance: [0, 0, 0], // Ignorance value for each area in category (row 91)
+    Mni_Cat: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // array of M n,i summarising all risks in category, for each area (Cost, Duration, Quality) for each grade (0% - 3%)   (row 135)
+    M_Cat: [0, 0, 0], // M for each area  (row 142) - 1-sum(Mni)
+    Ml_Cat: [0, 0, 0], // Ml for category  (row 149) - 1-Criterion weight
+    Mdash_Cat: [0, 0, 0], // Mdash for category  (row 156) - Criterion weight * (1-(sum(alternative weights)))
+    K_cat: 0, // K result for category (aggregated risks) (row 163)
+    Malt_cat: [0, 0, 0, 0], // array of (post K calc) M alt values for each grade (0% - 3%) (row 165)
+    MdashH_cat: 0, // M dash H result for category (row 174)
+    Ml_cat: 0, // Ml result for category (row 177)
+    Beliefs_cat: [0, 0, 0, 0], // array of Beliefs values for each grade (0% - 3%) for category (row 182)
+    Ignorance_cat: 0, // Ignorance value for category (row 190)
+    RiskLevels_cat: [0, 0, 0], // Risk levels for category - [MINIMUM, MAXIMUM, AVERAGE] (row 205)
+    costImpact_cat: 0, // Potential cost impact of AVERAGE risk level on project
+
+    // SUMMARY PAGE
+    CategoryWeight: 0, // Array to hold project level category weight (Summary page row 28)
+    Mni_obj: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // array of M n,i summarising all risks in category, for each area (Cost, Duration, Quality) for each grade (0% - 3%)   (Summary page row 42)
+    M_obj: [0, 0, 0], // M for each area @ objective level  (Summary page row 53) - 1-sum(Mni) (where Mni is results from each category)
+    Ml_obj: [0, 0, 0], // Ml for each area @ objective level (Summary sheet row 64) - 1-Criterion weight
+    Mdash_obj: [0, 0, 0], // Mdash for each area @ objective level (summary sheet row 75) - Criterion weight * (1-(sum(alternative weights)))
+
+
 }
 
 const Risk = {
@@ -34,12 +68,10 @@ const Risk = {
     durationImpact: [0, 0, 0], // 3 percentages relating to project grades
     qualityImpact: [0, 0, 0], // 3 percentages relating to project grades
 
-
-    // RESULTS
-    // RISK ASSESSMENT PAGE (Used on)
+    // RISK ASSESSMENT PAGE
     // Note - FACTORS = Coefficient of Project Features, Controllability + Dependency - static categories for all risks
     // Note - GRADES = 3
-    // Note - AREA = 3 areas of assessment - Cost, Duration, Quality
+    // Note - AREA = 3 areas of assessment (also called Objectives) - Cost, Duration, Quality
     probability: 0, // Average for factors
     WeightedCost: [0, 0, 0, 0], // array of weighted risk values relating to each grade (row 19) - (1%, 2% + 3%)
     WeightedDuration: [0, 0, 0, 0], // array of weighted risk values relating to each grade (row 19) - (1%, 2% + 3%)
