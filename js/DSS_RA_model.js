@@ -7,8 +7,8 @@ class DSS_RA_model {
         // Switch to turn on/off all calculation log statements
         this.debug = false;
         // Int to activate specific calculation log statments
-        // 1 = calcMvalues, 2 = calcK, 3 - calcMalternatives, 4 = calcMdashH, 5 = calcMlH, 6 = calcBeliefs,  7 = calcAggregatedMvalues, 8 = calcAggregatedK, 9 = calcAggregatedMalternatives, 10 = calcAggregatedMdashH, 11 = calcAggregatedMlH, 12 = calcAggregatedBeliefs, 13 = calcAggregatedIgnorance, 14 = calcRiskLevels, 15 = calcObjectiveMvalues, 16 = calcObjectiveK, 17 = calcObjectiveMalternatives, 18 = calcObjectiveMdashH, 19 = calcObjectiveMlH, 20 = calcObjectiveBeliefs, 21 = calcObjectiveRiskLevels
-        this.debugCalc = 21;
+        // 1 = calcMvalues, 2 = calcK, 3 - calcMalternatives, 4 = calcMdashH, 5 = calcMlH, 6 = calcBeliefs,  7 = calcAggregatedMvalues, 8 = calcAggregatedK, 9 = calcAggregatedMalternatives, 10 = calcAggregatedMdashH, 11 = calcAggregatedMlH, 12 = calcAggregatedBeliefs, 13 = calcAggregatedIgnorance, 14 = calcRiskLevels, 15 = calcObjectiveMvalues, 16 = calcObjectiveK, 17 = calcObjectiveMalternatives, 18 = calcObjectiveMdashH, 19 = calcObjectiveMlH, 20 = calcObjectiveBeliefs, 21 = calcObjectiveRiskLevels, 22 = calcProjectMvalues, 23 = calcProjectK, 24 = calcProjectMalternatives, 25 = calcProjectMdashH, 26 = calcProjectMlH, 27 = calcProjectBeliefs, 28 = calcProjectRiskLevels
+        this.debugCalc = 0;
     }
 
     // Perform results calculation on project and update project data object with results
@@ -61,6 +61,22 @@ class DSS_RA_model {
         this.calcObjectiveBeliefs();
         // Calculate Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Summary page row 133)
         this.calcObjectiveRiskLevels();
+
+        // RESULTS PAGE calculations
+        // Calculate arrays of M values relating to each category at project level (Summary page rows 167, 174 + 181)
+        this.calcProjectMvalues();
+        // Calculate K value for each AREA @ Project level(Summary page row 195)
+        this.calcProjectK();
+        // Calculate Malt values for each GRADE in each AREA (Summary page row 197)
+        this.calcProjectMalternatives();
+        // Calculate Mdash values for each each AREA (Summary page row 206)
+        this.calcProjectMdashH();
+        // Calculate MlH values for each each AREA (Summary page row 209)
+        this.calcProjectMlH();
+        // Calculate array of  Beliefs for each GRADE in each AREA (Summary page row 214)
+        this.calcProjectBeliefs();
+        // Calculate Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Summary page row 238)
+        this.calcProjectRiskLevels();
     }
 
     // Calculates the following M values:
@@ -787,22 +803,6 @@ class DSS_RA_model {
         if (_this.debug || _this.debugCalc === 20) console.log("data.Ignorance_obj: " + data.Ignorance_obj);
     }
 
-    // Calculate aggregated level of ignorance CATEGORY (row 190)
-    calcObjectiveIgnorance() {
-        var _this = this;
-        var data = this.data;
-        // Loop through all CATEGORIES
-        $.each(data.categories, function(indexCategory, category) {
-            if (_this.debug || _this.debugCalc === 13) console.log("\nCALC Aggregated Ignorance - Category: " + category.name + " >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-            // Loop for each GRADE
-            for (var indexGrade = 0; indexGrade < 4; indexGrade++) {
-                category.Ignorance_cat = category.MdashH_cat / (1 - category.Ml_cat);
-            }
-            if (_this.debug || _this.debugCalc === 13) console.log("category.Ignorance_cat: " + category.Ignorance_cat);
-        });
-    }
-
     // Calculate Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Summary page row 133)
     calcObjectiveRiskLevels() {
         var _this = this;
@@ -829,35 +829,201 @@ class DSS_RA_model {
         }
 
         if (_this.debug || _this.debugCalc === 21) console.log("data.RiskLevels_obj: " + data.RiskLevels_obj);
-
-
-        // Loop through all CATEGORIES
-        // $.each(data.categories, function(indexCategory, category) {
-        //
-        //
-        //     // Calculate MINIMUM risk level
-        //     category.RiskLevels_Cat[0] = (category.Beliefs_cat[1] + category.Ignorance_cat) *
-        //         data.grades[0] + category.Beliefs_cat[2] *
-        //         data.grades[1] + category.Beliefs_cat[3] *
-        //         data.grades[2];
-        //
-        //     // Calculate MAXIMUM risk level
-        //     category.RiskLevels_Cat[1] = category.Beliefs_cat[1] *
-        //         data.grades[0] + category.Beliefs_cat[2] *
-        //         data.grades[1] + (category.Beliefs_cat[3] + category.Ignorance_cat) *
-        //         data.grades[2];
-        //
-        //     // Calculate AVERAGE risk level
-        //     category.RiskLevels_Cat[2] = (category.RiskLevels_Cat[0] + category.RiskLevels_Cat[1]) / 2;
-        //
-        //     if (_this.debug || _this.debugCalc === 14) console.log("category.RiskLevels_Cat: " + category.RiskLevels_Cat);
-        //
-        //     // Calc potential cost impact on project
-        //     category.costImpact_cat = category.RiskLevels_Cat[2] * data.cost / 100;
-        //     if (_this.debug || _this.debugCalc === 14) console.log("category.costImpact_cat: " + category.costImpact_cat);
-        // });
     }
 
+
+
+    // RESULTS PAGE calculations
+    // Calculate arrays of M values relating to each category at project level (Summary page rows 167, 174 + 181)
+    calcProjectMvalues() {
+        var _this = this;
+        var data = this.data;
+        if (_this.debug || _this.debugCalc === 22) console.log("\nCALC M values - Overall Project  >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        // Calculate aggregated M n,i for each area >>>>>>
+        // Loop for each AREA
+        for (var indexArea = 0; indexArea < 3; indexArea++) {
+            // Loop for each GRADE
+            for (var indexGrade = 0; indexGrade < 4; indexGrade++) {
+                // Calculate Mni_proj
+                data.Mni_proj[indexArea][indexGrade] = data.Beliefs_obj[indexArea][indexGrade] * _this.fromPercent(data.ProjectWeights[indexArea]);
+            }
+
+            // Calculate M_obj values
+            data.M_proj[indexArea] = 1 - (data.Mni_proj[indexArea].reduce(_this.getSum));
+
+            // Calculate Ml_Cat values
+            data.Ml_proj[indexArea] = 1 - _this.fromPercent(data.ProjectWeights[indexArea]);
+
+            // Calculate Mdash_Cat values
+            data.Mdash_proj[indexArea] = _this.fromPercent(data.ProjectWeights[indexArea]) * (1 - (data.Beliefs_obj[indexArea].reduce(_this.getSum)));
+
+        }
+        if (_this.debug || _this.debugCalc === 22) console.log("\ndata.Mni_proj: " + data.Mni_proj);
+        if (_this.debug || _this.debugCalc === 22) console.log("category.Ml_obj: " + data.Ml_proj);
+        if (_this.debug || _this.debugCalc === 22) console.log("category.Mdash_obj: " + data.Mdash_proj);
+
+    }
+
+    // Calculate K value for each AREA @ Project level(Summary page row 195)
+    calcProjectK() {
+        var _this = this;
+        var data = this.data;
+        if (_this.debug || _this.debugCalc === 23) console.log("\nCALC K - Overall Project  >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+
+
+        var risk_results = []; // capture results from each AREA loop - to be summed for final risk_result
+        var category_results = []; // capture results from each ALTERNATIVE loop - to be summed for final category_result
+
+        // Loop for each GRADE
+        for (var indexGrade = 0; indexGrade < 4; indexGrade++) {
+
+            var risk_sub_calcs = []; // 3 sub calc results to be multliplied then pushed to risk_results (for final summing)
+
+            // Loop for each AREA
+            for (var indexArea = 0; indexArea < 3; indexArea++) {
+                risk_sub_calcs.push(data.Mni_proj[indexArea][indexGrade] + data.Ml_proj[indexArea] + data.Mdash_proj[indexArea]);
+            }
+            risk_results.push(risk_sub_calcs.reduce(_this.getProduct));
+        }
+        var risk_result = risk_results.reduce(_this.getSum);
+        // if (_this.debug || _this.debugCalc === 23) console.log("\nrisk_result: " + risk_result);
+
+        // Loop for each AREA
+        for (var indexArea = 0; indexArea < 3; indexArea++) {
+            category_results.push(data.Ml_proj[indexArea] + data.Mdash_proj[indexArea])
+        }
+        var category_result = category_results.reduce(_this.getProduct);
+        // if (_this.debug || _this.debugCalc === 23) console.log("category_result: " + category_result);
+
+        // Calc K
+        data.K_proj = 1 / (risk_result - (3 * category_result));
+
+
+        if (_this.debug || _this.debugCalc === 23) console.log("data.K_proj: " + data.K_proj);
+
+    }
+
+    // Calculate Malt values for each GRADE in each AREA (Summary page row 197)
+    calcProjectMalternatives() {
+        var _this = this;
+        var data = this.data;
+        if (_this.debug || _this.debugCalc === 24) console.log("\nCALC M alternatives - Overall Project  >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        // Loop for each GRADE
+        for (var indexGrade = 0; indexGrade < 4; indexGrade++) {
+            var category_results = []; // 5 sub calc results to be multliplied then pushed to risk_results (for final multiplication)
+            var risk_results = []; // capture results from each AREA loop - to be summed for final risk_result
+
+            // Loop for each AREA
+            for (var indexArea = 0; indexArea < 3; indexArea++) {
+                category_results.push(data.Ml_proj[indexArea] + data.Mdash_proj[indexArea])
+            }
+            var category_result = category_results.reduce(_this.getProduct);
+            // if (_this.debug || _this.debugCalc === 24) console.log("category_result: " + category_result);
+
+            var risk_sub_calcs = []; // 3 sub calc results to be multliplied then pushed to risk_results (for final summing)
+            var risk_result = 0;
+
+            // Loop for each AREA
+            for (var indexArea = 0; indexArea < 3; indexArea++) {
+                risk_results.push(data.Mni_proj[indexArea][indexGrade] + data.Ml_proj[indexArea] + data.Mdash_proj[indexArea]);
+            }
+            var risk_result = risk_results.reduce(_this.getProduct);
+            // if (_this.debug || _this.debugCalc === 24) console.log("\nrisk_result: " + risk_result);
+
+            // Calc Malt and add to array
+            data.Malt_proj[indexGrade] = data.K_proj * (risk_result - category_result);
+        }
+        if (_this.debug || _this.debugCalc === 24) console.log("\n data.Malt_proj: " + data.Malt_proj);
+    }
+
+    // Calculate Mdash values for each each AREA (Summary page row 206)
+    calcProjectMdashH() {
+        var _this = this;
+        var data = this.data;
+        if (_this.debug || _this.debugCalc === 25) console.log("\nCALC M dash H - Overall Project  >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        var category_results = []; // 5 sub calc results to be multliplied then pushed to risk_result
+        var ml_results = []; // 5 sub calc results to be multliplied then pushed to ml_result
+
+        // Loop for each AREA
+        for (var indexArea = 0; indexArea < 3; indexArea++) {
+            category_results.push(data.Ml_proj[indexArea] + data.Mdash_proj[indexArea]);
+            ml_results.push(data.Ml_proj[indexArea]);
+        }
+
+        var category_result = category_results.reduce(_this.getProduct);
+        // if (_this.debug || _this.debugCalc === 18) console.log("\category_result: " + category_result);
+        var ml_result = ml_results.reduce(_this.getProduct);
+        // if (_this.debug || _this.debugCalc === 18) console.log("\category_result: " + category_result);
+
+        // calc MdashH for this area and push to array
+        data.MdashH_proj = data.K_proj * (category_result - ml_result);
+
+        if (_this.debug || _this.debugCalc === 25) console.log("data.MdashH_proj: " + data.MdashH_proj);
+
+    }
+
+    // Calculate MlH values for each each AREA (Summary page row 209)
+    calcProjectMlH() {
+        var _this = this;
+        var data = this.data;
+        if (_this.debug || _this.debugCalc === 26) console.log("\nCALC MlH - Overall Project  >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        data.MlH_proj = data.K_proj * data.Ml_proj.reduce(_this.getProduct);
+
+        if (_this.debug || _this.debugCalc === 26) console.log("data.MlH_proj: " + data.MlH_proj);
+    }
+
+    // Calculate array of  Beliefs for each GRADE in each AREA (Summary page row 214)
+    calcProjectBeliefs() {
+        var _this = this;
+        var data = this.data;
+        if (_this.debug || _this.debugCalc === 27) console.log("\nCALC Beliefs - Overall Project  >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        // Loop for each GRADE
+        for (var indexGrade = 0; indexGrade < 4; indexGrade++) {
+            data.Beliefs_proj[indexGrade] = data.Malt_proj[indexGrade] / (1 - data.MlH_proj);
+        }
+        if (_this.debug || _this.debugCalc === 27) console.log("data.Beliefs_proj: " + data.Beliefs_proj);
+
+        // Calculate ignorance
+        data.Ignorance_proj= data.MdashH_proj/ (1 - data.MlH_proj);
+
+        if (_this.debug || _this.debugCalc === 27) console.log("data.Ignorance_proj: " + data.Ignorance_proj);
+    }
+
+    // Calculate Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Summary page row 238)
+    calcProjectRiskLevels() {
+        var _this = this;
+        var data = this.data;
+        if (_this.debug || _this.debugCalc === 28) console.log("\nCALC Risk Levels - Overall Project  >>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        // Calculate MINIMUM risk level
+            data.RiskLevels_proj[0] = (data.Beliefs_proj[1] + data.Ignorance_proj) *
+                data.grades[0] + data.Beliefs_proj[2] *
+                data.grades[1] + data.Beliefs_proj[3] *
+                data.grades[2];
+
+            // Calculate MAXIMUM risk level
+            data.RiskLevels_proj[1] = data.Beliefs_proj[1] *
+                data.grades[0] + data.Beliefs_proj[2] *
+                data.grades[1] + (data.Beliefs_proj[3] + data.Ignorance_proj) *
+                data.grades[2];
+
+            // Calculate AVERAGE risk level
+            data.RiskLevels_proj[2] = (data.RiskLevels_proj[0] + data.RiskLevels_proj[1]) / 2;
+
+            if (_this.debug || _this.debugCalc === 28) console.log("data.RiskLevels_proj: " + data.RiskLevels_proj);
+
+            // Calculate cost impact
+            data.costImpact_proj = data.RiskLevels_proj[2] * data.cost / 100;
+
+            if (_this.debug || _this.debugCalc === 28) console.log("data.costImpact_proj: " + data.costImpact_proj);
+
+    }
 
 
 

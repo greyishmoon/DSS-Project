@@ -3,7 +3,7 @@
 var projectManager; // Manager holding the Problem data object
 var project; // Link to project data
 // Ractive components
-var ractiveTitle, ractiveCategories, ractiveRisks, ractiveGrades, ractiveImpacts, ractiveAssessments, ractiveCategoryweights;
+var ractiveTitle, ractiveCategories, ractiveRisks, ractiveGrades, ractiveImpacts, ractiveRiskAssessment, ractiveSummary, ractiveResults;
 
 var minCatCount = 1; // Number of categories - limited >=1 <=6
 var maxCatCount = 6;
@@ -69,16 +69,22 @@ function setRactives() {
         template: '#template-impact-assessment-table',
         data: projectManager.getProject()
     });
-    // RISK ASSESSMENT TABLE (RISK ASSESSMENT PAGE)
-    ractiveAssessments = new Ractive({
-        target: '#target-risk-assessment-table',
-        template: '#template-risk-assessment-table',
+    // RISK RISK ASSESSMENT PAGE
+    ractiveRiskAssessment = new Ractive({
+        target: '#target-risk-assessment-page',
+        template: '#template-risk-assessment-page',
         data: projectManager.getProject()
     });
-    // CATEGORY WEIGHTS TABLE (SUMMARY PAGE)
-    ractiveCategoryweights = new Ractive({
-        target: '#target-category-weights-table',
-        template: '#template-category-weights-table',
+    // CATEGORY SUMMARY PAGE
+    ractiveSummary = new Ractive({
+        target: '#target-summary-page',
+        template: '#template-summary-page',
+        data: projectManager.getProject()
+    });
+    // CATEGORY SUMMARY PAGE
+    ractiveResults = new Ractive({
+        target: '#target-results-page',
+        template: '#template-results-page',
         data: projectManager.getProject()
     });
 }
@@ -297,8 +303,9 @@ function updateRactives() {
     ractiveRisks.update();
 	ractiveGrades.update();
 	ractiveImpacts.update();
-    ractiveAssessments.update();
-    ractiveCategoryweights.update();
+    ractiveRiskAssessment.update();
+    ractiveSummary.update();
+    ractiveResults.update();
 }
 
 // UPDATE ractive model to display changes, upgrade MDL elements and reset listeners

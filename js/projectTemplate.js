@@ -6,7 +6,6 @@ const Project = {
     grades: [1, 2, 3], // 3 percentages to be applied to impact assessment for whole project - default 1,2,3
 
     // SUMMARY PAGE
-    ObjectiveWeights: [33,33,34], // Array to hold project level objective weights
     K_obj: [0, 0, 0], // Array to hold project level K values (one for each area) (summary sheet row 86)
     Malt_obj: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // array of (post K calc) M alt values for each grade in each area (0% - 3%) (summary sheet row 89)
     MdashH_obj: [0, 0, 0], // MdashH for each area @ project level (summary sheet row 98)
@@ -16,6 +15,20 @@ const Project = {
     RiskLevels_obj: [[0, 0, 0], [0, 0, 0], [0, 0, 0]], // Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Summary page row 133)
 
     // RESULTS PAGE
+    ProjectWeights: [33, 33, 34], // Weights for 3 areas (objectives) (Cost, Duration, Quality) for whole project - captured on Results page
+    Mni_proj: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // array of M n,i summarising all risks in category, for each area (Cost, Duration, Quality) for each grade (0% - 3%)   (Summary page row 167)
+    M_proj: [0, 0, 0], // M for each area @ project level  (Summary page row 174) - 1-sum(Mni) (where Mni is results from each area)
+    Ml_proj: [0, 0, 0], // Ml for each area @ objective level (Summary sheet row 181) - 1-Criterion weight
+    Mdash_proj: [0, 0, 0], // Mdash for each area @ objective level (summary sheet row 188) - Criterion weight * (1-(sum(alternative weights)))
+
+    K_proj: 0, // Project level K value (summary sheet row 195)
+    Malt_proj: [0, 0, 0, 0], // array of (post K calc) M alt values for each grade in each area (0% - 3%) (summary sheet row 197)
+    MdashH_proj: 0, // MdashH for each area @ project level (summary sheet row 206)
+    MlH_proj: 0, // MlH for each area @ project level (summary sheet row 209)
+    Beliefs_proj: [0, 0, 0, 0], // array of Beliefs values for each grade (0% - 3%) for each area in project  (Summary page row 214)
+    Ignorance_proj: 0, // Ignorance value for each area in project  (Summary page row 222)
+    RiskLevels_proj: [0, 0, 0], // Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Summary page row 238)
+    costImpact_proj: 0, // Potential cost impact of AVERAGE risk level on project (Summary page row 245)
 }
 
 const Category = {

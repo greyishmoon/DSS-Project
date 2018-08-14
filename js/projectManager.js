@@ -142,6 +142,7 @@ class ProjectManager {
         this.project = JSON.parse(JSON.stringify(Project));
         this.project.name = "Example Project";
         this.project.cost = 600000;
+        this.project.ProjectWeights = [50, 40, 10];
 
         let cat1 = this.addCategory("Financial", 10);
         cat1.AreaWeights = [80, 20, 0];

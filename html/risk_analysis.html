@@ -191,9 +191,6 @@
 						<h4>Load example project: WARNING - All unsaved data will be lost</h4>
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
 
-						<h4>EMERGENCY RESET</h4>
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="reset-button">RESET</button>
-
 					</div>
 
 				</section>
@@ -230,19 +227,23 @@
 										<th class="mdl-data-table__cell--non-numeric width300 hlBlue200 wrap">
 											<h5>{{name}} Risks</h5>
 										</th>
-
+										<th class="blank"></th>
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue wrap smallText">
 											Likelihood of Occurrence<br /><b>%</b>
 										</th>
+										<th class="blank"></th>
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue wrap smallText">
 											Coefficient of Project Features<br /><b>%</b>
 										</th>
+										<th class="blank"></th>
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue wrap smallText">
 											Controllability<br /><b>%</b>
 										</th>
+										<th class="blank"></th>
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue wrap smallText">
 											Dependency<br /><b>%</b>
 										</th>
+										<th class="blank"></th>
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue200 wrap smallText">
 											Risk Weight<br /><b>%</b>
 										</th>
@@ -261,6 +262,7 @@
 												<label class="mdl-textfield__label">Risk...</label>
 											</div>
 										</td>
+										<td class="blank"></td>
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
@@ -269,6 +271,7 @@
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
+										<td class="blank"></td>
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
@@ -277,6 +280,7 @@
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
+										<td class="blank"></td>
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
@@ -285,6 +289,7 @@
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
+										<td class="blank"></td>
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
@@ -293,6 +298,7 @@
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
+										<td class="blank"></td>
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen200" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
@@ -360,14 +366,16 @@
 										<th class="mdl-data-table__cell--non-numeric width300 hlBlue">
 											<h5></h5>
 										</th>
-
+										<th class="blank"></th>
 										<!-- Columns for 3 grade options -->
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
 											<h6>Grade 1</h6>
 										</th>
+										<th class="blank"></th>
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
 											<h6>Grade 2</h6>
 										</th>
+										<th class="blank"></th>
 										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
 											<h6>Grade 3</h6>
 										</th>
@@ -381,6 +389,7 @@
 										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
 											<h6>Grade percentages</h6>
 										</td>
+										<td class="blank"></td>
 										<!-- Direct link for each cell to grades array -->
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
@@ -390,6 +399,7 @@
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
+										<td class="blank"></td>
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
@@ -398,6 +408,7 @@
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
+										<td class="blank"></td>
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
@@ -594,11 +605,11 @@
 						<h4>Risk Assessment</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 
-						<!-- TARGET ractiveAssessments -->
-						<div id="target-risk-assessment-table"></div>
+						<!-- TARGET ractiveRiskAssessment -->
+						<div id="target-risk-assessment-page"></div>
 
-						<!-- TEMPLATE ractiveAssessments -->
-						<script id="template-risk-assessment-table" type="text/ractive">
+						<!-- TEMPLATE ractiveRiskAssessment -->
+						<script id="template-risk-assessment-page" type="text/ractive">
 							<!-- Create full table for each Category -->
 							{{#each categories: catIndex}}
 							<h5>{{name}} Risk Category</h5>
@@ -973,6 +984,12 @@
 							{{/each}}
 						</script>
 
+
+
+
+
+
+
 						<!-- Next Tab button -->
 						<br>
 						<!-- Goto SUMMARY PAGE -->
@@ -989,11 +1006,11 @@
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
 					</div>
 
-					<!-- TARGET ractiveCategoryweights -->
-					<div id="target-category-weights-table"></div>
+					<!-- TARGET ractiveSummary -->
+					<div id="target-summary-page"></div>
 
-					<!-- TEMPLATE ractiveCategoryweights -->
-					<script id="template-category-weights-table" type="text/ractive">
+					<!-- TEMPLATE ractiveSummary -->
+					<script id="template-summary-page" type="text/ractive">
 
 						<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp" id="grades-table">
 							<thead>
@@ -1297,11 +1314,209 @@
 
 				</section>
 
+
+
+
 				<!-- RESULTS CONTENT ************************************************* -->
 				<section class="mdl-layout__tab-panel" id="page-6">
 					<div class="page-content">
 						<h4>Aggregation risk assessment results on the  project as a whole</h4>
 						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+
+						<!-- TARGET ractiveResults -->
+						<div id="target-results-page"></div>
+
+						<!-- TEMPLATE ractiveResults -->
+						<script id="template-results-page" type="text/ractive">
+							<!-- Table to alter 3 impact grade percentages -->
+							<table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp" id="grades-table">
+								<thead>
+									<tr>
+										<!-- First header - empty-->
+										<th class="mdl-data-table__cell--non-numeric width400 hlBlue">
+											<h5>Project Weights</h5>
+										</th>
+										<th class="blank"></th>
+										<!-- Columns for 3 grade options -->
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
+											<h6>Project Cost</h6>
+										</th>
+										<th class="blank"></th>
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
+											<h6>Project Duration</h6>
+										</th>
+										<th class="blank"></th>
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlBlue">
+											<h6>Project Quality</h6>
+										</th>
+
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr>
+										<!-- First cell - Grade percentages -->
+										<td class="mdl-data-table__cell--non-numeric narrow hlBlue">
+											<h6>Objective Risk Weights</h6>
+										</td>
+										<td class="blank"></td>
+										<!-- Direct link for each cell to grades array -->
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{ProjectWeights[0]}}">
+												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+											</div>
+										</td>
+										<td class="blank"></td>
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{ProjectWeights[1]}}">
+												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+											</div>
+										</td>
+										<td class="blank"></td>
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+											<div class="mdl-textfield mdl-js-textfield number">
+												<!-- Input validation - numbers 0-100 -->
+												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{ProjectWeights[2]}}">
+												<label class="mdl-textfield__label">0-100</label>
+												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+											</div>
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+							<br>
+							<!-- PROJECT RISK LEVEL table -->
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp">
+								<thead>
+									<tr>
+										<th class="mdl-data-table__cell--non-numeric width400 wrap hlBlue">
+											<h5>Risk Assessment on Project</h5>
+										</th>
+										<th class="blank"></th>
+
+										<th class="mdl-data-table__cell--center impact-header width100 hlGray">
+											0%
+										</th>
+										<th class="blank"></th>
+
+										<th class="mdl-data-table__cell--center impact-header width100 hlBlue">
+											1%
+										</th>
+										<th class="blank"></th>
+
+										<th class="mdl-data-table__cell--center impact-header width100 hlBlue">
+											2%
+										</th>
+										<th class="blank"></th>
+
+										<th class="mdl-data-table__cell--center impact-header width100 hlBlue">
+											3%
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<!-- First cell -->
+										<td class="mdl-data-table__cell--non-numeric narrow wrap hlBlue">
+											<h6>Degrees of Belief</h6>
+										</td>
+										<td class="blank"></td>
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlLightGray2">
+											<h5>{{percent(Beliefs_proj[0])}}</h5>
+										</td>
+										<td class="blank"></td>
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+											<h5>{{percent(Beliefs_proj[1])}}</h5>
+										</td>
+										<td class="blank"></td>
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+											<h5>{{percent(Beliefs_proj[2])}}</h5>
+										</td>
+										<td class="blank"></td>
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+											<h5>{{percent(Beliefs_proj[3])}}</h5>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<br>
+							<!-- RISK LEVELS table -->
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-levels-table">
+								<thead>
+									<tr>
+										<th class="mdl-data-table__cell--non-numeric width400 wrap hlBlue">
+											<h5>Risk Range for Project</h5>
+										</th>
+										<th class="blank"></th>
+
+										<th class="mdl-data-table__cell--center impact-header width150 hlBlue">
+											Minimum
+										</th>
+										<th class="blank"></th>
+
+										<th class="mdl-data-table__cell--center impact-header width150 hlBlue">
+											Maximum
+										</th>
+										<th class="blank"></th>
+										<th class="mdl-data-table__cell--center impact-header width150 hlBlue">
+											AVERAGE
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<!-- First cell -->
+										<td class="mdl-data-table__cell--non-numeric narrow wrap hlBlue">
+											<h6>Risk Levels</h6>
+										</td>
+										<td class="blank"></td>
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+											<h5>{{percent(RiskLevels_proj[0])}}</h5>
+										</td>
+										<td class="blank"></td>
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+											<h5>{{percent(RiskLevels_proj[1])}}</h5>
+										</td>
+										<td class="blank"></td>
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
+											<h5>{{percent(RiskLevels_proj[2])}}</h5>
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+							<br>
+							<!-- COST IMPACT table -->
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp cat-cost-impact-table">
+								<thead>
+									<tr>
+										<th class="mdl-data-table__cell--non-numeric width400 wrap hlBlue">
+											<h5>Potential cost impact on project</h5>
+										</th>
+										<th class="blank"></th>
+
+										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlYellow">
+											<h5>  £{{roundTo2(costImpact_proj)}}</h5>
+										</th>
+									</tr>
+								</thead>
+							</table>
+
+						</script>
 					</div>
 				</section>
 
