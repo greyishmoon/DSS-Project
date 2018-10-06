@@ -2,11 +2,29 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/0.3.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ##Terminology
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
+
+## [0.1.9] - 20-09-2018
+### Added
+- All percentages validated to 0-100 - alerts if not 0-100
+- Input validation for weights groups - must total 100
+* Risk Characteristics page
+* Impact Assessment page
+* Risk Assessment page
+* Summary page
+* Results page
+
+
+
+
+### Fixed
+#### DECISION MAKING
+- Data Entry page - percentage input validation - now alerts if not 0-100
+- Summary page - weights percentage input validation - now alerts if not 0-100
 
 ## [0.1.8] - 14-08-2018
 ### Added

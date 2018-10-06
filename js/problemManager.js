@@ -276,9 +276,6 @@ class ProblemManager {
                 if (arraySum > 100)
                     faultsIndex.push({category: cat, criteria: crit});
             }
-
-
-
         }
 
         // return collection of failed category indexes

@@ -189,6 +189,10 @@ width: 50px;
 .mdl-textfield__error {
     margin-left: -25px;
 }
+/* Centre warning label for shortened 0-100 validation */
+.mdl-textfield__error.short {
+    margin-left: 10px;
+}
 /* Override offset padding on last number cell */
 #lastNumber{
   padding: 8px 8px !important;

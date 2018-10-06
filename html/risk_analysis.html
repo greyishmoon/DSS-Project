@@ -8,8 +8,11 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 	<title>DSS Risk Analysis</title>
-	<meta name="description" content="DSS Prototype">
-	<meta name="author" content="C Blythe">
+	<meta name="description" content="DSS Risk Analysis Tool">
+	<meta name="author" content="Dr. Abdulmaten Taroun">
+	<meta name="contact" content="a.taroun@worc.ac.uk ">
+	<meta name="developer" content="C Blythe">
+	<meta name="version" content="0.1.9">
 
 	<!--  Remove favicon.ico request to stop error  -->
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -68,7 +71,7 @@
 			<header class="mdl-layout__header">
 				<div class="mdl-layout__header-row">
 					<!-- Title -->
-					<span class="mdl-layout-title">Risk Analysis 0.1.8</span>
+					<span class="mdl-layout-title">Risk Analysis</span>
 				</div>
 				<!-- Tabs -->
 				<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -185,12 +188,6 @@
 						<div>
 							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500 go-tab-1-btn" type="button">Next ></button>
 						</div>
-
-						<!-- TODO - REMOVE FOR PRODUCTION - BUTTON IN INSTRUCTIONS DISABLED UNTUL THIS REMOVED-->
-						<!-- TEMP LOAD EXAMPLE PROJECT -->
-						<h4>Load example project: WARNING - All unsaved data will be lost</h4>
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
-
 					</div>
 
 				</section>
@@ -266,7 +263,7 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{occurrence}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{occurrence}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -275,7 +272,7 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{coefficient}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{coefficient}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -284,7 +281,7 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{controllability}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{controllability}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -293,16 +290,16 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{dependency}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{dependency}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
 										<td class="blank"></td>
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen200" id="lastNumber">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number riskCharacteristic category{{catIndex}} hlGreen200" id="lastNumber">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{weight}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{weight}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -394,7 +391,7 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{grades[0]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{grades[0]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -403,7 +400,7 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{grades[1]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{grades[1]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -412,7 +409,7 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{grades[2]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{grades[2]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -503,80 +500,80 @@
 										</td>
 										<td class="blank"></td>
 										<!-- Cost Impact columns (x3) -->
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number impactAssessment category{{catIndex}} risk{{riskIndex}} area0 hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{costImpact[0]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{costImpact[0]}}">
 												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+												<span class="mdl-textfield__error percentage short">0-100</span>
 											</div>
 										</td>
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number impactAssessment category{{catIndex}} risk{{riskIndex}} area0 hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{costImpact[1]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{costImpact[1]}}">
 												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+												<span class="mdl-textfield__error percentage">0-100</span>
 											</div>
 										</td>
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number impactAssessment category{{catIndex}} risk{{riskIndex}} area0 hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{costImpact[2]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{costImpact[2]}}">
 												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+												<span class="mdl-textfield__error percentage">0-100</span>
 											</div>
 										</td>
 										<td class="blank"></td>
 										<!-- Duration Impact columns (x3) -->
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number impactAssessment category{{catIndex}} risk{{riskIndex}} area1 hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{durationImpact[0]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{durationImpact[0]}}">
 												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+												<span class="mdl-textfield__error percentage">0-100</span>
 											</div>
 										</td>
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number impactAssessment category{{catIndex}} risk{{riskIndex}} area1 hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{durationImpact[1]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{durationImpact[1]}}">
 												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+												<span class="mdl-textfield__error percentage">0-100</span>
 											</div>
 										</td>
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number impactAssessment category{{catIndex}} risk{{riskIndex}} area1 hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{durationImpact[2]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{durationImpact[2]}}">
 												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+												<span class="mdl-textfield__error percentage">0-100</span>
 											</div>
 										</td>
 										<td class="blank"></td>
 										<!-- Quality Impact columns (x3) -->
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number impactAssessment category{{catIndex}} risk{{riskIndex}} area2 hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{qualityImpact[0]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{qualityImpact[0]}}">
 												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+												<span class="mdl-textfield__error percentage">0-100</span>
 											</div>
 										</td>
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number impactAssessment category{{catIndex}} risk{{riskIndex}} area2 hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{qualityImpact[1]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{qualityImpact[1]}}">
 												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+												<span class="mdl-textfield__error percentage">0-100</span>
 											</div>
 										</td>
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number impactAssessment category{{catIndex}} risk{{riskIndex}} area2 hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{qualityImpact[2]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{qualityImpact[2]}}">
 												<label class="mdl-textfield__label">0-100</label>
-												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
+												<span class="mdl-textfield__error percentage">0-100</span>
 											</div>
 										</td>
 									</tr>
@@ -814,30 +811,30 @@
 										</td>
 										<td class="blank"></td>
 
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number aggregatedWeight hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number riskAssessment category{{catIndex}} hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number summaryInput" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{AreaWeights[0]}}">
+												<input class="mdl-textfield__input number summaryInput" type="number" min="0" max="100" value="{{AreaWeights[0]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
 										<td class="blank"></td>
 
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number aggregatedWeight hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number riskAssessment category{{catIndex}} hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number summaryInput" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{AreaWeights[1]}}">
+												<input class="mdl-textfield__input number summaryInput" type="number" min="0" max="100" value="{{AreaWeights[1]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
 										<td class="blank"></td>
 
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number aggregatedWeight hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number riskAssessment category{{catIndex}} hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number summaryInput" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{AreaWeights[2]}}">
+												<input class="mdl-textfield__input number summaryInput" type="number" min="0" max="100" value="{{AreaWeights[2]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -1036,10 +1033,10 @@
 									</td>
 									<td class="blank"></td>
 									<!-- Direct link for each cell to grades array -->
-									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number summaryWeight hlGreen">
 										<div class="mdl-textfield mdl-js-textfield number">
 											<!-- Input validation - numbers 0-100 -->
-											<input class="mdl-textfield__input number summaryInput" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{CategoryWeight}}">
+											<input class="mdl-textfield__input number summaryInput" type="number" min="0" max="100" value="{{CategoryWeight}}">
 											<label class="mdl-textfield__label">0-100</label>
 											<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 										</div>
@@ -1361,28 +1358,28 @@
 										</td>
 										<td class="blank"></td>
 										<!-- Direct link for each cell to grades array -->
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number resultsWeight hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{ProjectWeights[0]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{ProjectWeights[0]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
 										<td class="blank"></td>
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number resultsWeight hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{ProjectWeights[1]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{ProjectWeights[1]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
 										</td>
 										<td class="blank"></td>
-										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlGreen">
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number resultsWeight hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{ProjectWeights[2]}}">
+												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{ProjectWeights[2]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>

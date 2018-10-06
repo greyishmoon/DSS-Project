@@ -14,12 +14,21 @@ var simTabClicked = false; // Temporarily records if tab click is being simulate
 var delayInMillisecondsForward = 10; // timer for simTabClicked reset
 var delayInMillisecondsReset = 100; // timer for simTabClicked reset
 
-// riskCharacteristicsGroupFault - Records if there are any incorrect group totals on risk Characteristics data entry page
+// riskCharacteristicsGroupFault - Records if there are any incorrect group totals on Risk Characteristics data entry page
 // Risk weights within each category should total 100
 var riskCharacteristicsGroupFault = false;
 // impactAssessmentGroupFault - Records if there are any incorrect group totals on Impact Assessment data entry page
-// Risk weights within each category should total 100
+// Risk weights within each category in each of the 3 areas should total 100
 var impactAssessmentGroupFault = false;
+// riskAssessmentGroupFault - Records if there are any incorrect group totals on Risk Assessment data entry page
+// Area risk weights within each category should total 100
+var riskAssessmentGroupFault = false;
+// summaryWeightsFault - Records if there is an error in the aggregation weights on the Summary page
+// Agregated category risk weights should total 100
+var summaryWeightsFault = false
+// resultsWeightsFault - Records if there is an error in the project weights on the Results page
+// Area weights should total 100
+var resultsWeightsFault = false
 
 $(document).ready(function() {
 
@@ -216,15 +225,32 @@ function tabClicked() {
     }
     // check for inconsistent data in Risk Characteristics page and call Risk Characteristics tab on delay
     if (riskCharacteristicsGroupFault) {
+        setTimeout(goTab1, delayInMillisecondsForward);
+    }// check for inconsistent data in Impact Assessment page and call Impact Assessment tab on delay
+    if (impactAssessmentGroupFault) {
         setTimeout(goTab2, delayInMillisecondsForward);
     }
+    // check for inconsistent data in Risk Assessment page and call Risk Assessment tab on delay
+    if (riskAssessmentGroupFault) {
+        setTimeout(goTab3, delayInMillisecondsForward);
+    }
     // check for inconsistent data in Summary page and call Summary tab on delay
-    // if (impactAssessmentGroupFault) {
-    //     setTimeout(goTab3, delayInMillisecondsForward);
-    // }
+    if (summaryWeightsFault) {
+        setTimeout(goTab4, delayInMillisecondsForward);
+    }
+    // check for inconsistent data in Results page and call Results tab on delay
+    if (resultsWeightsFault) {
+        setTimeout(goTab5, delayInMillisecondsForward);
+    }
 
     updateData()
     scrollToTop();
+}
+
+// Stop infinite update loop created by forcing tab change due to group fault
+function resetTabClick() {
+    console.log("TIMER RESET");
+    simTabClicked = false;
 }
 
 // Simulate click on MDL tabs
@@ -234,9 +260,16 @@ function goTab0() {
 }
 // Risk Characteristics
 function goTab1() {
+    // set simTabClicked and timer to reset
+    simTabClicked = true;
+    setTimeout(resetTabClick, delayInMillisecondsReset);
 
     $(".mdl-layout__tab:eq(1) span").click();
     scrollToTop();
+
+    if (riskCharacteristicsGroupFault) {
+        showRiskCharacteristicsWarningDialogue();
+    }
 }
 // Impact Assessment
 function goTab2() {
@@ -244,45 +277,61 @@ function goTab2() {
     simTabClicked = true;
     setTimeout(resetTabClick, delayInMillisecondsReset);
 
-    if (riskCharacteristicsGroupFault) {
-        $(".mdl-layout__tab:eq(1) span").click();
-        showDataEntryWarningDialogue();
-    } else {
-        $(".mdl-layout__tab:eq(2) span").click();
-        scrollToTop();
+    $(".mdl-layout__tab:eq(2) span").click();
+    scrollToTop();
+
+    if (impactAssessmentGroupFault) {
+        showImpactAssessmentWarningDialogue();
     }
 
 }
-// Results
+// Risk Assessment
 function goTab3() {
     // set simTabClicked and timer to reset
     simTabClicked = true;
     setTimeout(resetTabClick, delayInMillisecondsReset);
 
-    if (impactAssessmentGroupFault) {
-        $(".mdl-layout__tab:eq(2) span").click();
-        showSummaryWarningDialogue();
-    } else {
-        $(".mdl-layout__tab:eq(3) span").click();
-        scrollToTop();
+    $(".mdl-layout__tab:eq(3) span").click();
+    scrollToTop();
+
+    if (riskAssessmentGroupFault) {
+        showRiskAssessmentWarningDialogue();
     }
 }
 // Summary
 function goTab4() {
-    // alert("TEST");
+    // set simTabClicked and timer to reset
+    simTabClicked = true;
+    setTimeout(resetTabClick, delayInMillisecondsReset);
+
     $(".mdl-layout__tab:eq(4) span").click();
     scrollToTop();
+
+    if (summaryWeightsFault) {
+        showSummaryWarningDialogue();
+    }
+}
+// Results
+function goTab5() {
+    // set simTabClicked and timer to reset
+    simTabClicked = true;
+    setTimeout(resetTabClick, delayInMillisecondsReset);
+
+    $(".mdl-layout__tab:eq(5) span").click();
+    scrollToTop();
+
+    if (resultsWeightsFault) {
+        showResultsWarningDialogue();
+    }
 }
 // Instructions
-function goTab5() {
-    // alert("TEST");
-    $(".mdl-layout__tab:eq(5) span").click();
+function goTab6() {
+    $(".mdl-layout__tab:eq(6) span").click();
     scrollToTop();
 }
 // Save/Load
-function goTab6() {
-    // alert("TEST");
-    $(".mdl-layout__tab:eq(6) span").click();
+function goTab7() {
+    $(".mdl-layout__tab:eq(7) span").click();
     scrollToTop();
 }
 // Reset simTabClicked
@@ -329,7 +378,7 @@ function update() {
     checkButtons();
 
     // Update interface - check group totals and alter table colours warning of problems
-    // updateInterface();
+    updateInterface();
 }
 
 // Save data to localStorage
@@ -337,12 +386,103 @@ function saveLocal() {
     projectManager.saveLocal();
 }
 
+/////////////////// UPDATE ////////////////////
+
 // UPDATE DATA calculation - on tab change AND ractive changes on Results page
 function updateData() {
     projectManager.update();
     update();
 }
-/////////////////// UPDATE ////////////////////
+
+// Check group totals and alter table colours warning of problems
+function updateInterface() {
+
+    // record of weights errors on Risk Characteristics page (by category #)
+    var riskCharacteristicsErrors = [];
+    // record of risk weight errors on Impact Assessment page (by category # risk # and area #)
+    var impactAssessmentErrors = [];
+    // record of area weight errors on Risk Assessment page (by category #)
+    var riskAssessmentErrors = [];
+
+    // reset warning flags
+    riskCharacteristicsGroupFault = false;
+    impactAssessmentGroupFault = false;
+    riskAssessmentGroupFault = false;
+    summaryWeightsFault = false;
+    resultsWeightsFault = false;
+
+
+
+    // Check area risk weights in each category (RISK CHARACTERISTICS PAGE)- record problem categories
+    riskCharacteristicsErrors = projectManager.checkriskCharacteristicsWeights();
+    // reset all hlWarningRed cells to hlGreen
+    $('.riskCharacteristic.hlWarningRed').addClass('hlGreen200').removeClass('hlWarningRed');
+    // set cell colours for problem columns to red
+    for (var i = 0; i < projectManager.getCategoryLength(); i++) {
+        // If category number is present, set relevent cells to hlWarningRed
+        if (jQuery.inArray(i, riskCharacteristicsErrors) !== -1) {
+            $('.riskCharacteristic.category' + i).addClass('hlWarningRed').removeClass('hlGreen200');
+        }
+    }
+    // set riskAssessmentGroupFault flag to TRUE if riskAssessmentErrors has recorded any problems
+    if (riskCharacteristicsErrors.length > 0) {
+        riskCharacteristicsGroupFault = true;
+    }
+    console.log(riskCharacteristicsErrors);
+
+    // Check area risk weights in each category for each area (IMPACT ASSESSMENT PAGE)- record problem categories/risks/areas
+    //      NOTE - impactAssessmentErrors structure:
+    //      {category: #, risk: #, area: #}
+    impactAssessmentErrors = projectManager.checkImpactAssessmentWeights();
+    // reset all hlWarningRed cells to hlGreen
+    $('.impactAssessment.hlWarningRed').addClass('hlGreen').removeClass('hlWarningRed');
+    // set cell colours for problem columns to red
+    for (var i = 0; i < impactAssessmentErrors.length; i++) {
+        var fault = impactAssessmentErrors[i];
+        // Set relevent cells to hlWarningRed
+        $('.impactAssessment.category' + fault.category + '.risk' + fault.risk + '.area' + fault.area).addClass('hlWarningRed').removeClass('hlGreen')
+    }
+    // set impactAssessmentGroupFault flag to TRUE if riskAssessmentErrors has recorded any problems
+    if (impactAssessmentErrors.length > 0) {
+        impactAssessmentGroupFault = true;
+    }
+
+    // Check area risk weights in each category (RISK ASSESSMENT PAGE)- record problem categories
+    riskAssessmentErrors = projectManager.checkRiskAssessmentWeights();
+    // reset all hlWarningRed cells to hlGreen
+    $('.riskAssessment.hlWarningRed').addClass('hlGreen').removeClass('hlWarningRed');
+    // set cell colours for problem columns to red
+    for (var i = 0; i < projectManager.getCategoryLength(); i++) {
+        // Set relevent cells to hlWarningRed
+        if (jQuery.inArray(i, riskAssessmentErrors) !== -1) {
+            $('.riskAssessment.category' + i).addClass('hlWarningRed').removeClass('hlGreen');
+        }
+    }
+    // set riskAssessmentGroupFault flag to TRUE if riskAssessmentErrors has recorded any problems
+    if (riskAssessmentErrors.length > 0) {
+        riskAssessmentGroupFault = true;
+    }
+
+    // check aggregation weights (SUMMARY PAGE) total - set summaryWeightsFault to TRUE if problem
+    // (checkAggregatedWeightsOk() returns true if total 100 so negate)
+    summaryWeightsFault = !projectManager.checkSummaryWeightsOk();
+    // reset all hlWarningRed cells to hlGreen
+    $('.summaryWeight.hlWarningRed').addClass('hlGreen').removeClass('hlWarningRed');
+    // Set relevent cells to hlWarningRed
+    if (summaryWeightsFault) {
+        $('.summaryWeight').addClass('hlWarningRed').removeClass('hlGreen');
+    }
+
+    // check project weights (RESULTS PAGE) total 100 - set resultsWeightsFault to TRUE if problem
+    // (checkAggregatedWeightsOk() returns true if total 100 so negate)
+    resultsWeightsFault = !projectManager.checkResultsWeightsOk();
+    // reset all hlWarningRed cells to hlGreen
+    $('.resultsWeight.hlWarningRed').addClass('hlGreen').removeClass('hlWarningRed');
+    // set cell colours for problem weights column to red
+    if (resultsWeightsFault) {
+        $('.resultsWeight').addClass('hlWarningRed').removeClass('hlGreen');
+    }
+}
 
 
 ////////////////// CATEGORIES ///////////////////
@@ -466,12 +606,31 @@ function loadExampleProject() {
 
 
 /////////////////// DIALOGS ////////////////////
-
-// Warning dialog for inconsistent data on Data Entry page
-function showDataEntryWarningDialogue() {
+// Warning dialog for inconsistent data on Risk Characteristics page
+function showRiskCharacteristicsWarningDialogue() {
     showDialog({
         title: 'WARNING: Inconsistent data',
-        text: 'Elements on this page need correcting: \nRows of criteria weights should NOT EXCEED 100 \nColumns of category weights must TOTAL 100 \nProblem groups highlighted in red'.split('\n').join('<br>'),
+        text: 'Elements on this page need correcting: \nColumns of risk weights must TOTAL 100\nProblem groups highlighted in red'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for inconsistent data on Impact Assessment page
+function showImpactAssessmentWarningDialogue() {
+    showDialog({
+        title: 'WARNING: Inconsistent data',
+        text: 'Elements on this page need correcting: \nRows of risk weights should NOT EXCEED 100 for each area\nProblem groups highlighted in red'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for inconsistent data on Risk Assessment page
+function showRiskAssessmentWarningDialogue() {
+    showDialog({
+        title: 'WARNING: Inconsistent data',
+        text: 'Elements on this page need correcting: \nThe objective weights for each category must TOTAL 100 \nProblem groups highlighted in red.'.split('\n').join('<br>'),
         negative: {
             title: 'Continue'
         }
@@ -482,6 +641,16 @@ function showSummaryWarningDialogue() {
     showDialog({
         title: 'WARNING: Inconsistent data',
         text: 'Elements on this page need correcting: \nThe aggregated category weights must TOTAL 100 \nProblem groups highlighted in red.'.split('\n').join('<br>'),
+        negative: {
+            title: 'Continue'
+        }
+    });
+}
+// Warning dialog for inconsistent data on Results page
+function showResultsWarningDialogue() {
+    showDialog({
+        title: 'WARNING: Inconsistent data',
+        text: 'Elements on this page need correcting: \nThe aggregated project weights must TOTAL 100 \nProblem groups highlighted in red.'.split('\n').join('<br>'),
         negative: {
             title: 'Continue'
         }

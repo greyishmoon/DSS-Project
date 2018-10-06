@@ -133,6 +133,107 @@ class ProjectManager {
     }
 
 
+    // DATA VALIDATION
+
+    // Check values of risk weights in each category (RISK CHERACTERISTICS PAGE) total 100
+    // return array of category indexes where total weight != 100
+    checkriskCharacteristicsWeights() {
+        var faultsIndex = [];
+        // Loop over each category
+        for (var cat = 0; cat < this.project.categories.length; cat++) {
+            // loop over each risk
+            var total = 0;
+            for (var rsk = 0; rsk < this.project.categories[cat].risks.length; rsk++) {
+                // Sum weights for each risk weight
+                total += this.project.categories[cat].risks[rsk].weight;
+            }
+            // If total != 100 push category nuber to faultsIndex
+            if (total !== 100)
+                faultsIndex.push(cat);
+        }
+        // return collection of failed category indexes
+        return faultsIndex;
+    }
+
+    // Check area risk weights in each category for each area (IMPACT ASSESSMENT PAGE) total 100
+    // return array of objects {category: #, risk: #, area: #} of problem groups
+    checkImpactAssessmentWeights() {
+        var faultsIndex = [];
+        // Loop over each category
+        for (var cat = 0; cat < this.project.categories.length; cat++) {
+            // Loop over each risk
+            for (var rsk = 0; rsk < this.project.categories[cat].risks.length; rsk++) {
+                // check cost area weights
+                var total = this.project.categories[cat].risks[rsk].costImpact.reduce(this.getSum);
+                //console.log("COST AREA total:");
+                if (total > 100) {
+                    faultsIndex.push({category: cat, risk: rsk, area: 0});
+                }
+                // check cost duration weights
+                total = this.project.categories[cat].risks[rsk].durationImpact.reduce(this.getSum);
+                if (total > 100) {
+                    faultsIndex.push({category: cat, risk: rsk, area: 1});
+                }
+                // check cost quality weights
+                total = this.project.categories[cat].risks[rsk].qualityImpact.reduce(this.getSum);
+                if (total > 100) {
+                    faultsIndex.push({category: cat, risk: rsk, area: 2});
+                }
+            }
+        }
+
+        // return collection of failed category indexes
+        return faultsIndex;
+    }
+
+    // Check values of all area risk weights in a category (RISK ASSESSMENT PAGE) total 100
+    // return array of category indexes where total weight != 100
+    checkRiskAssessmentWeights() {
+        var faultsIndex = [];
+        // Loop over each category
+        for (var cat = 0; cat < this.project.categories.length; cat++) {
+            // Sum three area weights for category
+            var total = this.project.categories[cat].AreaWeights.reduce(this.getSum);
+            // If total != 100 push category number to faultsIndex
+            if (total !== 100)
+                faultsIndex.push(cat);
+        }
+        // return collection of failed category indexes
+        return faultsIndex;
+    }
+
+    // Check values of project weights (RESULTS PAGE) total 100 - return TRUE if = 100
+    checkSummaryWeightsOk() {
+        var total = 0;
+        // Loop over every category
+        for (var i = 0; i < this.project.categories.length; i++) {
+            // Sum weights for each category
+            total += this.project.categories[i].CategoryWeight;
+        }
+        // return TRUE if total = 100
+        return (total === 100) ? true : false;
+    }
+
+    // Check values of project weights (RESULTS PAGE) total 100 - return TRUE if = 100
+    checkResultsWeightsOk() {
+        var total = 0;
+        // Loop over every category
+        for (var i = 0; i < this.project.categories.length; i++) {
+            // Sum weights for each category
+            total = this.project.ProjectWeights.reduce(this.getSum);
+        }
+        // return TRUE if total = 100
+        return (total === 100) ? true : false;
+    }
+
+
+    // HELPER FUNCTIONS
+    // Return sum of array -
+    // Call using - ARRAY_TO_BE_SUMMED.reduce(this.getSum); OR ARRAY_TO_BE_SUMMED.reduce(_this.getSum); from within anonymous function
+    getSum(total, num) {
+        return total + num;
+    }
+
 
     ////////////////// TESTING //////////////////////
     // load test problem

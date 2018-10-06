@@ -8,8 +8,11 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 	<title>DSS Decision Making</title>
-	<meta name="description" content="DSS Prototype">
-	<meta name="author" content="C Blythe">
+	<meta name="description" content="DSS Decision Making Tool">
+	<meta name="author" content="Dr. Abdulmaten Taroun">
+	<meta name="contact" content="a.taroun@worc.ac.uk ">
+	<meta name="developer" content="C Blythe">
+	<meta name="version" content="0.1.9">
 
 	<!--  Remove favicon.ico request to stop error  -->
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -68,7 +71,7 @@
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
 				<!-- Title -->
-				<span class="mdl-layout-title">Decision Making 0.1.8</span>
+				<span class="mdl-layout-title">Decision Making</span>
 			</div>
 			<!-- Tabs -->
 			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -309,7 +312,7 @@
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} criteria{{critIndex}} criteriaReset hlGreen">
 										<div class="mdl-textfield mdl-js-textfield number">
 											<!-- Input validation - numbers 0-100 -->
-											<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{this}}">
+											<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{this}}">
 											<label class="mdl-textfield__label">0-100</label>
 											<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 										</div>
@@ -319,7 +322,7 @@
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number category{{catIndex}} weight hlGreen200" id="lastNumber">
 										<div class="mdl-textfield mdl-js-textfield number">
 											<!-- Input validation - numbers 0-100 -->
-											<input class="mdl-textfield__input number" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{weight}}">
+											<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{weight}}">
 											<label class="mdl-textfield__label">0-100</label>
 											<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 										</div>
@@ -470,7 +473,7 @@
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number aggregatedWeight hlGreen">
 										<div class="mdl-textfield mdl-js-textfield number">
 											<!-- Input validation - numbers 0-100 -->
-											<input class="mdl-textfield__input number summaryInput" type="number" pattern="[0-9]|[1-9][0-9]|100" value="{{weight}}">
+											<input class="mdl-textfield__input number summaryInput" type="number" min="0" max="100" value="{{weight}}">
 											<label class="mdl-textfield__label">0-100</label>
 											<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 										</div>

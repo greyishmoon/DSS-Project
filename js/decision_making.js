@@ -172,39 +172,6 @@ function resetListeners() {
     // Input change listener - FOR INPUT CELLS ON SUMMARY PAGE - to force data update
     $('input.summaryInput').on('focusout', updateData);
 }
-//////////////////// DYNAMIC LISTENERS /////////////////////
-
-function jsfunction() {
-    console.log(">>>>>>>>>>>>>>>>>>>>>>TAB FUNCTION <<<<<<<<<<<<<<<<");
-}
-
-// NAVIGATION
-function tabClicked() {
-    // If simulate tab click then return to break recursive loop - simTabClicked gets reset on a timer
-    if (simTabClicked) {
-        return;
-    }
-    // check for inconsistent data in Data Entry page and call Data Entry tab on delay
-    if (dataEntryGroupFault) {
-        setTimeout(goTab2, delayInMillisecondsForward);
-    }
-    // check for inconsistent data in Summary page and call Summary tab on delay
-    if (summaryWeightsFault) {
-        setTimeout(goTab3, delayInMillisecondsForward);
-    }
-
-
-
-    //window.scrollTo(0, 0);
-    // TODO - TEMP ADDITION TO UPDATE DATA ON TAB CHANGE - MAY BE ABLE TO REMOVE IF NO PROBLEM CALLING DATA.UPDATE FROM THIS.UPDATE
-    updateData();
-    scrollToTop();
-}
-
-function resetTabClick() {
-    console.log("TIMER RESET");
-    simTabClicked = false;
-}
 
 // Check all buttons and enable/disable based on conditions - called by update
 function checkButtons() {
@@ -238,11 +205,95 @@ function checkButtons() {
     if (problemManager.getCategoryLength() <= 1) {
         disableButton("#remove-category");
     }
+}
 
+//////////////////// DYNAMIC LISTENERS /////////////////////
 
+////////////////// NAVIGATION /////////////////
 
+function tabClicked() {
+    // If simulate tab click then return to break recursive loop - simTabClicked gets reset on a timer
+    if (simTabClicked) {
+        return;
+    }
+    // check for inconsistent data in Data Entry page and call Data Entry tab on delay
+    if (dataEntryGroupFault) {
+        setTimeout(goTab2, delayInMillisecondsForward);
+    }
+    // check for inconsistent data in Summary page and call Summary tab on delay
+    if (summaryWeightsFault) {
+        setTimeout(goTab3, delayInMillisecondsForward);
+    }
+
+    updateData();
+    scrollToTop();
+}
+
+// Stop infinite update loop created by forcing tab change due to group fault
+function resetTabClick() {
+    console.log("TIMER RESET");
+    simTabClicked = false;
+}
+
+// Simulate click on MDL tabs
+// Problem Setup
+function goTab0() {
+    $(".mdl-layout__tab:eq(0) span").click();
+}
+// Data Entry
+function goTab1() {
+
+    $(".mdl-layout__tab:eq(1) span").click();
+    scrollToTop();
+}
+// Summary
+function goTab2() {
+    // set simTabClicked and timer to reset
+    simTabClicked = true;
+    setTimeout(resetTabClick, delayInMillisecondsReset);
+
+    if (dataEntryGroupFault) {
+        $(".mdl-layout__tab:eq(1) span").click();
+        showDataEntryWarningDialogue();
+    } else {
+        $(".mdl-layout__tab:eq(2) span").click();
+        scrollToTop();
+    }
 
 }
+// Results
+function goTab3() {
+    // set simTabClicked and timer to reset
+    simTabClicked = true;
+    setTimeout(resetTabClick, delayInMillisecondsReset);
+
+    if (summaryWeightsFault) {
+        $(".mdl-layout__tab:eq(2) span").click();
+        showSummaryWarningDialogue();
+    } else {
+        $(".mdl-layout__tab:eq(3) span").click();
+        scrollToTop();
+    }
+}
+// Instructions
+function goTab4() {
+    // alert("TEST");
+    $(".mdl-layout__tab:eq(4) span").click();
+    scrollToTop();
+}
+// Save/Load
+function goTab5() {
+    // alert("TEST");
+    $(".mdl-layout__tab:eq(5) span").click();
+    scrollToTop();
+}
+
+////////////////// NAVIGATION /////////////////
+
+// NAVIGATION
+
+
+
 
 
 //////////////// ALTERNATIVES ////////////////
@@ -310,62 +361,7 @@ function removeCriteria(event) {
 }
 /////////////////// CRITERIA //////////////////
 
-////////////////// NAVIGATION /////////////////
 
-// Simulate click on MDL tabs
-// Problem Setup
-function goTab0() {
-    $(".mdl-layout__tab:eq(0) span").click();
-}
-// Data Entry
-function goTab1() {
-
-    $(".mdl-layout__tab:eq(1) span").click();
-    scrollToTop();
-}
-// Summary
-function goTab2() {
-    // set simTabClicked and timer to reset
-    simTabClicked = true;
-    setTimeout(resetTabClick, delayInMillisecondsReset);
-
-    if (dataEntryGroupFault) {
-        $(".mdl-layout__tab:eq(1) span").click();
-        showDataEntryWarningDialogue();
-    } else {
-        $(".mdl-layout__tab:eq(2) span").click();
-        scrollToTop();
-    }
-
-}
-// Results
-function goTab3() {
-    // set simTabClicked and timer to reset
-    simTabClicked = true;
-    setTimeout(resetTabClick, delayInMillisecondsReset);
-
-    if (summaryWeightsFault) {
-        $(".mdl-layout__tab:eq(2) span").click();
-        showSummaryWarningDialogue();
-    } else {
-        $(".mdl-layout__tab:eq(3) span").click();
-        scrollToTop();
-    }
-}
-// Instructions
-function goTab4() {
-    // alert("TEST");
-    $(".mdl-layout__tab:eq(4) span").click();
-    scrollToTop();
-}
-// Save/Load
-function goTab5() {
-    // alert("TEST");
-    $(".mdl-layout__tab:eq(5) span").click();
-    scrollToTop();
-}
-
-////////////////// NAVIGATION /////////////////
 
 
 /////////////////// UPDATE ////////////////////
@@ -450,7 +446,6 @@ function updateInterface() {
 
     // Check weights total for each category - record problem categories
     categoryErrors = problemManager.checkCategoryWeights();
-
     // set cell colours for problem columns to red
     for (var i = 0; i < problemManager.getCategoryLength(); i++) {
         // If category number is present, change category#.weight to red
@@ -464,13 +459,11 @@ function updateInterface() {
     // set dataEntryGroupFault flag to TRUE if criteriaErrors or categoryErrors have recorded any problems
     if (criteriaErrors.length > 0 || categoryErrors.length > 0) {
         dataEntryGroupFault = true;
-
     }
 
     // check aggregation weights total - set summaryWeightsFault to TRUE if problem
     // (checkAggregatedWeightsOk() returns true if total 100 so negate)
     summaryWeightsFault = !problemManager.checkAggregatedWeightsOk();
-
     // set cell colours for aggregation weights column to red
     if (summaryWeightsFault) {
         $('.aggregatedWeight').addClass('hlWarningRed').removeClass('hlGreen');
