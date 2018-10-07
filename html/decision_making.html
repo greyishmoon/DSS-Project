@@ -25,8 +25,6 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<!-- Roboto font -->
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
-	<link href="../css/mdl-jquery-modal-dialog.css" rel="stylesheet" type="text/css">
 
 	<link href="../css/dss.css" rel="stylesheet" type="text/css">
 	<!-- <script src="../libs/jquery-3.2.1.min.js"></script> -->
@@ -35,6 +33,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/ractive"></script>
 	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
 	<script src="../libs/mdl-jquery-modal-dialog.js"></script>
+	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
+	<link href="../css/mdl-jquery-modal-dialog.css" rel="stylesheet" type="text/css">
+
 	<!-- jsPDF - for generating PDFs - from https://github.com/MrRio/jsPDF -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
 	<!-- jsPDF plugin - jsPDF-AutoTable - for tables in jsPDF - from https://github.com/simonbengtsson/jsPDF-AutoTable -->
@@ -92,7 +93,7 @@
 
 					<!-- Problem Setup -->
 					<h4>Problem Setup</h4>
-					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<p>Add details of the broad factors affecting this outsourcing decision.</p>
 
 					<!-- Project Title -->
 
@@ -120,7 +121,7 @@
 
 					<!-- Problem Alternatives -->
 					<h4>Alternative solutions</h4>
-					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<p>List the alternative solutions that are available for this problem. For instance - the range of suppliers who are bidding on a contract.</p>
 
 
 					<!-- TARGET ractiveAlternatives -->
@@ -173,8 +174,8 @@
 
 					<!-- Criteria Categories -->
 					<h4>Criteria Categories</h4>
-					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
-					<p>NOTE - Altering the number of Categories will reset the Aggregated Weights on the Summary page</p>
+					<p>List the broad categories of factors that have an influence on the decision. For instance - Financial / Operational / Strategic Benefit / Technical / Risk etc.
+						<br /><i>NOTE - Altering the number of Categories will reset the Aggregated Weights on the Summary page</i></p>
 
 					<!-- TARGET ractiveAlternatives -->
 					<div id="target-categories-table"></div>
@@ -254,11 +255,15 @@
 			<section class="mdl-layout__tab-panel" id="page-2">
 				<div class="page-content">
 					<h4>Data Entry</h4>
-					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<p>Add the data relevant to this decision making process</p>
 
 					<!-- Problem Categories -->
 					<h4>Categories of Criteria</h4>
-					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<p>For each category, list each <b>criteria</b> that has been identified as relevent in this area.</p>
+					<p>Then, for each alternative solution, assign a <b>degree of belief</b> for each criteria. These are percentage values (0-100) for how likely you consider that alternative is to meet that criteria.
+						<br /><i>NOTE: The sum of the assigned degrees of belief for all alternatives in a criteria row <b>must not exceed 100%</b></i></p>
+					<p>Finally, assign a <b>weight</b> for the importance of each criteria in the category. These are proportional within each category.
+						<br /><i>NOTE: The sum of the weights for each category <b>must exactly total 100%</b></i></p>
 
 					<!-- TARGET ractiveAlternatives -->
 					<div id="target-data-table"></div>
@@ -371,8 +376,9 @@
 
 					<!-- Analysis Summary table -->
 
-					<h4>Analysis Summary</h4>
-					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<h4>Aggregated Degrees of Belief</h4>
+					<p>Based on the degrees of belief and criteria weights, this is a summary of the <b>aggregated degrees of belief</b> for each category. The grey column shows any <b>unassigned degrees of belief</b>, which represents <b>ignorance</b> within that
+						area of the problem domain.</p>
 
 					<!-- TARGET ractiveSummary -->
 					<div id="target-summary-table"></div>
@@ -434,7 +440,8 @@
 					<!-- Analysis Summary table -->
 
 					<h4>Assessment Aggregation</h4>
-					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<p>For each category, assign a <b>weight</b> in order to reflect that category's importance relative to the other categories. The default assumption is that all risk categories are equally important.
+						<br /><i>NOTE: The sum of the weights for all categories <b>must exactly total 100%</b></i></p>
 
 					<!-- TARGET ractiveSummary -->
 					<div id="target-category-weights-table"></div>
@@ -506,8 +513,8 @@
 			<!-- RESULTS PAGE *********************************************** -->
 			<section class="mdl-layout__tab-panel" id="page-4">
 				<div class="page-content">
-					<h5>Aggregated Degrees of Belief</h5>
-					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<h4>Aggregated Degrees of Belief</h4>
+					<p>This final summary shows the <b>aggregated degrees of belief</b> for each alternative option, with the alternative weighting taken into account. The grey column shows the level of <b>ignorance</b> for the whole problem.</p>
 
 					<!-- TARGET ractiveSummary -->
 					<div id="target-aggregated-beliefs-table"></div>
@@ -554,8 +561,9 @@
 
 					</script>
 
-					<h5>Distributed Ignorance</h5>
-					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<h4>Distributed Ignorance</h4>
+					<p>This table <b>distributes the ignorance equally</b> between each alternative and represents a balanced view of the factors influencing the decision. <br>Alternatively all the ignorance could be applied to a <b>single alternative</b>
+						(aggregated degree of belief above) to create the most <b>optomistic</b> or <b>pessimistic</b> view of the potential solutions.</p>
 
 					<!-- TARGET ractiveSummary -->
 					<div id="target-distributed-ignorance-table"></div>
@@ -598,10 +606,26 @@
 			<section class="mdl-layout__tab-panel" id="page-5">
 				<div class="page-content">
 					<h4>Instructions</h4>
-					<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+					<p>Start entering data on the <b>Problem Setup</b> page following the instruction, and work <b>sequentially</b> through the subsequent pages. </p>
+
+					<p>All <b>data is validated</b> to ensure consistency with the DSS model. Any errors in data entry will be highlighted in red, and you will be automatically returned to a page with errors on it preventing progression unitl the inconsistency has been corrected. Full error messages are associated with each page.</p>
+
+					<p>These tools save all data to the browser local storage with any data change. This means that should your work be interupted, or the browser closed before saving the data file, you should be returned to the state following your last entry.
+						<br><i>However - do not rely on this as a long term saving mechanism - ensure you save to file when required.</i></p>
+
+					<p>To <b>save</b> a problem, click go to the Save/Load tab and click on the Save Problem button.
+						<br>The problem will be saved as DSS-Decision-Making-<ProjectTitle>.json to your browsers download folder. After saving please manually move file to a permenant location for storage. </p>
+
+					<p>Once completed, a problem report can be <b>printed to PDF</b> using the option in the Save/Load tab</p>
+
+					<p>To <b>load</b> a problem, click go to the Save/Load tab and click on the Load Problem button.
+						<br>Navigate to folder problem saves were moved to and select DSS-Decision-Making-<ProblemTitle>.json - All unsaved data from current problem will be lost.</p>
 
 
-					<h4>Load example project: WARNING - All unsaved data will be lost</h4>
+					<h4>Example project</h4>
+					<p>A completed example project has been provided to demonstrate how to add multiple categories, alternatives and criteria to a problem.
+					<br>This project is hard coded and cannot be harmed by experimentation - after playing with the values it can be reset to default by reloading the example.</p>
+					<h5><b>Load example project:</b> WARNING - All unsaved data will be lost</h5>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
 
 				</div>
@@ -612,28 +636,25 @@
 				<div class="page-content">
 					<p>Please run this application in the <b><em>Chrome</em></b> browser for full file management functionality.</p>
 
-					<h4>Print to PDF</h4>
-					<p>Print project results to PDF - saved by project title to browser downloads folder.</p>
+					<h4><b>Print to PDF</b></h4>
+					<p>Print problem results to PDF - saved by problem title to browser downloads folder.</p>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="printPDF">Print PDF</button>
 
-					<h4>Save Project</h4>
-					<p>The problem will be saved as <b>DSS-Decision-Making-&lt;ProjectTitle&gt;.json</b> to your browsers <b>download folder</b>. After saving please manually move file to a permenant location for storage.</p>
-					<p>NOTE - Due to browser security previous saves of this project WILL NOT be overwritten automatically. Multiple saves of the same name will be appended (2)(3)(4) etc.</p>
-					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" id="saveProject" type="button">SAVE PROJECT </button>
+					<h4><b>Save Problem</b></h4>
+					<p>The problem will be saved as <b>DSS-Decision-Making-&lt;ProblemTitle&gt;.json</b> to your browsers <b>download folder</b>. After saving please manually move file to a permenant location for storage.</p>
+					<p>NOTE - Due to browser security previous saves of this problem <b>WILL NOT</b> be overwritten automatically. Multiple saves of the same name will be appended (2)(3)(4) etc.</p>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" id="saveProject" type="button">SAVE PROBLEM </button>
 
-					<h4>Load Project</h4>
-					<p>Navigate to folder project saves were moved to and select <b>DSS-Decision-Making-&lt;ProjectTitle&gt;.json</b> - All unsaved data from current project will be lost.</p>
-
-
+					<h4><b>Load Problem:</b> WARNING - All unsaved data will be lost</h4>
+					<p>Navigate to folder problem saves were moved to and select <b>DSS-Decision-Making-&lt;ProblemTitle&gt;.json</b> - All unsaved data from current problem will be lost.</p>
 
 					<!-- From https://codepen.io/thierryc/pen/oBvvJB -->
 					<!-- Accent-colored raised button with ripple -->
 					<Label class="input-custom-file mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="loadProject">
-						LOAD PROJECT<input type="file" id="fileSelector" accept=".json"></label>
+						LOAD PROBLEM<input type="file" id="fileSelector" accept=".json"></label>
 
-
-					<h4>Clear current project: WARNING - All unsaved data will be lost</h4>
-					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="reset-button">RESET PROJECT</button>
+					<h4><b>Clear current problem:</b> WARNING - All unsaved data will be lost</h4>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="reset-button">RESET PROBLEM</button>
 
 
 				</div>

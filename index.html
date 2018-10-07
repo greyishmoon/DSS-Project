@@ -8,11 +8,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>DSS Menu</title>
-    <meta name="description" content="DSS Prototype">
-    <meta name="author" content="C Blythe">
+    <meta name="description" content="Decision Support System (DSS) Menu">
+    <meta name="author" content="Dr. Abdulmaten Taroun">
+    <meta name="contact" content="a.taroun@worc.ac.uk ">
+    <meta name="developer" content="C Blythe">
+    <meta name="version" content="0.1.9">
 
     <!--  Remove favicon.ico request to stop error  -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <link href="css/dss.css" rel="stylesheet" type="text/css">
 
     <!-- Material Design Lite -->
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
@@ -23,15 +28,8 @@
     <!-- Roboto font -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
-    <link href="css/index.css" rel="stylesheet" type="text/css">
-    <script src="libs/jquery-3.2.1.min.js"></script>
-    <!-- Project object definition -->
-    <!-- <script src="js/project.js"></script> -->
-    <!-- DSS model script -->
-    <!-- <script src="js/DSS_model.js"></script> -->
-    <!-- Main page script -->
-    <script src="js/index.js"></script>
 
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
 
     <!--[if lt IE 9]>
@@ -42,11 +40,12 @@
 
 <body>
 
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header mdl-layout__header--scroll">
-            <div class="mdl-layout__header-row">
+    <div class="mdl-layout mdl-js-layout">
+
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row index">
                 <!-- Title -->
-                <span class="mdl-layout-title">Decision Support System Menu</span>
+                <span class="mdl-layout__title">Decision Support System Menu</span>
             </div>
         </header>
 
@@ -54,17 +53,24 @@
             <section class="mdl-layout__tab-panel is-active" id="page-1">
                 <div class="page-content">
 
-                    <h4>Select a .... (wording?)</h4>
-                    <p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien
-                        in ipsum.</p>
-
+                    <h4>Select a DSS tool...</h4>
+                    <h5>Project Risk Analysis Tool</h5>
+                    <p>The purpose of this DSS tool is to assist decision makers in assessing project risk level based on the assessment of individual risks within a project. </p>
                     <table class="button-table-menu">
                         <tbody>
                             <tr>
                                 <td class="mdl-data-table__cell--non-numeric menu">
-                                    <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="html/risk_analysis.html">Project Risk Analysis tool</a>
+                                    <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="html/risk_analysis.html">Risk Analysis tool</a>
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>
+
+                    <h5>Outsourcing Decision Making Tool</h5>
+                    <p>The purpose of this DSS tool is to support decision makers in making informed outsourcing decisions by quantifying the uncertainty in the problem domain.</p>
+
+                    <table class="button-table-menu">
+                        <tbody>
                             <tr>
                                 <td class="mdl-data-table__cell--non-numeric menu">
                                     <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="html/decision_making.html">Decision Making tool</a>
@@ -74,19 +80,38 @@
                     </table>
                 </div>
 
+                <br><br>
+                <p><i>NOTE - Please run this application in the <b><em>Chrome</em></b> browser for full file management functionality.</i></p>
+                <br><br>
 
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                    <tbody>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric menu">
+                                <b style="color:green;">These tools were created by:</b>
+                            </td>
 
+                        </tr>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric menu">
+                                <i>Dr. <b>Abdulmaten Taroun</b>, Senior Lecturer in Project & Operations Management, The University of Worcester - Worcester Business School</i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric menu">
+                                E-mail:
+                                <a href="mailto:a.taroun@worc.ac.uk?Subject=DSS%20Tools%20Prototype" target="_top">a.taroun@worc.ac.uk</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+                <img src="images/University-of-worcester1.png" alt="UoW logo" width="250">
 
             </section>
         </main>
     </div>
-
-
-
-
-
-
-
 
 </body>
 

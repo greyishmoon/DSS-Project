@@ -8,8 +8,20 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+TODO!!!!! PDF REPORT FOR RISK ANALYSIS
+
+## [0.1.9] - 28-09-2018
+### Added
+#### INDEX PAGE
+- Introduction text
+- Author table with contact link
+- UoW logo
+#### DECISION MAKING
+- All instruction text
+
 ## [0.1.9] - 20-09-2018
 ### Added
+#### RISK ANALYSIS
 - All percentages validated to 0-100 - alerts if not 0-100
 - Input validation for weights groups - must total 100
 * Risk Characteristics page
@@ -17,9 +29,6 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 * Risk Assessment page
 * Summary page
 * Results page
-
-
-
 
 ### Fixed
 #### DECISION MAKING
