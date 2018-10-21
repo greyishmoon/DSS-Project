@@ -12,7 +12,7 @@
 	<meta name="author" content="Dr. Abdulmaten Taroun">
 	<meta name="contact" content="a.taroun@worc.ac.uk ">
 	<meta name="developer" content="C Blythe">
-	<meta name="version" content="0.1.9">
+	<meta name="version" content="0.1.10">
 
 	<!--  Remove favicon.ico request to stop error  -->
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -37,8 +37,9 @@
 	<!-- jsPDF - for generating PDFs - from https://github.com/MrRio/jsPDF -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
 	<!-- jsPDF plugin - jsPDF-AutoTable - for tables in jsPDF - from https://github.com/simonbengtsson/jsPDF-AutoTable -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.js"></script>
-
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.js"></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.js"></script> -->
+	<script src="../libs/jspdf.plugin.autotable.min.js"></script>
 
 	<!-- Prototypes and general helper functions -->
 	<script src="../js/prototypes.js"></script>
@@ -1534,9 +1535,9 @@
 					<div class="page-content">
 						<p>Please run this application in the <b><em>Chrome</em></b> browser for full file management functionality.</p>
 
-						<h4>Print to PDF</h4>
-						<p>Print project results to PDF - saved by project title to browser downloads folder.</p>
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="printPDF">Print PDF</button>
+						<h4>Print Report</h4>
+						<p>Print project report to PDF - saved by project title to browser downloads folder.</p>
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="printRiskAnalysisReportPDF">Print PDF</button>
 
 						<h4>Save Project</h4>
 						<p>The problem will be saved as <b>DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json</b> to your browsers <b>download folder</b>. After saving please manually move file to a permenant location for storage.</p>

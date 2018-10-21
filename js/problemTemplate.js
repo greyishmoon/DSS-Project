@@ -1,5 +1,5 @@
 // Stores all decision making project data
-var Problem = {
+const Problem = {
     type: "decision_making",
     name: "",
     alternatives: [], // List of alternative suppliers
@@ -16,7 +16,7 @@ var Problem = {
 }
 
 // Project categories being assessed
-var Category = {
+const Category = {
     name: "",
     criteria: [], // List of criteria associated with each category
     weight: 0, // Weight of each category (aggregated for summary tables)
@@ -38,7 +38,7 @@ var Category = {
 }
 
 // Criteria associated with a category
-var Criterion = {
+const Criterion = {
     name: "",
     weight: 0, // Weighting of criteria within Category
     alternativeWeights: [], // Weighting of criteria against each alternative supplier

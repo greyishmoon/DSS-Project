@@ -12,7 +12,7 @@
 	<meta name="author" content="Dr. Abdulmaten Taroun">
 	<meta name="contact" content="a.taroun@worc.ac.uk ">
 	<meta name="developer" content="C Blythe">
-	<meta name="version" content="0.1.9">
+	<meta name="version" content="0.1.10">
 
 	<!--  Remove favicon.ico request to stop error  -->
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -45,7 +45,7 @@
 	<!-- Prototypes and general helper functions -->
 	<script src="../js/prototypes.js"></script>
 	<!-- Project object definition + manager-->
-	<script src="../js/problem.js"></script>
+	<script src="../js/problemTemplate.js"></script>
 	<!-- DSS DM model script -->
 	<script src="../js/DSS_DM_model.js"></script>
 	<!-- Problem manager object - interaction between web page and problem data object -->
@@ -636,9 +636,9 @@
 				<div class="page-content">
 					<p>Please run this application in the <b><em>Chrome</em></b> browser for full file management functionality.</p>
 
-					<h4><b>Print to PDF</b></h4>
-					<p>Print problem results to PDF - saved by problem title to browser downloads folder.</p>
-					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="printPDF">Print PDF</button>
+					<h4><b>Print Report</b></h4>
+					<p>Print problem report to PDF - saved by problem title to browser downloads folder.</p>
+					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="printDecisionMakingReportPDF">Print PDF</button>
 
 					<h4><b>Save Problem</b></h4>
 					<p>The problem will be saved as <b>DSS-Decision-Making-&lt;ProblemTitle&gt;.json</b> to your browsers <b>download folder</b>. After saving please manually move file to a permenant location for storage.</p>

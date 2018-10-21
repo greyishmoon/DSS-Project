@@ -133,7 +133,7 @@ function setListeners() {
 
     // LOAD/SAVE PAGE
     // Print to PDF
-    $('#printPDF').on('click', printPDF);
+    $('#printDecisionMakingReportPDF').on('click', printDecisionMakingReportPDF);
 
     // Save project button
     $('#saveProject').on('click', saveProject);
@@ -478,7 +478,7 @@ function updateInterface() {
 //////////// PRINT / LOAD / SAVE //////////////
 
 // Print project reults to PDF
-function printPDF() {
+function printDecisionMakingReportPDF() {
     // Default values
     var TOP_MARGIN = 60;
     var LEFT_MARGIN = 55;
