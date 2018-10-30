@@ -17,29 +17,42 @@
 	<!--  Remove favicon.ico request to stop error  -->
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-	<!-- Material Design Lite -->
-	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 	<!-- Material Design Lite colour scheme-->
-	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+	<link rel="stylesheet" href="../libs/material.min.css">
+	<!-- <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" /> -->
+
+	<!-- Material Design Lite -->
+	<script src="../libs/material.min.js"></script>
+	<!-- <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
+
 	<!-- Material Design icon font -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 	<!-- Roboto font -->
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
-	<link href="../css/dss.css" rel="stylesheet" type="text/css">
-	<!-- <script src="../libs/jquery-3.2.1.min.js"></script> -->
-	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<!-- Ractive library TODO - change from CDN-->
-	<script src="https://cdn.jsdelivr.net/npm/ractive"></script>
 	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
 	<script src="../libs/mdl-jquery-modal-dialog.js"></script>
-	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
-	<link href="../css/mdl-jquery-modal-dialog.css" rel="stylesheet" type="text/css">
+	<link href="../libs/mdl-jquery-modal-dialog.css" rel="stylesheet" type="text/css">
+
+	<!-- Site CSS -->
+	<link href="../css/dss.css" rel="stylesheet" type="text/css">
+
+	<!-- JQuery -->
+	<script src="../libs/jquery-2.1.3.min.js"></script>
+	<!-- <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
+
+	<!-- Ractive -->
+	<script src="../libs/ractive.min.js"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/ractive"></script> -->
 
 	<!-- jsPDF - for generating PDFs - from https://github.com/MrRio/jsPDF -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
-	<!-- jsPDF plugin - jsPDF-AutoTable - for tables in jsPDF - from https://github.com/simonbengtsson/jsPDF-AutoTable -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.js"></script>
+	<script src="../libs/jspdf.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script> -->
+
+	<!-- jsPDF plugin - jsPDF-AutoTable - for tables in jsPDF - from https://github.com/simonbengtsson/jsPDF-AutoTable - Alpha 3 not required so using latest release version-->
+	<script src="../libs/jspdf.plugin.autotable.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.js"></script> -->
 
 
 	<!-- Prototypes and general helper functions -->
@@ -606,26 +619,26 @@
 			<section class="mdl-layout__tab-panel" id="page-5">
 				<div class="page-content">
 					<h4>Instructions</h4>
-					<p>Start entering data on the <b>Problem Setup</b> page following the instruction, and work <b>sequentially</b> through the subsequent pages. </p>
+					<p>Start entering data on the <b>Problem Setup</b> page following the instructions, and work <b>sequentially</b> through the subsequent pages. </p>
 
 					<p>All <b>data is validated</b> to ensure consistency with the DSS model. Any errors in data entry will be highlighted in red, and you will be automatically returned to a page with errors on it preventing progression unitl the inconsistency has been corrected. Full error messages are associated with each page.</p>
 
 					<p>These tools save all data to the browser local storage with any data change. This means that should your work be interupted, or the browser closed before saving the data file, you should be returned to the state following your last entry.
 						<br><i>However - do not rely on this as a long term saving mechanism - ensure you save to file when required.</i></p>
 
-					<p>To <b>save</b> a problem, click go to the Save/Load tab and click on the Save Problem button.
-						<br>The problem will be saved as DSS-Decision-Making-<ProjectTitle>.json to your browsers download folder. After saving please manually move file to a permenant location for storage. </p>
+					<p>To <b>save</b> a problem, click go to the Save/Load tab and click on the <b>Save Problem</b> button.
+						<br>The problem will be saved as DSS-Decision-Making-&lt;ProblemTitle&gt;.json to your browsers download folder. After saving please manually move file to a permenant location for storage. </p>
 
 					<p>Once completed, a problem report can be <b>printed to PDF</b> using the option in the Save/Load tab</p>
 
-					<p>To <b>load</b> a problem, click go to the Save/Load tab and click on the Load Problem button.
-						<br>Navigate to folder problem saves were moved to and select DSS-Decision-Making-<ProblemTitle>.json - All unsaved data from current problem will be lost.</p>
+					<p>To <b>load</b> a problem, click go to the Save/Load tab and click on the <b>Load Problem</b> button.
+						<br>Navigate to folder problem saves were moved to and select DSS-Decision-Making-&lt;ProblemTitle&gt;.json - All unsaved data from current problem will be lost.</p>
 
 
-					<h4>Example project</h4>
-					<p>A completed example project has been provided to demonstrate how to add multiple categories, alternatives and criteria to a problem.
-					<br>This project is hard coded and cannot be harmed by experimentation - after playing with the values it can be reset to default by reloading the example.</p>
-					<h5><b>Load example project:</b> WARNING - All unsaved data will be lost</h5>
+					<h4>Example problem</h4>
+					<p>A completed example problem has been provided to demonstrate how to add multiple Categories, Alternatives and Criteria to a problem.
+					<br>This problem is hard coded and cannot be harmed by experimentation - after playing with the values it can be reset to default by reloading the example.</p>
+					<h5><b>Load example problem:</b> <u>WARNING</u> - All unsaved data will be lost</h5>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
 
 				</div>
@@ -645,7 +658,7 @@
 					<p>NOTE - Due to browser security previous saves of this problem <b>WILL NOT</b> be overwritten automatically. Multiple saves of the same name will be appended (2)(3)(4) etc.</p>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" id="saveProject" type="button">SAVE PROBLEM </button>
 
-					<h4><b>Load Problem:</b> WARNING - All unsaved data will be lost</h4>
+					<h4><b>Load Problem:</b> <u>WARNING</u> - All unsaved data will be lost</h4>
 					<p>Navigate to folder problem saves were moved to and select <b>DSS-Decision-Making-&lt;ProblemTitle&gt;.json</b> - All unsaved data from current problem will be lost.</p>
 
 					<!-- From https://codepen.io/thierryc/pen/oBvvJB -->
@@ -653,7 +666,7 @@
 					<Label class="input-custom-file mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="loadProject">
 						LOAD PROBLEM<input type="file" id="fileSelector" accept=".json"></label>
 
-					<h4><b>Clear current problem:</b> WARNING - All unsaved data will be lost</h4>
+					<h4><b>Clear current problem:</b> <u>WARNING</u> - All unsaved data will be lost</h4>
 					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="reset-button">RESET PROBLEM</button>
 
 

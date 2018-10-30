@@ -716,7 +716,6 @@ function printRiskAnalysisReportPDF() {
     pdfY = pdf.autoTable.previous.finalY;
 
 
-
     // Degrees of Belief table
     pdf.setFontSize(14);
     pdf.text("Degrees of Belief", pdfX, pdfY += Yincrement + buffer);
@@ -800,106 +799,790 @@ function printRiskAnalysisReportPDF() {
 
     }
 
-    // // Generate and print data input table for each category
-    // for (var i = 0; i < cats.length; i++) {
-    //     // Temp store current working category
-    //     var cat = cats[i];
-    //     header = [];
-    //     headerRow = [];
-    //     body = [];
-    //
-    //
-    //     // Construct first header row
-    //     header = [];
-    //
-    //
-    //     // Construct second header row
-    //     headerRow.push('');             // empty element
-    //     // Add 3 lots of grade percentages
-    //     for (var i = 0; i < 3; i++) {
-    //         for (var j = 0; j < 3; j++) {
-    //             headerRow.push({content: project.grades[j]+'%', styles: {halign: 'center'}});
-    //         }
-    //     }
-    //     header.push(headerRow);
-    //
-    //     // Construct body
-    //     // Loop over risks in category
-    //     // Risk name
-    //
-    //
-    //
-    //
-    //
-    //     // Print table
-    //     pdf.autoTable({
-    //         startY: pdfY + Yincrement,
-    //         head: header,
-    //         body: body,
-    //         showHeader: 'firstPage',
-    //         //tableWidth: 'wrap',       // Use to limit table width
-    //         margin: {
-    //             left: pdfX
-    //         },
-    //         styles: {
-    //             fontSize: tableFontSize,
-    //             overflow: 'linebreak',
-    //
-    //         },
-    //         columnStyles: {
-    //             0: {cellWidth: firstColumnWidth},
-    //         }
-    //     });
-    //     // Record bottom of table
-    //     pdfY = pdf.autoTable.previous.finalY;
-    //
-    // }
+    // RISK ASSESSMENT PAGE
+    // new page
+    pdf.addPage();
+    // Reset pdfY for
+    pdfY = TOP_MARGIN;
+    pdf.setFontSize(16);
+    pdf.text("Risk Assessment", pdfX, pdfY);
 
-    // header.push('Financial Risks');                        // empty element
-    // header.push('Project Cost\n' + project.grades[0]+'%   ' + project.grades[1]+'%   ' + project.grades[2]+'% ');
-    // header.push('Project Duration\n' + project.grades[0]+'%   ' + project.grades[1]+'%   ' + project.grades[2]+'% ');
-    // header.push('Project Quality\n' + project.grades[0]+'%   ' + project.grades[1]+'%   ' + project.grades[2]+'% ');
-    //
-    // // TEMP ROW
-    // rows = [];
-    // row = ['Deposition of surplus earth work', 80, 10, 0,];// 0, 10, 0, 0, 0, 0]
-    //
-    //
-    //
-    // // Set first column width
-    // columnStyles[0] = {
-    //     columnWidth: firstColumnWidth
-    // };
-    // // Manually set 3 column widths to get even header
-    // columnStyles[1] = {
-    //     columnWidth: 100
-    // };
-    // columnStyles[2] = {
-    //     columnWidth: 100
-    // };
-    // columnStyles[3] = {
-    //     columnWidth: 100
-    // };
-    //
-    // // PRINT TABLE
-    // pdf.autoTable(header, rows, {
-    //     startY: pdfY + Yincrement,
-    //     showHeader: 'firstPage',
-    //     tableWidth: 'wrap',
-    //     margin: {
-    //         left: pdfX
-    //     },
-    //     styles: {
-    //         fontSize: tableFontSize,
-    //         overflow: 'linebreak'
-    //     },
-    //     columnStyles: columnStyles
-    // });
-    // // Record bottom of table
-    // pdfY = pdf.autoTable.previous.finalY;
+    // Set Column Styles for 3 cell tables for Risk Assessment tables
+    var narrow3CellTableColumnStyles = {
+        0: {cellWidth: 175},
+        1: {cellWidth: 50},
+        2: {cellWidth: 50},
+        3: {cellWidth: 50},
+    }
+
+    // Loop for each category
+    for (var i = 0; i < cats.length; i++) {
+        // Temp store current working category
+        var cat = cats[i];
+
+        // Category title for each group of tables
+        pdf.setFontSize(14);
+        pdf.text(cat.name + " Risk Category", pdfX, pdfY += Yincrement);
+
+        // Aggregated Risk Assessment TABLE
+        header = [];
+        body = [];
+
+        // Construct first header row
+        headerRow = [];
+        headerRow.push('Aggregated Risk Assessment');
+        headerRow.push({content: '  Project Cost  ', colSpan: 4, styles: {halign: 'center'}});
+        headerRow.push({content: 'Project Duration', colSpan: 4, styles: {halign: 'center'}});
+        headerRow.push({content: 'Project Quality ', colSpan: 4, styles: {halign: 'center'}});
+        header.push(headerRow);
+
+        // Construct second header row
+        headerRow = [];
+        headerRow.push('');             // empty element
+        // Add 3 lots of grade percentages
+        for (var j = 0; j < 3; j++) {
+            headerRow.push('0%');             // 0% element
+            for (var k = 0; k < 3; k++) {
+                headerRow.push({content: project.grades[k]+'%', styles: {halign: 'center'}});
+            }
+        }
+        header.push(headerRow);
+
+
+        // generate row for data
+        bodyRow = []; // stores name and data row
+        // Push row title
+        bodyRow.push('Degrees of Belief');
+        // Loop over category beliefs ( [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] )
+        for (var j = 0; j < cat.Beliefs.length; j++) {
+            // loop over 4 beleif values in each grade
+            for (var k = 0; k < cat.Beliefs[j].length; k++) {
+                // push data for 0% and each trio of grade percentages
+                bodyRow.push({content: toPercent(cat.Beliefs[j][k]), styles: {halign: 'center'}});
+
+            }
+        }
+        // push completed row to rows results array for printing
+        body.push(bodyRow);
+
+
+        // Print table
+        pdf.autoTable({
+            startY: pdfY + Yincrement,
+            head: header,
+            body: body,
+            showHeader: 'firstPage',
+            //tableWidth: 'wrap',       // Use to limit table width
+            margin: {
+                left: pdfX
+            },
+            styles: {
+                fontSize: tableFontSize,
+                overflow: 'linebreak',
+
+            },
+            columnStyles: {
+                0: {cellWidth: firstColumnWidth},
+            }
+        });
+        // Record bottom of table
+        pdfY = pdf.autoTable.previous.finalY;
 
 
 
+        // Unassigned Degrees of Belief TABLE
+        header = [];
+        body = [];
+
+        // Construct first header row
+        headerRow = [];
+        headerRow.push('Unassigned Degrees of Belief');
+        headerRow.push({content: '  Project Cost  ', styles: {halign: 'center'}});
+        headerRow.push({content: 'Project Duration', styles: {halign: 'center'}});
+        headerRow.push({content: 'Project Quality ', styles: {halign: 'center'}});
+        header.push(headerRow);
+
+        // generate row for data
+        bodyRow = []; // stores name and data row
+        // Push row title
+        bodyRow.push('Ignorance');
+        // Loop over ignorance
+        for (var j = 0; j < cat.Ignorance.length; j++) {
+            // push data for each grade
+            bodyRow.push({content: toPercent(cat.Ignorance[j]), styles: {halign: 'center'}});
+        }
+        // push completed row to rows results array for printing
+        body.push(bodyRow);
+
+        // Print table
+        pdf.autoTable({
+            startY: pdfY + Yincrement,
+            head: header,
+            body: body,
+            showHeader: 'firstPage',
+            tableWidth: 'wrap',
+            //tableWidth: 'wrap',       // Use to limit table width
+            margin: {
+                left: pdfX
+            },
+            styles: {
+                fontSize: tableFontSize,
+                overflow: 'linebreak',
+
+            },
+            columnStyles: narrow3CellTableColumnStyles
+        });
+        // Record bottom of table
+        pdfY = pdf.autoTable.previous.finalY;
+
+
+        // Objective Weights TABLE
+        header = [];
+        body = [];
+
+        // Construct first header row
+        headerRow = [];
+        headerRow.push('Objective Weights');
+        headerRow.push({content: '  Project Cost  ', styles: {halign: 'center'}});
+        headerRow.push({content: 'Project Duration', styles: {halign: 'center'}});
+        headerRow.push({content: 'Project Quality ', styles: {halign: 'center'}});
+        header.push(headerRow);
+
+        // generate row for data
+        bodyRow = []; // stores name and data row
+        // Push row title
+        bodyRow.push('Category Risk Weights');
+        // Loop over AreaWeights
+        for (var j = 0; j < cat.AreaWeights.length; j++) {
+            // push data for each area
+            bodyRow.push({content: cat.AreaWeights[j], styles: {halign: 'center'}});
+        }
+        // push completed row to rows results array for printing
+        body.push(bodyRow);
+
+        // Print table
+        pdf.autoTable({
+            startY: pdfY + Yincrement,
+            head: header,
+            body: body,
+            showHeader: 'firstPage',
+            tableWidth: 'wrap',
+            //tableWidth: 'wrap',       // Use to limit table width
+            margin: {
+                left: pdfX
+            },
+            styles: {
+                fontSize: tableFontSize,
+                overflow: 'linebreak',
+
+            },
+            columnStyles: narrow3CellTableColumnStyles
+        });
+        // Record bottom of table
+        pdfY = pdf.autoTable.previous.finalY;
+
+
+        // Assessment of CATEGORY Risks TABLE
+        header = [];
+        body = [];
+
+        // Construct first header row
+        headerRow = [];
+        headerRow.push('Assessment of ' + cat.name + ' Risks');
+        headerRow.push({content: '0%', styles: {halign: 'center'}});
+        for (var k = 0; k < 3; k++) {
+            headerRow.push({content: project.grades[k]+'%', styles: {halign: 'center'}});
+        }
+        headerRow.push({content: 'Ignorance', styles: {halign: 'center'}});
+        header.push(headerRow);
+
+        // generate row for data
+        bodyRow = []; // stores name and data row
+        // Push row title
+        bodyRow.push('Degrees of Belief');
+        // Loop over AreaWeights
+        for (var j = 0; j < cat.Beliefs_cat.length; j++) {
+            // push data for each area
+            bodyRow.push({content: toPercent(cat.Beliefs_cat[j]), styles: {halign: 'center'}});
+        }
+        // push data for Ignorance_cat
+        bodyRow.push({content: toPercent(cat.Ignorance_cat), styles: {halign: 'center'}});
+        // push completed row to rows results array for printing
+        body.push(bodyRow);
+
+        // Print table
+        pdf.autoTable({
+            startY: pdfY + Yincrement,
+            head: header,
+            body: body,
+            showHeader: 'firstPage',
+            tableWidth: 'wrap',
+            //tableWidth: 'wrap',       // Use to limit table width
+            margin: {
+                left: pdfX
+            },
+            styles: {
+                fontSize: tableFontSize,
+                overflow: 'linebreak',
+
+            },
+            columnStyles: {
+                0: {cellWidth: 175},
+                1: {cellWidth: 40},
+                2: {cellWidth: 40},
+                3: {cellWidth: 40},
+                4: {cellWidth: 40},
+            }
+        });
+        // Record bottom of table
+        pdfY = pdf.autoTable.previous.finalY;
+
+
+        // Risk Range for CATEGORY TABLE
+        header = [];
+        body = [];
+
+        // Construct first header row
+        headerRow = [];
+        headerRow.push('Risk Range for  ' + cat.name + ' Category');
+        headerRow.push({content: 'Minimum', styles: {halign: 'center'}});
+        headerRow.push({content: 'Maximum', styles: {halign: 'center'}});
+        headerRow.push({content: 'AVERAGE', styles: {halign: 'center'}});
+        header.push(headerRow);
+
+        // generate row for data
+        bodyRow = []; // stores name and data row
+        // Push row title
+        bodyRow.push('Risk Levels');
+        // Loop over RiskLevels_cat
+        for (var j = 0; j < cat.RiskLevels_cat.length; j++) {
+            // push data for each range
+            bodyRow.push({content: toPercent(cat.RiskLevels_cat[j]), styles: {halign: 'center'}});
+        }
+        // push completed row to rows results array for printing
+        body.push(bodyRow);
+
+        // Print table
+        pdf.autoTable({
+            startY: pdfY + Yincrement,
+            head: header,
+            body: body,
+            showHeader: 'firstPage',
+            tableWidth: 'wrap',
+            //tableWidth: 'wrap',       // Use to limit table width
+            margin: {
+                left: pdfX
+            },
+            styles: {
+                fontSize: tableFontSize,
+                overflow: 'linebreak',
+
+            },
+            columnStyles: narrow3CellTableColumnStyles
+        });
+        // Record bottom of table
+        pdfY = pdf.autoTable.previous.finalY;
+
+
+
+        // Potential cost impact on project TABLE
+        header = [];
+        body = [];
+
+        // Construct first header row
+        headerRow = [];
+        headerRow.push('Potential cost impact on project');
+        headerRow.push({content: 'Amount', styles: {halign: 'center'}});
+        header.push(headerRow);
+
+        // generate row for data
+        bodyRow = []; // stores name and data row
+        // Push row title
+        bodyRow.push('Potential impact');
+        // Puch impact on project value
+        bodyRow.push({content: '£' + Math.round( cat.costImpact_cat * 100 ) / 100, styles: {halign: 'center'}});
+
+        // push completed row to rows results array for printing Math.round( percent * 10 ) / 10;
+        body.push(bodyRow);
+
+        // Print table
+        pdf.autoTable({
+            startY: pdfY + Yincrement,
+            head: header,
+            body: body,
+            showHeader: 'firstPage',
+            tableWidth: 'wrap',
+            //tableWidth: 'wrap',       // Use to limit table width
+            margin: {
+                left: pdfX
+            },
+            styles: {
+                fontSize: tableFontSize,
+                overflow: 'linebreak',
+            },
+            columnStyles: narrow3CellTableColumnStyles
+        });
+        // Record bottom of table
+        pdfY = pdf.autoTable.previous.finalY;
+
+    }
+
+
+
+    // SUMMARY PAGE
+    // new page
+    pdf.addPage();
+    // Reset pdfY for
+    pdfY = TOP_MARGIN;
+    pdf.setFontSize(16);
+    pdf.text("Summary", pdfX, pdfY);
+
+    // Grade of Impact table
+    pdf.setFontSize(14);
+    pdf.text("Assessment aggregation on a Project Objective Level", pdfX, pdfY += Yincrement);
+
+
+    // Category weights TABLE
+    header = [];
+    body = [];
+
+    // Construct first header row
+    headerRow = [];
+    headerRow.push('Categories');
+    headerRow.push({content: 'Weight', styles: {halign: 'center'}});
+    header.push(headerRow);
+
+    // Loop over categories
+    // Generate and print data input table for each category
+    for (var i = 0; i < cats.length; i++) {
+        // Temp store current working category
+        var cat = cats[i];
+
+        // generate row for data
+        bodyRow = []; // stores name and data row
+        // Push row title
+        bodyRow.push(cat.name);
+        // Puch impact on project value
+        bodyRow.push({content: cat.CategoryWeight, styles: {halign: 'center'}});
+
+        // push completed row to rows results array for printing Math.round( percent * 10 ) / 10;
+        body.push(bodyRow);
+
+    }
+
+    // Print table
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: header,
+        body: body,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+        },
+        columnStyles: narrow3CellTableColumnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+
+
+    // Project Risk Summary TABLE
+    header = [];
+    body = [];
+
+    // Construct first header row
+    headerRow = [];
+    headerRow.push('Project Risk Summary');
+    headerRow.push({content: '  Project Cost  ', colSpan: 4, styles: {halign: 'center'}});
+    headerRow.push({content: 'Project Duration', colSpan: 4, styles: {halign: 'center'}});
+    headerRow.push({content: 'Project Quality ', colSpan: 4, styles: {halign: 'center'}});
+    header.push(headerRow);
+
+    // Construct second header row
+    headerRow = [];
+    headerRow.push('');             // empty element
+    // Add 3 lots of grade percentages
+    for (var j = 0; j < 3; j++) {
+        headerRow.push('0%');             // 0% element
+        for (var k = 0; k < 3; k++) {
+            headerRow.push({content: project.grades[k]+'%', styles: {halign: 'center'}});
+        }
+    }
+    header.push(headerRow);
+
+
+    // generate row for data
+    bodyRow = []; // stores name and data row
+    // Push row title
+    bodyRow.push('Degrees of Belief');
+    // Loop over project beliefs (Beliefs_obj [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] )
+    for (var j = 0; j < project.Beliefs_obj.length; j++) {
+        // loop over 4 beleif values in each grade
+        for (var k = 0; k < project.Beliefs_obj[j].length; k++) {
+            // push data for 0% and each trio of grade percentages
+            bodyRow.push({content: toPercent(project.Beliefs_obj[j][k]), styles: {halign: 'center'}});
+
+        }
+    }
+    // push completed row to rows results array for printing
+    body.push(bodyRow);
+
+
+    // Print table
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: header,
+        body: body,
+        showHeader: 'firstPage',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: {
+            0: {cellWidth: firstColumnWidth},
+        }
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+    // Unassigned Degrees of Belief TABLE
+    header = [];
+    body = [];
+
+    // Construct first header row
+    headerRow = [];
+    headerRow.push('Unassigned Degrees of Belief');
+    headerRow.push({content: '  Project Cost  ', styles: {halign: 'center'}});
+    headerRow.push({content: 'Project Duration', styles: {halign: 'center'}});
+    headerRow.push({content: 'Project Quality ', styles: {halign: 'center'}});
+    header.push(headerRow);
+
+    // generate row for data
+    bodyRow = []; // stores name and data row
+    // Push row title
+    bodyRow.push('Ignorance');
+    // Loop over ignorance
+    for (var j = 0; j < project.Ignorance_obj.length; j++) {
+        // push data for each grade
+        bodyRow.push({content: toPercent(project.Ignorance_obj[j]), styles: {halign: 'center'}});
+    }
+    // push completed row to rows results array for printing
+    body.push(bodyRow);
+
+    // Print table
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: header,
+        body: body,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: narrow3CellTableColumnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+    // Risk Range for all Areas TABLE
+    header = [];
+    body = [];
+
+    // Construct first header row
+    headerRow = [];
+    headerRow.push('Risk Range for all Areas');
+    headerRow.push({content: '  Project Cost  ', styles: {halign: 'center'}});
+    headerRow.push({content: 'Project Duration', styles: {halign: 'center'}});
+    headerRow.push({content: 'Project Quality ', styles: {halign: 'center'}});
+    header.push(headerRow);
+
+    // generate row for data
+    bodyRow = []; // stores name and data row
+
+    // Create row for Minimum risk
+    // Push row title
+    bodyRow.push('Minimum risk');
+    // Loop over risk levels (RiskLevels_obj: [[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+    for (var i = 0; i < 3; i++) {
+        // push data for each grade
+        bodyRow.push({content: toPercent(project.RiskLevels_obj[i][0]), styles: {halign: 'center'}});
+    }
+    // push completed row to rows results array for printing
+    body.push(bodyRow);
+
+    bodyRow = []; // stores name and data row
+    // Create row for Maximum risk
+    // Push row title
+    bodyRow.push('Maximum risk');
+    // Loop over risk levels (RiskLevels_obj: [[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+    for (var i = 0; i < 3; i++) {
+        // push data for each grade
+        bodyRow.push({content: toPercent(project.RiskLevels_obj[i][1]), styles: {halign: 'center'}});
+    }
+    // push completed row to rows results array for printing
+    body.push(bodyRow);
+
+    bodyRow = []; // stores name and data row
+    // Create row for Average risk
+    // Push row title
+    bodyRow.push('Average risk');
+    // Loop over risk levels (RiskLevels_obj: [[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+    for (var i = 0; i < 3; i++) {
+        // push data for each grade
+        bodyRow.push({content: toPercent(project.RiskLevels_obj[i][2]), styles: {halign: 'center'}});
+    }
+    // push completed row to rows results array for printing
+    body.push(bodyRow);
+
+    // Print table
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: header,
+        body: body,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: narrow3CellTableColumnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+
+    // RESULTS PAGE
+    // new page
+    pdf.addPage();
+    // Reset pdfY for
+    pdfY = TOP_MARGIN;
+    pdf.setFontSize(16);
+    pdf.text("Results", pdfX, pdfY);
+
+    pdf.setFontSize(14);
+    pdf.text("Aggregation risk assessment results on the project as a whole", pdfX, pdfY += Yincrement);
+
+
+    // Project weights TABLE
+    header = [];
+    body = [];
+
+    // Construct first header row
+    headerRow = [];
+    headerRow.push('Objective Weights');
+    headerRow.push({content: '  Project Cost  ', styles: {halign: 'center'}});
+    headerRow.push({content: 'Project Duration', styles: {halign: 'center'}});
+    headerRow.push({content: 'Project Quality ', styles: {halign: 'center'}});
+    header.push(headerRow);
+
+    // generate row for data
+    bodyRow = []; // stores name and data row
+    // Push row title
+    bodyRow.push('Objective Risk Weights');
+    // Loop over AreaWeights
+    for (var i = 0; i < project.ProjectWeights.length; i++) {
+        // push data for each area
+        bodyRow.push({content: project.ProjectWeights[i], styles: {halign: 'center'}});
+    }
+    // push completed row to rows results array for printing
+    body.push(bodyRow);
+
+    // Print table
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: header,
+        body: body,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: narrow3CellTableColumnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+
+    // Risk Assessment on Project TABLE
+    header = [];
+    body = [];
+
+    // Construct first header row
+    headerRow = [];
+    headerRow.push('Risk Assessment on Project');
+    headerRow.push({content: '0%', styles: {halign: 'center'}});
+    for (var k = 0; k < 3; k++) {
+        headerRow.push({content: project.grades[k]+'%', styles: {halign: 'center'}});
+    }
+    header.push(headerRow);
+
+    // generate row for data
+    bodyRow = []; // stores name and data row
+    // Push row title
+    bodyRow.push('Degrees of Belief');
+    // Loop over Beliefs_proj
+    for (var i = 0; i < project.Beliefs_proj.length; i++) {
+        // push data for each area
+        bodyRow.push({content: toPercent(project.Beliefs_proj[i]), styles: {halign: 'center'}});
+    }
+    // push completed row to rows array for printing
+    body.push(bodyRow);
+
+    // Print table
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: header,
+        body: body,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: {
+            0: {cellWidth: 175},
+            1: {cellWidth: 52},
+            2: {cellWidth: 52},
+            3: {cellWidth: 52},
+            4: {cellWidth: 52},
+        }
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+    // Risk Range for Project TABLE
+    header = [];
+    body = [];
+
+    // Construct first header row
+    headerRow = [];
+    headerRow.push('Risk Range for Project');
+    headerRow.push({content: 'Minimum', styles: {halign: 'center'}});
+    headerRow.push({content: 'Maximum', styles: {halign: 'center'}});
+    headerRow.push({content: 'AVERAGE', styles: {halign: 'center'}});
+    header.push(headerRow);
+
+    // generate row for data
+    bodyRow = []; // stores name and data row
+    // Push row title
+    bodyRow.push('Risk Levels');
+    // Loop over RiskLevels_cat
+    for (var i = 0; i < project.RiskLevels_proj.length; i++) {
+        // push data for each range
+        bodyRow.push({content: toPercent(project.RiskLevels_proj[i]), styles: {halign: 'center'}});
+    }
+    // push completed row to rows results array for printing
+    body.push(bodyRow);
+
+    // Print table
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: header,
+        body: body,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: {
+            0: {cellWidth: 175},
+            1: {cellWidth: 70},
+            2: {cellWidth: 70},
+            3: {cellWidth: 70},
+        }
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+    // Potential cost impact on project TABLE
+    header = [];
+    body = [];
+
+    // Construct first header row
+    headerRow = [];
+    headerRow.push('Potential cost impact on project');
+    headerRow.push({content: 'Amount', styles: {halign: 'center'}});
+    header.push(headerRow);
+
+    // generate row for data
+    bodyRow = []; // stores name and data row
+    // Push row title
+    bodyRow.push('Potential impact');
+    // Puch impact on project value
+    bodyRow.push({content: '£' + Math.round( project.costImpact_proj * 100 ) / 100, styles: {halign: 'center'}});
+
+    // push completed row to rows results array for printing Math.round( percent * 10 ) / 10;
+    body.push(bodyRow);
+
+    // Print table
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: header,
+        body: body,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+        },
+        columnStyles: narrow3CellTableColumnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
+    // Genegrate footer on each page
+    pdfSetFooter(pdf);
 
     // Save report
     pdf.save(project.name + ' Risk Analysis Report.pdf');
@@ -908,11 +1591,32 @@ function printRiskAnalysisReportPDF() {
     showProjectPrintedDialogue(project.name);
 }
 
+// Sets footer on each page of pdf
+function pdfSetFooter(pdfObject) {
+    var number_of_pages = pdfObject.internal.getNumberOfPages()
+    var pdf_pages = pdfObject.internal.pages
+    var today = new Date();
+    var date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
+    var myFooter = "Risk Analysis Report: " + projectManager.project.name + ' - ' + date
+    // Iterate over pages, not including 1st page
+    for (var i = 2; i < pdf_pages.length; i++) {
+        // We are telling our pdfObject that we are now working on this page
+        pdfObject.setPage(i)
+        // Set small grey font
+        pdfObject.setFontSize(8);
+        pdfObject.setTextColor(145, 145, 145);
+        // print title
+        pdfObject.text(myFooter, 40, 30)
+        // print page number
+        pdfObject.text('Page: ' + i, 520, 30)
+    }
+}
+
 // Save project data model (JS object) as JSON file to local file system
 function saveProject() {
     let saveProject = projectManager.getProject();
     // Construct filename
-    let fileName = 'DSS-Risk-Analysis-' + saveProject.name; //DSS-Problem
+    let fileName = 'DSS-Risk-Analysis-' + saveProject.name + ".json"; //DSS-Problem
     // Save file
     saveOBJECTasJSONfile(saveProject, fileName);
     showProjectSavedDialogue(fileName);
@@ -1036,7 +1740,7 @@ function showProjectPrintedDialogue(name) {
 function showProjectSavedDialogue(fileName) {
     showDialog({
         title: 'Project saved',
-        text: 'Project saved as <b>' + fileName + '.json</b> to your browsers <b>DOWNLOADS</b> folder \n\n <b>Manually move .json file to permenant location for storage.</b>'.split('\n').join('<br>'),
+        text: 'Project saved as <b>' + fileName + '</b> to your browsers <b>DOWNLOADS</b> folder \n\n <b>Manually move .json file to permenant location for storage.</b>'.split('\n').join('<br>'),
         negative: {
             title: 'Continue'
         }
@@ -1114,6 +1818,13 @@ function enableButton(buttonID) {
 // Disable MDL button using buttonID
 function disableButton(buttonID) {
     $(buttonID).attr("disabled", true);
+}
+
+// Convert value from calculations (x.xxxxxx) to percentage to 1dp (xx.x)
+function toPercent(value) {
+    var percent = value * 100;
+    var rounded = Math.round( percent * 10 ) / 10;
+    return rounded;
 }
 
 // SCROLL FUNCTIONS

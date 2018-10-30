@@ -8,7 +8,18 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
-TODO!!!!! PDF REPORT FOR RISK ANALYSIS
+## [0.1.10] - 27-10-2018
+### Added
+#### RISK ANALYSIS
+- PDF report competed
+#### DECISION MAKING
+- Added header function to PDF
+
+## [0.1.10] - 14-10-2018
+### Added
+#### RISK ANALYSIS
+- PDF report printing function
+- first half of report printout
 
 ## [0.1.9] - 28-09-2018
 ### Added

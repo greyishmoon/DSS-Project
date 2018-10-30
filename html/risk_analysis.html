@@ -17,29 +17,41 @@
 	<!--  Remove favicon.ico request to stop error  -->
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-	<!-- Material Design Lite -->
-	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 	<!-- Material Design Lite colour scheme-->
-	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" />
+	<link rel="stylesheet" href="../libs/material.min.css">
+	<!-- <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" /> -->
+
+	<!-- Material Design Lite -->
+	<script src="../libs/material.min.js"></script>
+	<!-- <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
+
 	<!-- Material Design icon font -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 	<!-- Roboto font -->
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
-	<link href="../css/mdl-jquery-modal-dialog.css" rel="stylesheet" type="text/css">
 
-	<link href="../css/dss.css" rel="stylesheet" type="text/css">
-	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<!-- Ractive library TODO - change from CDN-->
-	<script src="https://cdn.jsdelivr.net/npm/ractive"></script>
 	<!-- MDL modal dialogues from https://github.com/oRRs/mdl-jquery-modal-dialog -->
 	<script src="../libs/mdl-jquery-modal-dialog.js"></script>
+	<link href="../libs/mdl-jquery-modal-dialog.css" rel="stylesheet" type="text/css">
+
+	<!-- Site CSS -->
+	<link href="../css/dss.css" rel="stylesheet" type="text/css">
+
+	<!-- JQuery -->
+	<script src="../libs/jquery-2.1.3.min.js"></script>
+	<!-- <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
+
+	<!-- Ractive -->
+	<script src="../libs/ractive.min.js"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/ractive"></script> -->
+
 	<!-- jsPDF - for generating PDFs - from https://github.com/MrRio/jsPDF -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
-	<!-- jsPDF plugin - jsPDF-AutoTable - for tables in jsPDF - from https://github.com/simonbengtsson/jsPDF-AutoTable -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.js"></script> -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.js"></script> -->
-	<script src="../libs/jspdf.plugin.autotable.min.js"></script>
+	<script src="../libs/jspdf.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script> -->
+
+	<!-- jsPDF plugin - jsPDF-AutoTable - for tables in jsPDF - from https://github.com/simonbengtsson/jsPDF-AutoTable Alpha 3 used for multi headed table-->
+	<script src="../libs/jspdf.plugin.autotable.min-3.js"></script>
 
 	<!-- Prototypes and general helper functions -->
 	<script src="../js/prototypes.js"></script>
@@ -97,7 +109,7 @@
 
 						<!-- Project setup -->
 						<h4>Project Setup</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+						<p>Add details of the broad factors affecting this risk analysis.</p>
 
 
 						<!-- Project Title -->
@@ -138,7 +150,7 @@
 
 						<!-- Risk Categories -->
 						<h4>Risk Categories</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+						<p>Add up to 6 risk categories covering the areas of risk for the project. For instance - Financial, Technical & Operational, Mangerial & Legal, Environmantal & Social, Health & Safety etc. </p>
 
 						<!-- TARGET ractiveAlternatives -->
 						<div id="target-categories-table"></div>
@@ -205,7 +217,14 @@
 					<div class="page-content">
 						<!-- Project Risks -->
 						<h4>Risk Characteristics</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+						<p>Add up to 6 specific risks in each category, then define the risk as follows:</p>
+						<ul>
+							  <li><b>Likelihood of Occurrence</b> - a percentage which reflects the probability that a risk factor may happen</li>
+							  <li><b>Coefficient of Project Features</b> - a percentage representing how the specifications, environment and unique nature of a project may help in mitigating risk impact</li>
+							  <li><b>Controllability</b> - a percentage which reflects the experience of the management team, their familiarity with the risk and the extent to which the team is able to mitigate its negative impact</li>
+							  <li><b>Dependency</b> - a percentage which is an adjustment factor for adjusting the impact of each individual risk after considering the co-existing risks</li>
+							  <li><b>Risk weight</b> - a percentage which reflects the overall importance of the risk. <b>All risk weights for the category should sum up to 100</b></li>
+						</ul>
 
 
 						<!-- TARGET ractiveAlternatives -->
@@ -349,7 +368,7 @@
 					<div class="page-content">
 
 						<h4>Grades of Impact</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+						<p>Assign 3 Impact Grades to aid assessment of risk to project over a range of scenarios. Impact Grades are a percantage of the initial cost of the project under analysis. </p>
 
 						<!-- TARGET ractiveGrades -->
 						<div id="target-grades-table"></div>
@@ -423,7 +442,8 @@
 
 
 						<h4>Degrees of Belief</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+						<p>Assign a Degree of Belief to each Impact Grade for each Risk. Degrees of Belief are percentages representing the expectation the the impact of this risk will reach the stated Impact Grade (the percentage of the initial project cost)</p>
+						<p><b>The row of Degrees of Belief for each Impact Grade should not <u><i>exceed</i></u> 100%, but can be lower (or zero)</b></p>
 
 
 						<!-- TARGET ractiveImpacts -->
@@ -601,7 +621,15 @@
 				<section class="mdl-layout__tab-panel" id="page-4">
 					<div class="page-content">
 						<h4>Risk Assessment</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+						<p>This page provides a summary of risks aggregated by Category across the 3 areas of the project - Cost, Duration and Quality</p>
+						<ul>
+							<li><b>Aggregated Risk</b> - the aggregation of all risks in this category based on the Risk Characteristics and Impact Assessment data entry</li>
+							<li><b>Unassigned Degrees of Belief</b> - where there is a lack of information in the Impact Assessment (where rows on Degrees of Belief table do not total 100%) this represents uncertainty about that aspect of the project, which is calculated as a percentage representing 'Ignorance' in this area</li>
+							<li><b>Objective Weights</b> - by default each area (project cost, duration and quality) is assumed to have an equal level - these weightings can be altered if required</li>
+							<li><b>Assessment of Risks</b> - the aggregation of all areas of impact in this category - this represents the categorys potential impact on the project as a whole, with associated level of ingorance</li>
+							<li><b>Risk Range</b> - when the category ingorance is assigned, the range of risk impact can be calculated with a minimum, maximum and the average risk of impact</li>
+							<li><b>Potential cost impact on project</b> - represents the potential financial impact on project based on the <b>Average</b> risk level</li>
+						</ul>
 
 						<!-- TARGET ractiveRiskAssessment -->
 						<div id="target-risk-assessment-page"></div>
@@ -1001,7 +1029,10 @@
 				<section class="mdl-layout__tab-panel" id="page-5">
 					<div class="page-content">
 						<h4>Assessment aggregation on a Project Objective Level</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+						<p>This page provides an aggregation of risk levels of categories over the whole project</p>
+						<ul>
+							<li><b>Category Weights</b> - each category can have a weight assigned to it adjusting its importance in relation to other categories - defualt assumption is all categories are eqaully weighted - <b>All category weights should sum up to 100</b></li>
+						</ul>
 					</div>
 
 					<!-- TARGET ractiveSummary -->
@@ -1319,7 +1350,10 @@
 				<section class="mdl-layout__tab-panel" id="page-6">
 					<div class="page-content">
 						<h4>Aggregation risk assessment results on the  project as a whole</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+						<p>This page provides the results of risk levels for the project as a whole</p>
+						<ul>
+							<li><b>Project Weights</b> - each area can have a weight assigned to it adjusting its importance in relation to other areas - defualt assumption is all areas are eqaully weighted - <b>All area weights should sum up to 100</b></li>
+						</ul>
 
 						<!-- TARGET ractiveResults -->
 						<div id="target-results-page"></div>
@@ -1522,9 +1556,31 @@
 				<section class="mdl-layout__tab-panel" id="page-7">
 					<div class="page-content">
 						<h4>Instructions</h4>
-						<p>Placeholder instruction text - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vel laoreet nisi, non congue lorem. Quisque commodo, tellus eu vestibulum sollicitudin, tortor nisi mattis dolor, vel tristique mi sapien in ipsum.</p>
+						<p>Start entering data on the <b>Project Setup</b> page following the instructions, and work <b>sequentially</b> through the subsequent pages.</p>
 
-						<h4>Load example project: WARNING - All unsaved data will be lost</h4>
+						<p>All <b>data is validated</b> to ensure consistency with the DSS model. Any errors in data entry will be highlighted in red, and you will be automatically returned to a page with errors on it preventing progression unitl the inconsistency has been corrected. Full error messages are associated with each page.</p>
+
+						<p>These tools save all data to the browser local storage with any data change. This means that should your work be interupted, or the browser closed before saving the data file, you should be returned to the state following your last entry.
+							<br><i>However - do not rely on this as a long term saving mechanism - ensure you save to file when required.</i></p>
+
+						<p>To <b>save</b> a project, click go to the Save/Load tab and click on the <b>Save Project</b> button.
+							<br>The project will be saved as DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json to your browsers download folder. After saving please manually move file to a permenant location for storage. </p>
+
+						<p>Once completed, a project report can be <b>printed to PDF</b> using the option in the Save/Load tab</p>
+
+						<p>To <b>load</b> a project, click go to the Save/Load tab and click on the <b>Load Project</b> button.
+							<br>Navigate to folder project saves were moved to and select DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json - All unsaved data from current project will be lost.</p>
+
+
+						<h4>Example project</h4>
+						<p>A completed example project has been provided to demonstrate how to add multiple Categories, Risks and Degrees of Belief to a project.
+						<br>This project is hard coded and cannot be harmed by experimentation - after playing with the values it can be reset to default by reloading the example.</p>
+
+
+
+
+
+						<h4><b>Load example project:</b> <u>WARNING</u> - All unsaved data will be lost</h4>
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
 
 					</div>
@@ -1535,18 +1591,17 @@
 					<div class="page-content">
 						<p>Please run this application in the <b><em>Chrome</em></b> browser for full file management functionality.</p>
 
-						<h4>Print Report</h4>
+						<h4><b>Print Report</b></h4>
 						<p>Print project report to PDF - saved by project title to browser downloads folder.</p>
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="printRiskAnalysisReportPDF">Print PDF</button>
 
-						<h4>Save Project</h4>
-						<p>The problem will be saved as <b>DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json</b> to your browsers <b>download folder</b>. After saving please manually move file to a permenant location for storage.</p>
+						<h4><b>Save Project</b></h4>
+						<p>The project will be saved as <b>DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json</b> to your browsers <b>download folder</b>. Click the 'Save File' option if offered options (also check 'Do this automatically...'). After saving please manually move file to a permenant location for storage.</p>
 						<p>NOTE - Due to browser security previous saves of this project WILL NOT be overwritten automatically. Multiple saves of the same name will be appended (2)(3)(4) etc.</p>
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" id="saveProject" type="button">SAVE PROJECT </button>
 
-						<h4>Load Project</h4>
+						<h4><b>Load Project:</b> <u>WARNING</u> - All unsaved data will be lost</h4>
 						<p>Navigate to folder project saves were moved to and select <b>DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json</b> - All unsaved data from current project will be lost.</p>
-
 
 
 						<!-- From https://codepen.io/thierryc/pen/oBvvJB -->
@@ -1555,7 +1610,7 @@
 						LOAD PROJECT<input type="file" id="fileSelector" accept=".json"></label>
 
 
-						<h4>Clear current project: WARNING - All unsaved data will be lost</h4>
+						<h4><b>Clear current project:</b> <u>WARNING</u> - All unsaved data will be lost</h4>
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="reset-button">RESET PROJECT</button>
 
 					</div>

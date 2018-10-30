@@ -606,11 +606,12 @@ function printDecisionMakingReportPDF() {
     // Reset pdfY for
     pdfY = TOP_MARGIN;
     pdf.setFontSize(16);
-    pdf.text("Results: " + problemManager.problem.name, pdfX, pdfY);
+    pdf.text("Summary", pdfX, pdfY);
 
     // Agregated results table
     pdf.setFontSize(14);
-    pdf.text("Analysis Summary", pdfX, pdfY += Yincrement);
+    pdf.text("Aggregated Degrees of Belief", pdfX, pdfY += Yincrement);
+    // Get data from HTML table
     var elem = document.getElementById("summary-table");
     var res = pdf.autoTableHtmlToJson(elem);
 
@@ -632,7 +633,7 @@ function printDecisionMakingReportPDF() {
     pdfY = pdf.autoTable.previous.finalY;
 
     // Assessment Agregation data inputs
-    pdf.text("Assessment Aggregation data inputs", pdfX, pdfY += Yincrement + buffer);
+    pdf.text("Category Weights", pdfX, pdfY += Yincrement + buffer);
 
     // header for table
     header = ["Category", "Weight"];
@@ -663,6 +664,8 @@ function printDecisionMakingReportPDF() {
     pdfY = pdf.autoTable.previous.finalY;
 
 
+    pdf.setFontSize(16);
+    pdf.text("Results", pdfX, pdfY += Yincrement + buffer);
 
     //Set results column widths
     for (var i = 0; i < alternativeNames.length; i++) {
@@ -724,16 +727,40 @@ function printDecisionMakingReportPDF() {
     // Record bottom of table
     pdfY = pdf.autoTable.previous.finalY;
 
+    // Genegrate footer on each page
+    pdfSetFooter(pdf);
 
     pdf.save(problemManager.problem.name + ' Decision Making Report.pdf');
 
     showProjectPrintedDialogue(problemManager.problem.name);
 }
 
+// Sets footer on each page of pdf
+function pdfSetFooter(pdfObject) {
+    var number_of_pages = pdfObject.internal.getNumberOfPages()
+    var pdf_pages = pdfObject.internal.pages
+    var today = new Date();
+    var date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
+    var myFooter = "Decision Making Report: " + problemManager.problem.name + ' - ' + date
+    // Iterate over pages, not including 1st page
+    for (var i = 2; i < pdf_pages.length; i++) {
+        // We are telling our pdfObject that we are now working on this page
+        pdfObject.setPage(i)
+        // Set small grey font
+        pdfObject.setFontSize(8);
+        pdfObject.setTextColor(145, 145, 145);
+        // print title
+        pdfObject.text(myFooter, 40, 30)
+        // print page number
+        pdfObject.text('Page: ' + i, 520, 30)
+    }
+}
+
+
 // Save project data model (JS object) as JSON file to local file system
 function saveProject() {
     // Construct filename
-    var fileName = 'DSS-Decision-Making-' + problemManager.problem.name; //DSS-Problem
+    var fileName = 'DSS-Decision-Making-' + problemManager.problem.name + ".json"; //DSS-Problem
     // Save file
     saveOBJECTasJSONfile(problemManager.getProblem(), fileName);
     showProjectSavedDialogue(fileName);
@@ -827,7 +854,7 @@ function showProjectPrintedDialogue(name) {
 function showProjectSavedDialogue(fileName) {
     showDialog({
         title: 'Project saved',
-        text: 'Project saved as <b>' + fileName + '.json</b> to your browsers <b>DOWNLOADS</b> folder \n\n <b>Manually move .json file to permenant location for storage.</b>'.split('\n').join('<br>'),
+        text: 'Project saved as <b>' + fileName + '</b> to your browsers <b>DOWNLOADS</b> folder \n\n <b>Manually move .json file to permenant location for storage.</b>'.split('\n').join('<br>'),
         negative: {
             title: 'Continue'
         }
