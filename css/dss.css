@@ -211,6 +211,13 @@ label.input-custom-file input[type=file] {
   display: none;
 }
 
+.guidance {
+    color: rgb(200,0,0);
+}
+.guidance.subheading {
+    color: rgb(0,158,71);
+}
+
 
 
 

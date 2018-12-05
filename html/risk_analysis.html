@@ -12,7 +12,7 @@
 	<meta name="author" content="Dr. Abdulmaten Taroun">
 	<meta name="contact" content="a.taroun@worc.ac.uk ">
 	<meta name="developer" content="C Blythe">
-	<meta name="version" content="0.1.10">
+	<meta name="version" content="0.2.1">
 
 	<!--  Remove favicon.ico request to stop error  -->
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -50,7 +50,7 @@
 	<script src="../libs/jspdf.min.js"></script>
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script> -->
 
-	<!-- jsPDF plugin - jsPDF-AutoTable - for tables in jsPDF - from https://github.com/simonbengtsson/jsPDF-AutoTable Alpha 3 used for multi headed table-->
+	<!-- jsPDF plugin - jsPDF-AutoTable - for tables in jsPDF - from https://github.com/simonbengtsson/jsPDF-AutoTable - Alpha 3 used for multi headed table-->
 	<script src="../libs/jspdf.plugin.autotable.min-3.js"></script>
 
 	<!-- Prototypes and general helper functions -->
@@ -1582,6 +1582,40 @@
 
 						<h4><b>Load example project:</b> <u>WARNING</u> - All unsaved data will be lost</h4>
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
+
+
+						<!-- Model guidance -->
+
+						<h4>Operating Guidance</h4>
+
+						<h5 class="guidance"><b>Risk Model:</b></h5>
+						<p>In this tool, risk is modelled as : &nbsp;&nbsp;&nbsp;<b><font size="+2">R = L * P * I<font></font></b></p>
+						<img src="../images\Risk_Guidance_1.PNG" alt="Risk model">
+						<p><b class="guidance">Likelihood of occurrence:</b> represents the probability of an identified risk factor to happen.</p>
+						<p><b class="guidance">Impact:</b> represents the maximum amount of loss or damage incurred on a specific project success objective if the risk factor happened. In this research, the impact is assessed as a percentage of the project initial cost.</p>
+						<p><b class="guidance">Probability of Impact materialisation:</b> reflects the probability that the actual impact of a risk on a project success objective will materialise in its worst scenario.</p>
+						<p>Probability of impact materialisation play the role of adjustment factor which assist the analyst in discounting the maximum potential risk impact by considering the surrounding environment.</p>
+						<p>As illustrated by the aforementioned risk model, risk assessment is related to the interdependencies between the analysed risk and the other identified risks, the project specifications and its environment, the capability and the experience of the project management team who is in charge of managing risk impact. These issues have been considered through the usage of three adjustment coefficient; Project Features (F), Controllability of risk impact (C) and risk Dependency (D) on the other identified risks.</p>
+
+						<h5 class="guidance subheading">Project Features (F):</h5>
+						<p>This factor reflects the specifications, environment, criticality and the unique nature of a construction project. The value of this coefficient is to be determined by the decision maker or the risk analyst. It is proposed by the author that its value is a proportional score falls in the range [0-1]. </p>
+						<p>The risk analyst, with the assistance of his experience and the expert opinions, is required to provide an agreed upon value for this factor which reflect his/her belief about the mitigating effect of the project features on the maximum risk impact. If the risk analyst believes, for instance, that the project environment has a very supportive role which may mitigate the maximum impact, he/she is to assign a value for the features parameter which reflects such effect. For instance the value of F may be assigned as 0.6. However, if it is the opposite case, the value of F may be assigned as 0.95 or even 1 to show that there is no positive effect the project environment has in mitigating risk impact.</p>
+						<p>The next table illustrate the possible values of (F) suggested by the author as a guidance and definition.</p>
+						<img src="../images\Risk_Guidance_2.PNG" alt="Project features">
+
+						<h5 class="guidance subheading">Controllability (C):</h5>
+						<p>Reflects the experience of the project management team, their familiarity with the risk and the extent to which the team is able to manage it and mitigate its downside impact. Controllability can also be looked at as a means of reflecting the nature of a risk factor as some risks are more manageable than others. Hence, it is a reflection of risk nature and a measurement of the experience, familiarity and capability of the party in charge of managing it and mitigating its negative impact  on a specific project target. Similar to the previous two factors, controllability is an adjustment coefficient whose value falls in the range [0-1].</p>
+						<img src="../images\Risk_Guidance_3.PNG" alt="Controllability">
+
+						<h5 class="guidance subheading">Dependency Factor (D):</h5>
+						<p>Assuming that total risk impact is the sum of the impacts of individual risks is not realistic as it assumes total independence between the identified risk factors. This is an exaggerating estimate which may produce an over-estimated project risk level. To appreciate this issue, the author is introducing the Dependency coefficient as an adjustment factor to be used for discounting the impact of each individual risk after considering the co-existing risks. The rational behind this introduction is that the identified risks will create a Risk Environment affecting the project. Hence the collective behaviour of the risk factors are not to be neglected.</p>
+						<img src="../images\Risk_Guidance_4.PNG" alt="Dependency Factor">
+						<p>The values of the three coefficients F, C and D will be used to produce a value for the parameter P; the probability of impact materialisation. We can generate the value of P in different ways. Based on the above definitions of F,C and D, we can use the weighted average method. We can assume that the three coefficients are equally important which will make P the average of them. The risk analyst, however, can make different assumption based on his attitude towards the risk under analysis.</p>
+
+						<h5 class="guidance subheading">Achievability coefficient (A):</h5>
+						<p>Achievability coefficient (A) is an adjustment factor which reflects the degree to which the analyst believes that the benefit under analysis will materialise in its estimated size. This coefficient will reflect the ability of the project team of delivering the project benefits in their expected volume during the bidding stage. It will also reflect whether there is a lack of clarity and details of the project brief which makes the total benefit of the project outcome is hardly be estimated.</p>
+						<p>Achievability value will fall in the range [0 - 1] and the analyst is to assign a suitable value to it according to the situation under analysis and according to his/her judgment. The following table illustrates the values of the achievability factor and their meanings as proposed by the authors:</p>
+						<img src="../images\Risk_Guidance_5.PNG" alt="Achievability coefficient">
 
 					</div>
 				</section>

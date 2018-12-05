@@ -140,8 +140,6 @@ function setListeners() {
 
     // Reset project button
     $('#reset-button').on('click', resetProject);
-    // TODO - remove for production - emergency reset button emergency-reset
-    $('.emergency-reset').on('click', resetProject);
 
     // Load example project button
     $('#loadExample-button').on('click', loadExampleProject);

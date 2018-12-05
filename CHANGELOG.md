@@ -8,10 +8,30 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+## [0.2.1] - 01-12-2018
+### Added
+#### RISK ANALYSIS
+- Guidance info to instructions page
+
+## [0.2.0] - 29-10-2018
+## FINAL DEV VERSION - FOR TESTING
+### Added
+- all libraries and replaced CDN calls
+- RUN DSS TOOLS relative shortcut
+- README.txt with instructions to run
+- tested locally from zip
+### Removed
+- misc unused files and images
+
 ## [0.1.10] - 27-10-2018
 ### Added
 #### RISK ANALYSIS
-- PDF report competed
+- Completed instructions in html
+
+## [0.1.10] - 27-10-2018
+### Added
+#### RISK ANALYSIS
+- PDF report completed
 #### DECISION MAKING
 - Added header function to PDF
 
