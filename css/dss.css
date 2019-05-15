@@ -21,15 +21,12 @@
 
 }
 
-/* TEMP - testing for scroll up buttons */
-/* .page-content {
-  max-height: 600px;
-  overflow: auto;
+/* Increase hight of menu header to accomodate logo */
+.menu_header{
+
+    height: 125px;
+    min-height: 125px;
 }
-.tabs--body .page-content{
-  height:100%;
-  min-height:400px;
-} */
 
 /* Padding for all page content in each tab panel */
 .mdl-layout__tab-panel {
@@ -92,6 +89,11 @@
 /* Menu button table - pad top*/
 td.menu {
     padding: 10px;
+}
+
+/* Menu logo image */
+.logo {
+    padding-top: 60px;
 }
 
 /****************** RISK ANALYSIS ****************/

@@ -146,6 +146,7 @@ function setListeners() {
 
     // TAB NAVIGATION
     // Next button on each tab to simulate click on tab
+    $('.go-tab-0-btn').on('click', goTab0);
     $('.go-tab-1-btn').on('click', goTab1);
     $('.go-tab-2-btn').on('click', goTab2);
     $('.go-tab-3-btn').on('click', goTab3);

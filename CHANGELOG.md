@@ -8,6 +8,20 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+## [0.2.2] - 09-01-2019
+### Altered
+#### MENU
+- Title from DSS Tools Menu to UDecide Tools Menu
+### Added
+#### MENU
+- UDecide logo
+#### RISK ANALYSIS
+- Header bar - link to other tool
+- Back buttons at bottom of pages
+#### DECISION MAKING
+- Header bar - link to other tool
+- Back buttons at bottom of pages
+
 ## [0.2.1] - 01-12-2018
 ### Added
 #### RISK ANALYSIS
