@@ -21,11 +21,23 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 * Added Unassigned Degree of Belief table (figure) for project
 * Changed risk range values to monetary values
 * Removed Potential Cost On Project table (figure)
+- Instructions page
+* Replaced 3 tables with new versions
+* Edited text to match table titling
+* Removed Achievability coefficient (A): section
 #### DECISION MAKING
 - Results page
 * Altered Distributed Ignorance heading to 'Aggregated Degrees of Belief after distributing the degree of ignorance'
 * Altered second line of Aggregated Degrees of Belief after distributing the degree of ignorance body text
 * Added extra line of explanatory text after Aggregated Degrees of Belief after distributing the degree of ignorance table
+
+### README.txt
+- Edited run instructions to match new menu file name
+
+### Project files
+- removed unused images
+- removed run script link file
+- Changed html page titles to UDecide
 
 ## [0.2.3] - 15-05-2019
 ### Fixed
