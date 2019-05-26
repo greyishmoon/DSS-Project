@@ -146,10 +146,10 @@ function setListeners() {
 
     // TAB NAVIGATION
     // Next button on each tab to simulate click on tab
-    $('.go-tab-0-btn').on('click', goTab0);
-    $('.go-tab-1-btn').on('click', goTab1);
-    $('.go-tab-2-btn').on('click', goTab2);
-    $('.go-tab-3-btn').on('click', goTab3);
+    $('.go-tab-0-btn').on('click', btnGoTab0);
+    $('.go-tab-1-btn').on('click', btnGoTab1);
+    $('.go-tab-2-btn').on('click', btnGoTab2);
+    $('.go-tab-3-btn').on('click', btnGoTab3);
     // Scroll to top buttons (if needed)
     $("#scroll-up-btn").click(scrollToTop);
 }
@@ -286,6 +286,35 @@ function goTab5() {
     $(".mdl-layout__tab:eq(5) span").click();
     scrollToTop();
 }
+
+// Next and Back button functions - call data update then tab change
+// Buttons to Problem Setup
+function btnGoTab0() {
+    updateData();
+    goTab0();
+    console.log("to Problem Setup");
+}
+// Buttons to Data Entry
+function btnGoTab1() {
+    updateData();
+    goTab1();
+    console.log("to Data Entry");
+}
+
+// Buttons to Summary
+function btnGoTab2() {
+    updateData();
+    goTab2();
+    console.log("to Summary");
+}
+
+// Buttons to Results
+function btnGoTab3() {
+    updateData();
+    goTab3();
+    console.log("to Results");
+}
+
 
 ////////////////// NAVIGATION /////////////////
 

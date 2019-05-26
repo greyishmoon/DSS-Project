@@ -87,6 +87,7 @@
 					<span class="mdl-layout-title">Risk Analysis</span>
 					<div class="mdl-layout-spacer"></div>
 	                <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="decision_making.html">Decision Making tool</a>
+					<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="..\UDecide_Menu.html">Menu</a>
 				</div>
 				<!-- Tabs -->
 				<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -227,6 +228,7 @@
 							  <li><b>Dependency</b> - a percentage which is an adjustment factor for adjusting the impact of each individual risk after considering the co-existing risks</li>
 							  <li><b>Risk weight</b> - a percentage which reflects the overall importance of the risk. <b>All risk weights for the category should sum up to 100</b></li>
 						</ul>
+						<p>All <b style = "color: green">GREEN CELLS</b> in this tool are editable and can have data values added or altered. The data model is updated on clicking out of the cell</p>
 
 
 						<!-- TARGET ractiveAlternatives -->
@@ -445,7 +447,7 @@
 
 
 						<h4>Degrees of Belief</h4>
-						<p>Assign a Degree of Belief to each Impact Grade for each Risk. Degrees of Belief are percentages representing the expectation the the impact of this risk will reach the stated Impact Grade (the percentage of the initial project cost)</p>
+						<p>Assign a Degree of Belief to each Impact Grade for each Risk. Degrees of Belief are percentages representing the expectation the the impact of this risk will reach the<br>stated Impact Grade (the percentage of the initial project cost)</p>
 						<p><b>The row of Degrees of Belief for each Impact Grade should not <u><i>exceed</i></u> 100%, but can be lower (or zero)</b></p>
 
 
@@ -628,9 +630,12 @@
 						<p>This page provides a summary of risks aggregated by Category across the 3 areas of the project - Cost, Duration and Quality</p>
 						<ul>
 							<li><b>Aggregated Risk</b> - the aggregation of all risks in this category based on the Risk Characteristics and Impact Assessment data entry</li>
-							<li><b>Unassigned Degrees of Belief</b> - where there is a lack of information in the Impact Assessment (where rows on Degrees of Belief table do not total 100%) this represents uncertainty about that aspect of the project, which is calculated as a percentage representing 'Ignorance' in this area</li>
+							<ul>
+								<li style="color: red">The <b>fixed 0%</b> column represents the case where there is no impact due to no risk existing</li>
+							</ul>
+							<li><b>Unassigned Degrees of Belief</b> - where there is a lack of information in the Impact Assessment (where rows on Degrees of Belief table do not total 100%) this represents uncertainty<br />about that aspect of the project, which is calculated as a percentage representing 'Ignorance' in this area</li>
 							<li><b>Objective Weights</b> - by default each area (project cost, duration and quality) is assumed to have an equal level - these weightings can be altered if required</li>
-							<li><b>Assessment of Risks</b> - the aggregation of all areas of impact in this category - this represents the categorys potential impact on the project as a whole, with associated level of ingorance</li>
+							<li><b>Assessment of Risks</b> - the aggregation of all areas of impact in this category - this represents the categorys potential impact on the project as a whole, with associated level of ignorance</li>
 							<li><b>Risk Range</b> - when the category ingorance is assigned, the range of risk impact can be calculated with a minimum, maximum and the average risk of impact</li>
 							<li><b>Potential cost impact on project</b> - represents the potential financial impact on project based on the <b>Average</b> risk level</li>
 						</ul>
@@ -1030,7 +1035,7 @@
 						<h4>Assessment aggregation on a Project Objective Level</h4>
 						<p>This page provides an aggregation of risk levels of categories over the whole project</p>
 						<ul>
-							<li><b>Category Weights</b> - each category can have a weight assigned to it adjusting its importance in relation to other categories - defualt assumption is all categories are eqaully weighted - <b>All category weights should sum up to 100</b></li>
+							<li><b>Category Weights</b> - each category can have a weight assigned to it adjusting its importance in relation to other categories - defualt assumption is all categories are eqaully weighted - <br /><b>All category weights should sum up to 100</b></li>
 						</ul>
 					</div>
 
@@ -1352,7 +1357,7 @@
 						<h4>Aggregation risk assessment results on the  project as a whole</h4>
 						<p>This page provides the results of risk levels for the project as a whole</p>
 						<ul>
-							<li><b>Project Weights</b> - each area can have a weight assigned to it adjusting its importance in relation to other areas - defualt assumption is all areas are eqaully weighted - <b>All area weights should sum up to 100</b></li>
+							<li><b>Project Weights</b> - each area can have a weight assigned to it adjusting its importance in relation to other areas - defualt assumption is all areas are eqaully weighted - <br /><b>All area weights should sum up to 100</b></li>
 						</ul>
 
 						<!-- TARGET ractiveResults -->
@@ -1565,9 +1570,9 @@
 						<h4>Instructions</h4>
 						<p>Start entering data on the <b>Project Setup</b> page following the instructions, and work <b>sequentially</b> through the subsequent pages.</p>
 
-						<p>All <b>data is validated</b> to ensure consistency with the DSS model. Any errors in data entry will be highlighted in red, and you will be automatically returned to a page with errors on it preventing progression unitl the inconsistency has been corrected. Full error messages are associated with each page.</p>
+						<p>All <b>data is validated</b> to ensure consistency with the DSS model. Any errors in data entry will be highlighted in red, and you will be automatically returned to a page with errors on it preventing <br />progression unitl the inconsistency has been corrected. Full error messages are associated with each page.</p>
 
-						<p>These tools save all data to the browser local storage with any data change. This means that should your work be interupted, or the browser closed before saving the data file, you should be returned to the state following your last entry.
+						<p>These tools save all data to the browser local storage with any data change. This means that should your work be interupted, or the browser closed before saving the data file, you should be <br />returned to the state following your last entry.
 							<br><i>However - do not rely on this as a long term saving mechanism - ensure you save to file when required.</i></p>
 
 						<p>To <b>save</b> a project, click go to the Save/Load tab and click on the <b>Save Project</b> button.
@@ -1578,17 +1583,8 @@
 						<p>To <b>load</b> a project, click go to the Save/Load tab and click on the <b>Load Project</b> button.
 							<br>Navigate to folder project saves were moved to and select DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json - All unsaved data from current project will be lost.</p>
 
+						<p>An <b>Example Project</b> can be loaded to demonstrate the tool with a pre-configured project. <b>Load Example Project</b> can be found at the bottom of this Instructions page.</p>
 
-						<h4>Example project</h4>
-						<p>A completed example project has been provided to demonstrate how to add multiple Categories, Risks and Degrees of Belief to a project.
-						<br>This project is hard coded and cannot be harmed by experimentation - after playing with the values it can be reset to default by reloading the example.</p>
-
-
-
-
-
-						<h4><b>Load example project:</b> <u>WARNING</u> - All unsaved data will be lost</h4>
-						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
 
 
 						<!-- Model guidance -->
@@ -1599,30 +1595,38 @@
 						<p>In this tool, risk is modelled as : &nbsp;&nbsp;&nbsp;<b><font size="+2">R = L * P * I<font></font></b></p>
 						<img src="../images\Risk_Guidance_1.PNG" alt="Risk model">
 						<p><b class="guidance">Likelihood of occurrence:</b> represents the probability of an identified risk factor to happen.</p>
-						<p><b class="guidance">Impact:</b> represents the maximum amount of loss or damage incurred on a specific project success objective if the risk factor happened. In this research, the impact is assessed as a percentage of the project initial cost.</p>
+						<p><b class="guidance">Impact:</b> represents the maximum amount of loss or damage incurred on a specific project success objective if the risk factor happened. In this research, the impact is assessed as a percentage <br />of the project initial cost.</p>
 						<p><b class="guidance">Probability of Impact materialisation:</b> reflects the probability that the actual impact of a risk on a project success objective will materialise in its worst scenario.</p>
 						<p>Probability of impact materialisation play the role of adjustment factor which assist the analyst in discounting the maximum potential risk impact by considering the surrounding environment.</p>
-						<p>As illustrated by the aforementioned risk model, risk assessment is related to the interdependencies between the analysed risk and the other identified risks, the project specifications and its environment, the capability and the experience of the project management team who is in charge of managing risk impact. These issues have been considered through the usage of three adjustment coefficient; Project Features (F), Controllability of risk impact (C) and risk Dependency (D) on the other identified risks.</p>
+						<p>As illustrated by the aforementioned risk model, risk assessment is related to the interdependencies between the analysed risk and the other identified risks, the project specifications and its <br />environment, the capability and the experience of the project management team who is in charge of managing risk impact. These issues have been considered through the usage of three <br />adjustment coefficient; Project Features (F), Controllability of risk impact (C) and risk Dependency (D) on the other identified risks.</p>
 
 						<h5 class="guidance subheading">Project Features (F):</h5>
-						<p>This factor reflects the specifications, environment, criticality and the unique nature of a construction project. The value of this coefficient is to be determined by the decision maker or the risk analyst. It is proposed by the author that its value is a proportional score falls in the range [0-1]. </p>
-						<p>The risk analyst, with the assistance of his experience and the expert opinions, is required to provide an agreed upon value for this factor which reflect his/her belief about the mitigating effect of the project features on the maximum risk impact. If the risk analyst believes, for instance, that the project environment has a very supportive role which may mitigate the maximum impact, he/she is to assign a value for the features parameter which reflects such effect. For instance the value of F may be assigned as 0.6. However, if it is the opposite case, the value of F may be assigned as 0.95 or even 1 to show that there is no positive effect the project environment has in mitigating risk impact.</p>
+						<p>This factor reflects the specifications, environment, criticality and the unique nature of a construction project. The value of this coefficient is to be determined by the decision maker or the risk analyst. <br />It is proposed by the author that its value is a proportional score falls in the range [0-1]. </p>
+						<p>The risk analyst, with the assistance of his experience and the expert opinions, is required to provide an agreed upon value for this factor which reflect his/her belief about the mitigating effect of the <br />project features on the maximum risk impact. If the risk analyst believes, for instance, that the project environment has a very supportive role which may mitigate the maximum impact, he/she is to <br />assign a value for the features parameter which reflects such effect. For instance the value of F may be assigned as 0.6. However, if it is the opposite case, the value of F may be assigned as 0.95 <br />or even 1 to show that there is no positive effect the project environment has in mitigating risk impact.</p>
 						<p>The next table illustrate the possible values of (F) suggested by the author as a guidance and definition.</p>
 						<img src="../images\Risk_Guidance_2.PNG" alt="Project features">
 
 						<h5 class="guidance subheading">Controllability (C):</h5>
-						<p>Reflects the experience of the project management team, their familiarity with the risk and the extent to which the team is able to manage it and mitigate its downside impact. Controllability can also be looked at as a means of reflecting the nature of a risk factor as some risks are more manageable than others. Hence, it is a reflection of risk nature and a measurement of the experience, familiarity and capability of the party in charge of managing it and mitigating its negative impact  on a specific project target. Similar to the previous two factors, controllability is an adjustment coefficient whose value falls in the range [0-1].</p>
+						<p>Reflects the experience of the project management team, their familiarity with the risk and the extent to which the team is able to manage it and mitigate its downside impact. Controllability can <br />also be looked at as a means of reflecting the nature of a risk factor as some risks are more manageable than others. Hence, it is a reflection of risk nature and a measurement of the experience, <br />familiarity and capability of the party in charge of managing it and mitigating its negative impact  on a specific project target. Similar to the previous two factors, controllability is an adjustment <br />coefficient whose value falls in the range [0-1].</p>
 						<img src="../images\Risk_Guidance_3.PNG" alt="Controllability">
 
 						<h5 class="guidance subheading">Dependency Factor (D):</h5>
-						<p>Assuming that total risk impact is the sum of the impacts of individual risks is not realistic as it assumes total independence between the identified risk factors. This is an exaggerating estimate which may produce an over-estimated project risk level. To appreciate this issue, the author is introducing the Dependency coefficient as an adjustment factor to be used for discounting the impact of each individual risk after considering the co-existing risks. The rational behind this introduction is that the identified risks will create a Risk Environment affecting the project. Hence the collective behaviour of the risk factors are not to be neglected.</p>
+						<p>Assuming that total risk impact is the sum of the impacts of individual risks is not realistic as it assumes total independence between the identified risk factors. This is an exaggerating estimate <br />which may produce an over-estimated project risk level. To appreciate this issue, the author is introducing the Dependency coefficient as an adjustment factor to be used for discounting the impact of <br />each individual risk after considering the co-existing risks. The rational behind this introduction is that the identified risks will create a Risk Environment affecting the project. Hence the collective <br />behaviour of the risk factors are not to be neglected.</p>
 						<img src="../images\Risk_Guidance_4.PNG" alt="Dependency Factor">
-						<p>The values of the three coefficients F, C and D will be used to produce a value for the parameter P; the probability of impact materialisation. We can generate the value of P in different ways. Based on the above definitions of F,C and D, we can use the weighted average method. We can assume that the three coefficients are equally important which will make P the average of them. The risk analyst, however, can make different assumption based on his attitude towards the risk under analysis.</p>
+						<p>The values of the three coefficients F, C and D will be used to produce a value for the parameter P; the probability of impact materialisation. We can generate the value of P in different ways. <br />Based on the above definitions of F,C and D, we can use the weighted average method. We can assume that the three coefficients are equally important which will make P the average of them. <br />The risk analyst, however, can make different assumption based on his attitude towards the risk under analysis.</p>
 
 						<h5 class="guidance subheading">Achievability coefficient (A):</h5>
-						<p>Achievability coefficient (A) is an adjustment factor which reflects the degree to which the analyst believes that the benefit under analysis will materialise in its estimated size. This coefficient will reflect the ability of the project team of delivering the project benefits in their expected volume during the bidding stage. It will also reflect whether there is a lack of clarity and details of the project brief which makes the total benefit of the project outcome is hardly be estimated.</p>
-						<p>Achievability value will fall in the range [0 - 1] and the analyst is to assign a suitable value to it according to the situation under analysis and according to his/her judgment. The following table illustrates the values of the achievability factor and their meanings as proposed by the authors:</p>
+						<p>Achievability coefficient (A) is an adjustment factor which reflects the degree to which the analyst believes that the benefit under analysis will materialise in its estimated size. This coefficient <br />will reflect the ability of the project team of delivering the project benefits in their expected volume during the bidding stage. It will also reflect whether there is a lack of clarity and details of the <br />project brief which makes the total benefit of the project outcome is hardly be estimated.</p>
+						<p>Achievability value will fall in the range [0 - 1] and the analyst is to assign a suitable value to it according to the situation under analysis and according to his/her judgment. The following table illustrates <br />the values of the achievability factor and their meanings as proposed by the authors:</p>
 						<img src="../images\Risk_Guidance_5.PNG" alt="Achievability coefficient">
+
+						<!-- LOAD EXAMPLE -->
+						<h4>Example project</h4>
+						<p>A completed example project has been provided to demonstrate how to add multiple Categories, Risks and Degrees of Belief to a project.
+						<br>This project is hard coded and cannot be harmed by experimentation - after playing with the values it can be reset to default by reloading the example.</p>
+
+						<h4><b>Load example project:</b> <u>WARNING</u> - All unsaved data will be lost</h4>
+						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-500" type="button" id="loadExample-button">LOAD EXAMPLE</button>
 
 					</div>
 				</section>
@@ -1637,7 +1641,7 @@
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="button" id="printRiskAnalysisReportPDF">Print PDF</button>
 
 						<h4><b>Save Project</b></h4>
-						<p>The project will be saved as <b>DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json</b> to your browsers <b>download folder</b>. Click the 'Save File' option if offered options (also check 'Do this automatically...'). After saving please manually move file to a permenant location for storage.</p>
+						<p>The project will be saved as <b>DSS-Risk-Analysis-&lt;ProjectTitle&gt;.json</b> to your browsers <b>download folder</b>. Click the 'Save File' option if offered options (also check 'Do this automatically...'). <br />After saving please manually move file to a permenant location for storage.</p>
 						<p>NOTE - Due to browser security previous saves of this project WILL NOT be overwritten automatically. Multiple saves of the same name will be appended (2)(3)(4) etc.</p>
 						<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--green-500" id="saveProject" type="button">SAVE PROJECT </button>
 

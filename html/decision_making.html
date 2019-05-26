@@ -86,6 +86,7 @@
 				<span class="mdl-layout-title">Decision Making</span>
 				<div class="mdl-layout-spacer"></div>
 				<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="risk_analysis.html">Risk Analysis tool</a>
+				<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" href="..\UDecide_Menu.html">Menu</a>
 			</div>
 			<!-- Tabs -->
 			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -279,6 +280,7 @@
 						<br /><i>NOTE: The sum of the assigned degrees of belief for all alternatives in a criteria row <b>must not exceed 100%</b></i></p>
 					<p>Finally, assign a <b>weight</b> for the importance of each criteria in the category. These are proportional within each category.
 						<br /><i>NOTE: The sum of the weights for each category <b>must exactly total 100%</b></i></p>
+					<p>All <b style = "color: green">GREEN CELLS</b> in this tool are editable and can have data values added or altered. The data model is updated on clicking out of the cell</p>
 
 					<!-- TARGET ractiveAlternatives -->
 					<div id="target-data-table"></div>
@@ -393,7 +395,7 @@
 					<!-- Analysis Summary table -->
 
 					<h4>Aggregated Degrees of Belief</h4>
-					<p>Based on the degrees of belief and criteria weights, this is a summary of the <b>aggregated degrees of belief</b> for each category. The grey column shows any <b>unassigned degrees of belief</b>, which represents <b>ignorance</b> within that
+					<p>Based on the degrees of belief and criteria weights, this is a summary of the <b>aggregated degrees of belief</b> for each category. The grey column shows any <b>unassigned degrees of belief</b>, <br />which represents <b>ignorance</b> within that
 						area of the problem domain.</p>
 
 					<!-- TARGET ractiveSummary -->
@@ -531,7 +533,7 @@
 			<section class="mdl-layout__tab-panel" id="page-4">
 				<div class="page-content">
 					<h4>Aggregated Degrees of Belief</h4>
-					<p>This final summary shows the <b>aggregated degrees of belief</b> for each alternative option, with the alternative weighting taken into account. The grey column shows the level of <b>ignorance</b> for the whole problem.</p>
+					<p>This final summary shows the <b>aggregated degrees of belief</b> for each alternative option, with the alternative weighting taken into account. The grey column shows the level of <b>ignorance</b> <br />for the whole problem.</p>
 
 					<!-- TARGET ractiveSummary -->
 					<div id="target-aggregated-beliefs-table"></div>
@@ -617,7 +619,7 @@
 
 					</script>
 				</div>
-				
+
 				<br>
 
 				<!-- Goto SUMMARY PAGE -->
@@ -632,9 +634,9 @@
 					<h4>Instructions</h4>
 					<p>Start entering data on the <b>Problem Setup</b> page following the instructions, and work <b>sequentially</b> through the subsequent pages. </p>
 
-					<p>All <b>data is validated</b> to ensure consistency with the DSS model. Any errors in data entry will be highlighted in red, and you will be automatically returned to a page with errors on it preventing progression unitl the inconsistency has been corrected. Full error messages are associated with each page.</p>
+					<p>All <b>data is validated</b> to ensure consistency with the DSS model. Any errors in data entry will be highlighted in red, and you will be automatically returned to a page with errors on it preventing <br />progression until the inconsistency has been corrected. Full error messages are associated with each page.</p>
 
-					<p>These tools save all data to the browser local storage with any data change. This means that should your work be interupted, or the browser closed before saving the data file, you should be returned to the state following your last entry.
+					<p>These tools save all data to the browser local storage with any data change. This means that should your work be interupted, or the browser closed before saving the data file, you should be <br />returned to the state following your last entry.
 						<br><i>However - do not rely on this as a long term saving mechanism - ensure you save to file when required.</i></p>
 
 					<p>To <b>save</b> a problem, click go to the Save/Load tab and click on the <b>Save Problem</b> button.

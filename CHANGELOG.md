@@ -8,6 +8,34 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+## [0.2.3] - 15-05-2019
+### Fixed
+#### DECISION MAKING
+- Next/Back buttons not updating data model due to bypassing tab click mechanics - updateData() now added
+- Line lengths on narrow screens
+#### RISK ANALYSIS
+- Next/Back buttons not updating data model due to bypassing tab click mechanics - updateData() now added
+- Line lengths on narrow screens
+
+### Added
+#### DECISION MAKING
+- Menu button to header bar
+- Data Entry page - Note to indicate green cells are editable
+#### RISK ANALYSIS
+- Menu button to header bar
+- Risk Assessment page - added note explaining 0% column in Aggregated Risk Assessment table
+- Risk Characteristics page - Note to indicate green cells are editable
+
+### Altered
+#### MENU
+- removed 'Outsourcing' from Decision Making Tool heading
+#### RISK ANALYSIS
+- Moved 'Load Example' section to end of Instruction page, with note at top where to find it
+
+### Removed
+#### MENU
+- 'Select a tool...' heading
+
 ## [0.2.2] - 09-01-2019
 ### Altered
 #### MENU
