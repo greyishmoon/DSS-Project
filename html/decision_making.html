@@ -392,7 +392,7 @@
 			<section class="mdl-layout__tab-panel" id="page-3">
 				<div class="page-content">
 
-					<!-- Analysis Summary table -->
+					<!-- Aggregated Degrees of Belief table -->
 
 					<h4>Aggregated Degrees of Belief</h4>
 					<p>Based on the degrees of belief and criteria weights, this is a summary of the <b>aggregated degrees of belief</b> for each category. The grey column shows any <b>unassigned degrees of belief</b>, <br />which represents <b>ignorance</b> within that
@@ -455,7 +455,7 @@
 
 					</script>
 
-					<!-- Analysis Summary table -->
+					<!-- Assessment Aggregation table -->
 
 					<h4>Assessment Aggregation</h4>
 					<p>For each category, assign a <b>weight</b> in order to reflect that category's importance relative to the other categories. The default assumption is that all risk categories are equally important.
@@ -532,6 +532,9 @@
 			<!-- RESULTS PAGE *********************************************** -->
 			<section class="mdl-layout__tab-panel" id="page-4">
 				<div class="page-content">
+
+					<!-- Aggregated Degrees of Belief table -->
+
 					<h4>Aggregated Degrees of Belief</h4>
 					<p>This final summary shows the <b>aggregated degrees of belief</b> for each alternative option, with the alternative weighting taken into account. The grey column shows the level of <b>ignorance</b> <br />for the whole problem.</p>
 
@@ -577,12 +580,13 @@
 								</tr>
 							</tbody>
 						</table>
-
 					</script>
 
-					<h4>Distributed Ignorance</h4>
-					<p>This table <b>distributes the ignorance equally</b> between each alternative and represents a balanced view of the factors influencing the decision. <br>Alternatively all the ignorance could be applied to a <b>single alternative</b>
-						(aggregated degree of belief above) to create the most <b>optomistic</b> or <b>pessimistic</b> view of the potential solutions.</p>
+					<!-- Aggregated Degrees of Belief after distributing the degree of ignorance table -->
+
+					<h4>Aggregated Degrees of Belief after distributing the degree of ignorance</h4>
+					<p>This table <b>distributes the ignorance equally</b> between each alternative and represents a balanced view of the factors influencing the decision.
+						<br>Alternatively all the ignorance could be distributed in a different way or applied to a single alternative based on the decision maker's strategy.</p>
 
 					<!-- TARGET ractiveSummary -->
 					<div id="target-distributed-ignorance-table"></div>
@@ -621,6 +625,8 @@
 				</div>
 
 				<br>
+
+				<p>These are the <b>degrees of belief</b> associated with each of the <b>alternatives compared</b>. Based on the data used, <b>the alternative with the highest degree of belief is the most preferred one.</b></p>
 
 				<!-- Goto SUMMARY PAGE -->
 				<div>

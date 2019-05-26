@@ -8,6 +8,25 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+## [0.2.4] - 25-05-2019
+### Altered
+#### RISK ANALYSIS
+- Risk Assessment page
+* Changed Risk Levels to monetary values
+* Removed Potential cost impact on project table
+- Summary page
+* added % symbol to Ignorance
+* Changed Risk Range for all Areas to monetary values
+- Results page
+* Added Unassigned Degree of Belief table (figure) for project
+* Changed risk range values to monetary values
+* Removed Potential Cost On Project table (figure)
+#### DECISION MAKING
+- Results page
+* Altered Distributed Ignorance heading to 'Aggregated Degrees of Belief after distributing the degree of ignorance'
+* Altered second line of Aggregated Degrees of Belief after distributing the degree of ignorance body text
+* Added extra line of explanatory text after Aggregated Degrees of Belief after distributing the degree of ignorance table
+
 ## [0.2.3] - 15-05-2019
 ### Fixed
 #### DECISION MAKING

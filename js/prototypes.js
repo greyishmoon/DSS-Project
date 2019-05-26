@@ -29,8 +29,12 @@ helpers.percent = function ( num ) {
     return (num * 100).toFixedNumber(1);
 };
 
+helpers.roundTo1 = function ( num ) {
+    return Number.parseFloat(num).toFixedNumber(1);
+};
+
 helpers.roundTo2 = function ( num ) {
-    return num.toFixedNumber(2);
+    return Number.parseFloat(num).toFixedNumber(2);
 };
 
 // EXAMPLE

@@ -794,7 +794,7 @@
 									<tr>
 										<!-- First cell -->
 										<td class="mdl-data-table__cell--non-numeric narrow wrap hlBlue">
-											<h6>Ignorance</h6>
+											<h6>Ignorance %</h6>
 										</td>
 										<td class="blank"></td>
 
@@ -982,39 +982,24 @@
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h5>{{percent(RiskLevels_cat[0])}}</h5>
+											<!-- <h5>{{percent(RiskLevels_cat[0])}}</h5> -->
+											<h6>£{{roundTo2(RiskLevels_cat[0] * 100)}}</h6>
 										</td>
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h5>{{percent(RiskLevels_cat[1])}}</h5>
+											<h6>£{{roundTo2(RiskLevels_cat[1] * 100)}}</h6>
 										</td>
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h5>{{percent(RiskLevels_cat[2])}}</h5>
+											<h6>£{{roundTo2(RiskLevels_cat[2] * 100)}}</h6>
 										</td>
 									</tr>
 
 								</tbody>
 							</table>
 							<br>
-
-							<!-- COST IMPACT table -->
-							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp cat-cost-impact-table">
-								<thead>
-									<tr>
-										<th class="mdl-data-table__cell--non-numeric width400 wrap hlBlue">
-											<h5>Potential cost impact on project</h5>
-										</th>
-										<th class="blank"></th>
-
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlYellow">
-											<h5>  £{{roundTo2(costImpact_cat)}}</h5>
-										</th>
-									</tr>
-								</thead>
-							</table>
 
 							{{/each}}
 						</script>
@@ -1229,7 +1214,7 @@
 								<tr>
 									<!-- First cell -->
 									<td class="mdl-data-table__cell--non-numeric narrow wrap hlBlue">
-										<h6>Ignorance</h6>
+										<h6>Ignorance %</h6>
 									</td>
 									<td class="blank"></td>
 
@@ -1284,15 +1269,15 @@
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>{{percent(RiskLevels_obj[0][0])}}</h6>
+										<h6>£{{roundTo2(RiskLevels_obj[0][0] * 100)}}</h6>
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>{{percent(RiskLevels_obj[1][0])}}</h6>
+										<h6>£{{roundTo2(RiskLevels_obj[1][0] * 100)}}</h6>
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>{{percent(RiskLevels_obj[2][0])}}</h6>
+										<h6>£{{roundTo2(RiskLevels_obj[2][0] * 100)}}</h6>
 									</td>
 								</tr>
 
@@ -1303,15 +1288,16 @@
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>{{percent(RiskLevels_obj[0][1])}}</h6>
+										<h6>£{{roundTo2(RiskLevels_obj[0][1] * 100)}}</h6>
+
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>{{percent(RiskLevels_obj[1][1])}}</h6>
+										<h6>£{{roundTo2(RiskLevels_obj[1][1] * 100)}}</h6>
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>{{percent(RiskLevels_obj[2][1])}}</h6>
+										<h6>£{{roundTo2(RiskLevels_obj[2][1] * 100)}}</h6>
 									</td>
 								</tr>
 
@@ -1322,15 +1308,15 @@
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>{{percent(RiskLevels_obj[0][2])}}</h6>
+										<h6>£{{roundTo2(RiskLevels_obj[0][2] * 100)}}</h6>
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>{{percent(RiskLevels_obj[1][2])}}</h6>
+										<h6>£{{roundTo2(RiskLevels_obj[1][2] * 100)}}</h6>
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>{{percent(RiskLevels_obj[2][2])}}</h6>
+										<h6>£{{roundTo2(RiskLevels_obj[2][2] * 100)}}</h6>
 									</td>
 								</tr>
 							</tbody>
@@ -1462,7 +1448,7 @@
 									<tr>
 										<!-- First cell -->
 										<td class="mdl-data-table__cell--non-numeric narrow wrap hlBlue">
-											<h6>Degrees of Belief</h6>
+											<h6>Degrees of Belief er</h6>
 										</td>
 										<td class="blank"></td>
 
@@ -1488,6 +1474,37 @@
 								</tbody>
 							</table>
 							<br>
+							<!-- IGNORANCE table -->
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp ignorance-table">
+								<thead>
+									<tr>
+										<th class="mdl-data-table__cell--non-numeric width400 wrap hlBlue">
+											<h5>Unassigned Degree of Belief</h5>
+										</th>
+										<th class="blank"></th>
+
+										<th class="mdl-data-table__cell--center impact-header width150 hlBlue">
+											Project
+										</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<!-- First cell -->
+										<td class="mdl-data-table__cell--non-numeric narrow wrap hlBlue">
+											<h6>Ignorance %</h6>
+										</td>
+										<td class="blank"></td>
+
+										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlLightGray2">
+											<h5>{{percent(Ignorance_proj)}}</h5>
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+							<BR />
 							<!-- RISK LEVELS table -->
 							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp risk-levels-table">
 								<thead>
@@ -1520,39 +1537,23 @@
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h5>{{percent(RiskLevels_proj[0])}}</h5>
+											<h6>£{{roundTo2(RiskLevels_proj[0] * 100)}}</h6>
 										</td>
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h5>{{percent(RiskLevels_proj[1])}}</h5>
+											<h6>£{{roundTo2(RiskLevels_proj[1] * 100)}}</h6>
 										</td>
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h5>{{percent(RiskLevels_proj[2])}}</h5>
+											<h6>£{{roundTo2(RiskLevels_proj[2] * 100)}}</h6>
 										</td>
 									</tr>
 
 								</tbody>
 							</table>
 							<br>
-							<!-- COST IMPACT table -->
-							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp cat-cost-impact-table">
-								<thead>
-									<tr>
-										<th class="mdl-data-table__cell--non-numeric width400 wrap hlBlue">
-											<h5>Potential cost impact on project</h5>
-										</th>
-										<th class="blank"></th>
-
-										<th class="mdl-data-table__cell--non-numeric mdl-data-table__cell--center width150 hlYellow">
-											<h5>  £{{roundTo2(costImpact_proj)}}</h5>
-										</th>
-									</tr>
-								</thead>
-							</table>
-
 						</script>
 					</div>
 
