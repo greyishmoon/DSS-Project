@@ -607,7 +607,10 @@ class DSS_RA_model {
             if (_this.debug || _this.debugCalc === 14) console.log("category.RiskLevels_cat: " + category.RiskLevels_cat);
 
             // Calc potential cost impact on project
-            category.costImpact_cat = category.RiskLevels_cat[2] * data.cost / 100;
+            // category.costImpact_cat = category.RiskLevels_cat[2] * data.cost / 100;
+            category.costImpact_cat[0] = category.RiskLevels_cat[0] * data.cost / 100;
+            category.costImpact_cat[1] = category.RiskLevels_cat[1] * data.cost / 100;
+            category.costImpact_cat[2] = category.RiskLevels_cat[2] * data.cost / 100;
             if (_this.debug || _this.debugCalc === 14) console.log("category.costImpact_cat: " + category.costImpact_cat);
         });
     }
@@ -826,6 +829,11 @@ class DSS_RA_model {
 
             // Calculate AVERAGE risk level
             data.RiskLevels_obj[indexArea][2] = (data.RiskLevels_obj[indexArea][0] + data.RiskLevels_obj[indexArea][1]) / 2;
+
+            // Calculate cost impacts for each of above - added by request of Abdul for change in Summary page presentation
+            data.CostImpact_obj[indexArea][0] = data.RiskLevels_obj[indexArea][0] * data.cost / 100;
+            data.CostImpact_obj[indexArea][1] = data.RiskLevels_obj[indexArea][1] * data.cost / 100;
+            data.CostImpact_obj[indexArea][2] = data.RiskLevels_obj[indexArea][2] * data.cost / 100;
         }
 
         if (_this.debug || _this.debugCalc === 21) console.log("data.RiskLevels_obj: " + data.RiskLevels_obj);
@@ -1019,7 +1027,10 @@ class DSS_RA_model {
             if (_this.debug || _this.debugCalc === 28) console.log("data.RiskLevels_proj: " + data.RiskLevels_proj);
 
             // Calculate cost impact
-            data.costImpact_proj = data.RiskLevels_proj[2] * data.cost / 100;
+            // data.costImpact_proj = data.RiskLevels_proj[2] * data.cost / 100;
+            data.costImpact_proj[0] = data.RiskLevels_proj[0] * data.cost / 100;
+            data.costImpact_proj[1] = data.RiskLevels_proj[1] * data.cost / 100;
+            data.costImpact_proj[2] = data.RiskLevels_proj[2] * data.cost / 100;
 
             if (_this.debug || _this.debugCalc === 28) console.log("data.costImpact_proj: " + data.costImpact_proj);
 

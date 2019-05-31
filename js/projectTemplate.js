@@ -13,6 +13,7 @@ const Project = {
     Beliefs_obj: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // array of Beliefs values for each grade (0% - 3%) for each area in project  (Summary page row 104)
     Ignorance_obj: [0, 0, 0], // Ignorance value for each area in project  (Summary page row 112)
     RiskLevels_obj: [[0, 0, 0], [0, 0, 0], [0, 0, 0]], // Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Summary page row 133)
+    CostImpact_obj: [[0, 0, 0], [0, 0, 0], [0, 0, 0]], // Cost impact for each risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Added by Abdul request)
 
     // RESULTS PAGE
     ProjectWeights: [33, 33, 34], // Weights for 3 areas (objectives) (Cost, Duration, Quality) for whole project - captured on Results page
@@ -28,7 +29,7 @@ const Project = {
     Beliefs_proj: [0, 0, 0, 0], // array of Beliefs values for each grade (0% - 3%) for each area in project  (Summary page row 214)
     Ignorance_proj: 0, // Ignorance value for each area in project  (Summary page row 222)
     RiskLevels_proj: [0, 0, 0], // Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Summary page row 238)
-    costImpact_proj: 0, // Potential cost impact of AVERAGE risk level on project (Summary page row 245)
+    costImpact_proj: [0, 0, 0], // Potential cost impact of Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] on project (Summary page row 245)
 }
 
 const Category = {
@@ -58,7 +59,7 @@ const Category = {
     Beliefs_cat: [0, 0, 0, 0], // array of Beliefs values for each grade (0% - 3%) for category (row 182)
     Ignorance_cat: 0, // Ignorance value for category (row 190)
     RiskLevels_cat: [0, 0, 0], // Risk levels for category - [MINIMUM, MAXIMUM, AVERAGE] (row 205)
-    costImpact_cat: 0, // Potential cost impact of AVERAGE risk level on project
+    costImpact_cat: [0, 0, 0], // Potential cost impact of each risk level [MINIMUM, MAXIMUM, AVERAGE] on project
 
     // SUMMARY PAGE
     CategoryWeight: 0, // Array to hold project level category weight (Summary page row 28)

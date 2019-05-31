@@ -433,7 +433,7 @@ function updateData() {
 
 // Check group totals and alter table colours warning of problems
 function updateInterface() {
-
+console.log("updateInterface");
     // record of weights errors on Risk Characteristics page (by category #)
     var riskCharacteristicsErrors = [];
     // record of risk weight errors on Impact Assessment page (by category # risk # and area #)

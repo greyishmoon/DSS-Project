@@ -983,17 +983,20 @@
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
 											<!-- <h5>{{percent(RiskLevels_cat[0])}}</h5> -->
-											<h6>£{{roundTo2(RiskLevels_cat[0] * 100)}}</h6>
+											<!-- <h6>£{{roundTo2(RiskLevels_cat[0] * 100)}}</h6> -->
+											<h6>£{{roundTo2(costImpact_cat[0])}}</h6>
 										</td>
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h6>£{{roundTo2(RiskLevels_cat[1] * 100)}}</h6>
+											<!-- <h6>£{{roundTo2(RiskLevels_cat[1] * 100)}}</h6> -->
+											<h6>£{{roundTo2(costImpact_cat[1])}}</h6>
 										</td>
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h6>£{{roundTo2(RiskLevels_cat[2] * 100)}}</h6>
+											<!-- <h6>£{{roundTo2(RiskLevels_cat[2] * 100)}}</h6> -->
+											<h6>£{{roundTo2(costImpact_cat[2])}}</h6>
 										</td>
 									</tr>
 
@@ -1269,15 +1272,15 @@
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>£{{roundTo2(RiskLevels_obj[0][0] * 100)}}</h6>
+										<h6>£{{roundTo2(CostImpact_obj[0][0])}}</h6>
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>£{{roundTo2(RiskLevels_obj[1][0] * 100)}}</h6>
+										<h6>£{{roundTo2(CostImpact_obj[1][0])}}</h6>
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>£{{roundTo2(RiskLevels_obj[2][0] * 100)}}</h6>
+										<h6>£{{roundTo2(CostImpact_obj[2][0])}}</h6>
 									</td>
 								</tr>
 
@@ -1288,16 +1291,16 @@
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>£{{roundTo2(RiskLevels_obj[0][1] * 100)}}</h6>
+										<h6>£{{roundTo2(CostImpact_obj[0][1])}}</h6>
 
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>£{{roundTo2(RiskLevels_obj[1][1] * 100)}}</h6>
+										<h6>£{{roundTo2(CostImpact_obj[1][1])}}</h6>
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>£{{roundTo2(RiskLevels_obj[2][1] * 100)}}</h6>
+										<h6>£{{roundTo2(CostImpact_obj[2][1])}}</h6>
 									</td>
 								</tr>
 
@@ -1308,20 +1311,19 @@
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>£{{roundTo2(RiskLevels_obj[0][2] * 100)}}</h6>
+										<h6>£{{roundTo2(CostImpact_obj[0][2])}}</h6>
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>£{{roundTo2(RiskLevels_obj[1][2] * 100)}}</h6>
+										<h6>£{{roundTo2(CostImpact_obj[1][2])}}</h6>
 									</td>
 									<td class="blank"></td>
 									<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-										<h6>£{{roundTo2(RiskLevels_obj[2][2] * 100)}}</h6>
+										<h6>£{{roundTo2(CostImpact_obj[2][2])}}</h6>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-
 					</script>
 
 					<!-- Next Tab button -->
@@ -1387,7 +1389,7 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number resultsWeight hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{ProjectWeights[0]}}">
+												<input class="mdl-textfield__input number summaryInput" type="number" min="0" max="100" value="{{ProjectWeights[0]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -1396,7 +1398,7 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number resultsWeight hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{ProjectWeights[1]}}">
+												<input class="mdl-textfield__input number summaryInput" type="number" min="0" max="100" value="{{ProjectWeights[1]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -1405,7 +1407,7 @@
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number resultsWeight hlGreen">
 											<div class="mdl-textfield mdl-js-textfield number">
 												<!-- Input validation - numbers 0-100 -->
-												<input class="mdl-textfield__input number" type="number" min="0" max="100" value="{{ProjectWeights[2]}}">
+												<input class="mdl-textfield__input number summaryInput" type="number" min="0" max="100" value="{{ProjectWeights[2]}}">
 												<label class="mdl-textfield__label">0-100</label>
 												<span class="mdl-textfield__error percentage">Percentage 0-100</span>
 											</div>
@@ -1448,7 +1450,7 @@
 									<tr>
 										<!-- First cell -->
 										<td class="mdl-data-table__cell--non-numeric narrow wrap hlBlue">
-											<h6>Degrees of Belief er</h6>
+											<h6>Degrees of Belief</h6>
 										</td>
 										<td class="blank"></td>
 
@@ -1537,17 +1539,17 @@
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h6>£{{roundTo2(RiskLevels_proj[0] * 100)}}</h6>
+											<h6>£{{roundTo2(costImpact_proj[0])}}</h6>
 										</td>
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h6>£{{roundTo2(RiskLevels_proj[1] * 100)}}</h6>
+											<h6>£{{roundTo2(costImpact_proj[1])}}</h6>
 										</td>
 										<td class="blank"></td>
 
 										<td class="mdl-data-table__cell mdl-data-table__cell--center narrow number hlYellow">
-											<h6>£{{roundTo2(RiskLevels_proj[2] * 100)}}</h6>
+											<h6>£{{roundTo2(costImpact_proj[2])}}</h6>
 										</td>
 									</tr>
 

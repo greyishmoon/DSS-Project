@@ -8,6 +8,15 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+## [0.2.5] - 30-05-2019
+### Altered
+#### MENU
+- Moved logo to top left title bar (to fix variable screen width problems)
+#### RISK ANALYSIS
+- Spelling corrections
+- Summary page
+* Objective risk weights data entry fields not updating calculation when changed - added focusout->update for cells
+
 ## [0.2.4] - 25-05-2019
 ### Altered
 #### RISK ANALYSIS
