@@ -12,7 +12,13 @@ const Problem = {
     MlH: 0, // Ml H value for category (row 66)
     Beliefs: [], // array of Beliefs relating to each Alternative (row 71)
     Ignorance: 0, // level of ignorance associated with Alternatives of this Category (row 77)
-    IgnoranceSplit: 0       // level of ignorance (%) divided equallyt between number of alternatives
+    IgnoranceSplit: 0,       // level of ignorance (%) divided equallyt between number of alternatives
+
+    // NOTES TEXT FIELDS
+    setupNotes: "", // Notes for setup page
+    dataEntryNotes: "", // Notes for data entry page
+    summaryNotes: "", // Notes for summary page
+    resultsNotes: "", // Notes for results page
 }
 
 // Project categories being assessed

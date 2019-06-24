@@ -12,7 +12,7 @@
 	<meta name="author" content="Dr. Abdulmaten Taroun">
 	<meta name="contact" content="a.taroun@worc.ac.uk ">
 	<meta name="developer" content="C Blythe">
-	<meta name="version" content="0.2.5">
+	<meta name="version" content="0.2.6">
 
 	<!--  Remove favicon.ico request to stop error  -->
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -183,6 +183,7 @@
 									{{/each}}
 								</tbody>
 							</table>
+
 						</script>
 
 						<!-- Buttons layout table -->
@@ -198,6 +199,32 @@
 								</tr>
 							</tbody>
 						</table>
+
+						<!-- Notes text field table -->
+						<br>
+						<h4>Notes</h4>
+						<!-- TARGET ractiveNotesSetup -->
+						<div id="target-notes-setup-table"></div>
+
+						<!-- TEMPLATE ractiveNotesSetup -->
+						<script id="template-notes-setup-table" type="text/ractive">
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+								<tr>
+									<td>
+									   <form action = "#">
+										  <div class = "mdl-textfield mdl-js-textfield">
+											 <textarea class = "mdl-textfield__input" type = "text" rows =  "3"
+												id = "notes-setup" value="{{setupNotes}}"></textarea>
+											 <label class = "mdl-textfield__label" for = "notes-setup">Notes...</label>
+										  </div>
+									   </form>
+									</td>
+								</tr>
+							</table>
+
+						</script>
+
 
 						<!-- Goto RISK CHARACTERISTICS -->
 						<br>
@@ -348,6 +375,30 @@
 							</table>
 							<br /> {{/each}}
 
+						</script>
+
+						<!-- Notes text field table -->
+
+						<h4>Notes</h4>
+						<!-- TARGET ractiveNotesSetup -->
+						<div id="target-notes-risk-characteristic-table"></div>
+
+						<!-- TEMPLATE ractiveNotesSetup -->
+						<script id="template-notes-risk-characteristic-table" type="text/ractive">
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+								<tr>
+									<td>
+									   <form action = "#">
+										  <div class = "mdl-textfield mdl-js-textfield">
+											 <textarea class = "mdl-textfield__input" type = "text" rows =  "3"
+												id = "notes-risk-characteristic" value="{{riskCharacteristicsNotes}}"></textarea>
+											 <label class = "mdl-textfield__label" for = "notes-risk-characteristic">Notes...</label>
+										  </div>
+									   </form>
+									</td>
+								</tr>
+							</table>
 						</script>
 
 
@@ -609,7 +660,28 @@
 							<br> {{/each}}
 						</script>
 
+						<!-- Notes text field table -->
+						<h4>Notes</h4>
+						<!-- TARGET ractiveNotesSetup -->
+						<div id="target-notes-impact-assessment-table"></div>
 
+						<!-- TEMPLATE ractiveNotesSetup -->
+						<script id="template-notes-impact-assessment-table" type="text/ractive">
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+								<tr>
+									<td>
+									   <form action = "#">
+										  <div class = "mdl-textfield mdl-js-textfield">
+											 <textarea class = "mdl-textfield__input" type = "text" rows =  "3"
+												id = "notes-impact-assessment" value="{{impactAssessmentNotes}}"></textarea>
+											 <label class = "mdl-textfield__label" for = "notes-impact-assessment">Notes...</label>
+										  </div>
+									   </form>
+									</td>
+								</tr>
+							</table>
+						</script>
 
 
 
@@ -1007,6 +1079,29 @@
 							{{/each}}
 						</script>
 
+						<!-- Notes text field table -->
+						<h4>Notes</h4>
+						<!-- TARGET ractiveNotesSetup -->
+						<div id="target-notes-risk-assessment-table"></div>
+
+						<!-- TEMPLATE ractiveNotesSetup -->
+						<script id="template-notes-risk-assessment-table" type="text/ractive">
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+								<tr>
+									<td>
+									   <form action = "#">
+										  <div class = "mdl-textfield mdl-js-textfield">
+											 <textarea class = "mdl-textfield__input" type = "text" rows =  "3"
+												id = "notes-risk-assessment" value="{{riskAssessmentNotes}}"></textarea>
+											 <label class = "mdl-textfield__label" for = "notes-risk-assessment">Notes...</label>
+										  </div>
+									   </form>
+									</td>
+								</tr>
+							</table>
+						</script>
+
 						<!-- Next Tab button -->
 						<br>
 						<!-- Goto SUMMARY PAGE -->
@@ -1326,6 +1421,29 @@
 						</table>
 					</script>
 
+					<!-- Notes text field table -->
+					<h4>Notes</h4>
+					<!-- TARGET ractiveNotesSetup -->
+					<div id="target-notes-summary-table"></div>
+
+					<!-- TEMPLATE ractiveNotesSetup -->
+					<script id="template-notes-summary-table" type="text/ractive">
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+							<tr>
+								<td>
+								   <form action = "#">
+									  <div class = "mdl-textfield mdl-js-textfield">
+										 <textarea class = "mdl-textfield__input" type = "text" rows =  "3"
+											id = "notes-summary" value="{{summaryNotes}}"></textarea>
+										 <label class = "mdl-textfield__label" for = "notes-summary">Notes...</label>
+									  </div>
+								   </form>
+								</td>
+							</tr>
+						</table>
+					</script>
+
 					<!-- Next Tab button -->
 					<br>
 					<!-- Goto RESULTS PAGE -->
@@ -1557,6 +1675,30 @@
 							</table>
 							<br>
 						</script>
+
+						<!-- Notes text field table -->
+						<h4>Notes</h4>
+						<!-- TARGET ractiveNotesSetup -->
+						<div id="target-notes-results-table"></div>
+
+						<!-- TEMPLATE ractiveNotesSetup -->
+						<script id="template-notes-results-table" type="text/ractive">
+
+							<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+								<tr>
+									<td>
+									   <form action = "#">
+										  <div class = "mdl-textfield mdl-js-textfield">
+											 <textarea class = "mdl-textfield__input" type = "text" rows =  "3"
+												id = "notes-results" value="{{resultsNotes}}"></textarea>
+											 <label class = "mdl-textfield__label" for = "notes-results">Notes...</label>
+										  </div>
+									   </form>
+									</td>
+								</tr>
+							</table>
+						</script>
+
 					</div>
 
 					<br>

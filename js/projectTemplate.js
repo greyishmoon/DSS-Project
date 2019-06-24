@@ -30,6 +30,14 @@ const Project = {
     Ignorance_proj: 0, // Ignorance value for each area in project  (Summary page row 222)
     RiskLevels_proj: [0, 0, 0], // Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] (Summary page row 238)
     costImpact_proj: [0, 0, 0], // Potential cost impact of Risk levels for each area - [MINIMUM, MAXIMUM, AVERAGE] on project (Summary page row 245)
+
+    // NOTES TEXT FIELDS
+    setupNotes: "", // Notes for setup page
+    riskCharacteristicsNotes: "", // Notes for risk Characteristics page
+    impactAssessmentNotes: "", // Notes for impact Assessment page
+    riskAssessmentNotes: "", // Notes for risk Assessment page
+    summaryNotes: "", // Notes for summary page
+    resultsNotes: "", // Notes for results page
 }
 
 const Category = {

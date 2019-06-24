@@ -8,6 +8,18 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+## [0.2.6] - 25-06-2019
+### Added
+#### RISK ANALYSIS
+- Notes text filed on every page
+- Notes text boxes for each page on report
+#### DECISION MAKING
+- Notes text filed on every page
+- Notes text boxes for each page on report
+### Altered
+#### RISK ANALYSIS
+- Report 'risk range' tables altered to reflect change in tool pages to show full cost impact in £
+
 ## [0.2.5] - 30-05-2019
 ### Altered
 #### MENU

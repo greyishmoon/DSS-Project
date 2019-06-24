@@ -12,7 +12,7 @@
 	<meta name="author" content="Dr. Abdulmaten Taroun">
 	<meta name="contact" content="a.taroun@worc.ac.uk ">
 	<meta name="developer" content="C Blythe">
-	<meta name="version" content="0.2.5">
+	<meta name="version" content="0.2.6">
 
 	<!--  Remove favicon.ico request to stop error  -->
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -237,11 +237,31 @@
 						</tbody>
 					</table>
 
-					<!-- TODO - remove test scroll button -->
-					<!-- <div>
-							<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect mdl-color--red-400" type="button" id="scroll-up-btn">Top></button>
-						</div> -->
-					<!-- Next Tab button -->
+					<!-- Notes text field table -->
+					<h4>Notes</h4>
+					<!-- TARGET ractiveNotesSetup -->
+					<div id="target-notes-setup-table"></div>
+
+					<!-- TEMPLATE ractiveNotesSetup -->
+					<script id="template-notes-setup-table" type="text/ractive">
+
+						<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+							<tr>
+								<td>
+								   <form action = "#">
+									  <div class = "mdl-textfield mdl-js-textfield">
+										 <textarea
+										 	class = "mdl-textfield__input" type = "text" rows =  "3"
+											id = "notes-setup" value="{{setupNotes}}"></textarea>
+										 <label class = "mdl-textfield__label" for = "notes-setup">Notes...</label>
+									  </div>
+								   </form>
+								</td>
+							</tr>
+						</table>
+
+					</script>
+
 					<br>
 					<!-- Goto DATA ENTRY -->
 					<div>
@@ -370,6 +390,30 @@
 					</script>
 				</div>
 
+				<!-- Notes text field table -->
+				<h4>Notes</h4>
+				<!-- TARGET ractiveNotesSetup -->
+				<div id="target-notes-data-entry-table"></div>
+
+				<!-- TEMPLATE ractiveNotesSetup -->
+				<script id="template-notes-data-entry-table" type="text/ractive">
+
+					<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+						<tr>
+							<td>
+							   <form action = "#">
+								  <div class = "mdl-textfield mdl-js-textfield">
+									 <textarea class = "mdl-textfield__input" type = "text" rows =  "3"
+										id = "notes-data-entry" value="{{dataEntryNotes}}"></textarea>
+									 <label class = "mdl-textfield__label" for = "notes-data-entry">Notes...</label>
+								  </div>
+							   </form>
+							</td>
+						</tr>
+					</table>
+
+				</script>
+
 				<!-- Next Tab button -->
 				<br>
 				<!-- Goto SUMMARY PAGE -->
@@ -458,7 +502,7 @@
 					<!-- Assessment Aggregation table -->
 
 					<h4>Assessment Aggregation</h4>
-					<p>For each category, assign a <b>weight</b> in order to reflect that category's importance relative to the other categories. The default assumption is that all risk categories are equally important.
+					<p>For each category, assign a <b>weight</b> in order to reflect that categorys importance relative to the other categories. The default assumption is that all risk categories are equally important.
 						<br /><i>NOTE: The sum of the weights for all categories <b>must exactly total 100%</b></i></p>
 
 					<!-- TARGET ractiveSummary -->
@@ -512,6 +556,29 @@
 					</script>
 
 				</div>
+
+				<!-- Notes text field table -->
+				<h4>Notes</h4>
+				<!-- TARGET ractiveNotesSetup -->
+				<div id="target-notes-summary-table"></div>
+
+				<!-- TEMPLATE ractiveNotesSetup -->
+				<script id="template-notes-summary-table" type="text/ractive">
+
+					<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+						<tr>
+							<td>
+							   <form action = "#">
+								  <div class = "mdl-textfield mdl-js-textfield">
+									 <textarea class = "mdl-textfield__input" type = "text" rows =  "3"
+										id = "notes-summary" value="{{summaryNotes}}"></textarea>
+									 <label class = "mdl-textfield__label" for = "notes-summary">Notes...</label>
+								  </div>
+							   </form>
+							</td>
+						</tr>
+					</table>
+				</script>
 
 				<!-- Next Tab button -->
 				<br>
@@ -586,7 +653,7 @@
 
 					<h4>Aggregated Degrees of Belief after distributing the degree of ignorance</h4>
 					<p>This table <b>distributes the ignorance equally</b> between each alternative and represents a balanced view of the factors influencing the decision.
-						<br>Alternatively all the ignorance could be distributed in a different way or applied to a single alternative based on the decision maker's strategy.</p>
+						<br>Alternatively all the ignorance could be distributed in a different way or applied to a single alternative based on the decision makers strategy.</p>
 
 					<!-- TARGET ractiveSummary -->
 					<div id="target-distributed-ignorance-table"></div>
@@ -627,6 +694,30 @@
 				<br>
 
 				<p>These are the <b>degrees of belief</b> associated with each of the <b>alternatives compared</b>. Based on the data used, <b>the alternative with the highest degree of belief is the most preferred one.</b></p>
+
+				<!-- Notes text field table -->
+				<h4>Notes</h4>
+				<!-- TARGET ractiveNotesSetup -->
+				<div id="target-notes-results-table"></div>
+
+				<!-- TEMPLATE ractiveNotesSetup -->
+				<script id="template-notes-results-table" type="text/ractive">
+
+					<table class="mdl-data-table  mdl-js-data-table mdl-shadow--4dp narrow">
+						<tr>
+							<td>
+							   <form action = "#">
+								  <div class = "mdl-textfield mdl-js-textfield">
+									 <textarea class = "mdl-textfield__input" type = "text" rows =  "3"
+										id = "notes-results" value="{{resultsNotes}}"></textarea>
+									 <label class = "mdl-textfield__label" for = "notes-results">Notes...</label>
+								  </div>
+							   </form>
+							</td>
+						</tr>
+					</table>
+				</script>
+				<br>
 
 				<!-- Goto SUMMARY PAGE -->
 				<div>

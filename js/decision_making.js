@@ -78,16 +78,34 @@ function setRactives() {
         template: '#template-categories-table',
         data: problemManager.problem
     });
+    // NOTES SETUP PAGE
+    ractiveCategories = new Ractive({
+        target: '#target-notes-setup-table',
+        template: '#template-notes-setup-table',
+        data: problemManager.problem
+    });
     // DATA ENTRY TABLE
     ractiveData = new Ractive({
         target: '#target-data-table',
         template: '#template-data-table',
         data: problemManager.problem
     });
+    // NOTES DATA ENTRY PAGE
+    ractiveCategories = new Ractive({
+        target: '#target-notes-data-entry-table',
+        template: '#template-notes-data-entry-table',
+        data: problemManager.problem
+    });
     // SUMMARY TABLE
     ractiveSummary = new Ractive({
         target: '#target-summary-table',
         template: '#template-summary-table',
+        data: problemManager.problem
+    });
+    // NOTES SUMMARY PAGE
+    ractiveCategories = new Ractive({
+        target: '#target-notes-summary-table',
+        template: '#template-notes-summary-table',
         data: problemManager.problem
     });
     // CATEGORY WEIGHTS TABLE
@@ -106,6 +124,12 @@ function setRactives() {
     ractiveDistributedIgnorance = new Ractive({
         target: '#target-distributed-ignorance-table',
         template: '#template-distributed-ignorance-table',
+        data: problemManager.problem
+    });
+    // NOTES RESULTS PAGE
+    ractiveCategories = new Ractive({
+        target: '#target-notes-results-table',
+        template: '#template-notes-results-table',
         data: problemManager.problem
     });
 }
@@ -523,6 +547,7 @@ function printDecisionMakingReportPDF() {
     var summaryColumnWidth = 80;
     var lastColumnWidth = 48;
     var tableFontSize = 8;
+    var notesWidth = 485;
 
     // Generate new document
     // var pdf = new jsPDF('p', 'pt', 'a4');
@@ -542,6 +567,31 @@ function printDecisionMakingReportPDF() {
     var today = new Date();
     var date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
     pdf.text("Report date: " + date, pdfX, pdfY += Yincrement);
+
+
+    // NOTES - PROJECT SETUP PAGE
+    columnStyles[0] = {
+        columnWidth: notesWidth
+    };
+
+    // PRINT NOTES TABLE
+    pdf.autoTable(['Project Setup Page Notes'],
+    [[problemManager.problem.setupNotes]], {
+        startY: pdfY + Yincrement,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak'
+        },
+        columnStyles: columnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
 
     // Data inputs
     pdf.setFontStyle('bold');
@@ -622,13 +672,45 @@ function printDecisionMakingReportPDF() {
         // Record bottom of table
         pdfY = pdf.autoTable.previous.finalY;
 
+
+
         // console.log("HEADER ROW - " + cat.name);
         // console.log(header);
         // console.log("FINAL ROWS - " + cat.name);
         // console.log(rows);
     }
 
-    // RESULTS
+    // NOTES - DATA ENTRY PAGE
+    columnStyles[0] = {
+        columnWidth: notesWidth
+    };
+
+    // PRINT NOTES TABLE
+    pdf.autoTable(['Data Entry Page Notes'],
+    [[problemManager.problem.dataEntryNotes]], {
+        startY: pdfY + Yincrement,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak'
+        },
+        columnStyles: columnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+    // Reset first column width for next table
+    columnStyles[0] = {
+        columnWidth: firstColumnWidth
+    };
+
+
+
+
+    // SUMMARY
     // new page
     pdf.addPage();
     // Reset pdfY for
@@ -692,6 +774,36 @@ function printDecisionMakingReportPDF() {
     pdfY = pdf.autoTable.previous.finalY;
 
 
+    // NOTES - SUMMARY PAGE
+    columnStyles[0] = {
+        columnWidth: notesWidth
+    };
+
+    // PRINT NOTES TABLE
+    pdf.autoTable(['Summary Page Notes'],
+    [[problemManager.problem.summaryNotes]], {
+        startY: pdfY + Yincrement,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak'
+        },
+        columnStyles: columnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+    // Reset first column width for next table
+    columnStyles[0] = {
+        columnWidth: firstColumnWidth
+    };
+
+
+
+    // RESULTS
     pdf.setFontSize(16);
     pdf.text("Results", pdfX, pdfY += Yincrement + buffer);
 
@@ -754,6 +866,36 @@ function printDecisionMakingReportPDF() {
     });
     // Record bottom of table
     pdfY = pdf.autoTable.previous.finalY;
+
+
+    // NOTES - RESULTS PAGE
+    columnStyles[0] = {
+        columnWidth: notesWidth
+    };
+
+    // PRINT NOTES TABLE
+    pdf.autoTable(['Results Page Notes'],
+    [[problemManager.problem.resultsNotes]], {
+        startY: pdfY + Yincrement,
+        showHeader: 'firstPage',
+        tableWidth: 'wrap',
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak'
+        },
+        columnStyles: columnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+    // Reset first column width for next table
+    columnStyles[0] = {
+        columnWidth: firstColumnWidth
+    };
+
+
 
     // Genegrate footer on each page
     pdfSetFooter(pdf);

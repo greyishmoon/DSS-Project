@@ -22,6 +22,11 @@ Storage.prototype.getObject = function(key) {
     return value && JSON.parse(value);
 }
 
+// prototypes for counting number of lines in a string (used for notes printing)
+String.prototype.lines = function() { return this.split(/\r*\n/); }
+
+String.prototype.lineCount = function() { return this.lines().length; }
+
 // Ractive helpers
 var helpers = Ractive.defaults.data;
 

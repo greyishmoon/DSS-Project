@@ -60,10 +60,22 @@ function setRactives() {
         template: '#template-categories-table',
         data: projectManager.getProject()
     });
+    // NOTES SETUP PAGE
+    ractiveCategories = new Ractive({
+        target: '#target-notes-setup-table',
+        template: '#template-notes-setup-table',
+        data: projectManager.getProject()
+    });
     // RISKS TABLE
     ractiveRisks = new Ractive({
         target: '#target-risk-characteristics-table',
         template: '#template-risk-characteristics-table',
+        data: projectManager.getProject()
+    });
+    // NOTES RISK CHARACTERISTICS PAGE
+    ractiveCategories = new Ractive({
+        target: '#target-notes-risk-characteristic-table',
+        template: '#template-notes-risk-characteristic-table',
         data: projectManager.getProject()
     });
 	// GRADES OF IMPACT TABLE
@@ -78,10 +90,22 @@ function setRactives() {
         template: '#template-impact-assessment-table',
         data: projectManager.getProject()
     });
+    // NOTES IMPACT ASSESSMENT PAGE
+    ractiveCategories = new Ractive({
+        target: '#target-notes-impact-assessment-table',
+        template: '#template-notes-impact-assessment-table',
+        data: projectManager.getProject()
+    });
     // RISK RISK ASSESSMENT PAGE
     ractiveRiskAssessment = new Ractive({
         target: '#target-risk-assessment-page',
         template: '#template-risk-assessment-page',
+        data: projectManager.getProject()
+    });
+    // NOTES RISK ASSESSMENT PAGE
+    ractiveCategories = new Ractive({
+        target: '#target-notes-risk-assessment-table',
+        template: '#template-notes-risk-assessment-table',
         data: projectManager.getProject()
     });
     // CATEGORY SUMMARY PAGE
@@ -90,10 +114,22 @@ function setRactives() {
         template: '#template-summary-page',
         data: projectManager.getProject()
     });
-    // CATEGORY SUMMARY PAGE
+    // NOTES SUMMARY PAGE
+    ractiveCategories = new Ractive({
+        target: '#target-notes-summary-table',
+        template: '#template-notes-summary-table',
+        data: projectManager.getProject()
+    });
+    // CATEGORY RESULTS PAGE
     ractiveResults = new Ractive({
         target: '#target-results-page',
         template: '#template-results-page',
+        data: projectManager.getProject()
+    });
+    // NOTES RESULTS PAGE
+    ractiveCategories = new Ractive({
+        target: '#target-notes-results-table',
+        template: '#template-notes-results-table',
         data: projectManager.getProject()
     });
 }
@@ -594,6 +630,7 @@ function printRiskAnalysisReportPDF() {
     var summaryColumnWidth = 80;
     var lastColumnWidth = 48;
     var tableFontSize = 8;
+    var notesWidth = 485;
 
     var header = [];    // stores array of header rows
     var headerRow = []; // for generation of header row
@@ -618,6 +655,31 @@ function printRiskAnalysisReportPDF() {
     var today = new Date();
     var date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
     pdf.text("Report date: " + date, pdfX, pdfY += Yincrement);
+
+    // NOTES - PROJECT SETUP PAGE
+    // PRINT NOTES TABLE
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: [['Project Setup Page Notes']],
+        body: [[project.setupNotes]],
+        showHeader: 'firstPage',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: {
+            0: {cellWidth: notesWidth},
+        }
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
 
     // Data inputs
     pdf.setFontStyle('bold');
@@ -695,6 +757,29 @@ function printRiskAnalysisReportPDF() {
         pdfY = pdf.autoTable.previous.finalY;
 
     }
+
+    // NOTES - RISK CHARACTERISTICS PAGE
+    // PRINT NOTES TABLE
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: [['Risk Characteristics Page Notes']],
+        body: [[project.riskCharacteristicsNotes]],
+        showHeader: 'firstPage',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: {
+            0: {cellWidth: notesWidth},
+        }
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
 
     // DATA ENTRY - IMPACT ASSESSMENT TABLES
     // new page
@@ -835,6 +920,31 @@ function printRiskAnalysisReportPDF() {
         pdfY = pdf.autoTable.previous.finalY;
 
     }
+
+    // NOTES - IMPACT ASSESSMENT PAGE
+    // PRINT NOTES TABLE
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: [['Impact Assessment Page Notes']],
+        body: [[project.impactAssessmentNotes]],
+        showHeader: 'firstPage',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: {
+            0: {cellWidth: notesWidth},
+        }
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+
 
     // RISK ASSESSMENT PAGE
     // new page
@@ -1094,7 +1204,7 @@ function printRiskAnalysisReportPDF() {
         // Loop over RiskLevels_cat
         for (var j = 0; j < cat.RiskLevels_cat.length; j++) {
             // push data for each range
-            bodyRow.push({content: toPercent(cat.RiskLevels_cat[j]), styles: {halign: 'center'}});
+            bodyRow.push({content: '£'+ helpers.roundTo2(cat.costImpact_cat[j]), styles: {halign: 'center'}});
         }
         // push completed row to rows results array for printing
         body.push(bodyRow);
@@ -1119,51 +1229,31 @@ function printRiskAnalysisReportPDF() {
         });
         // Record bottom of table
         pdfY = pdf.autoTable.previous.finalY;
-
-
-
-        // Potential cost impact on project TABLE
-        header = [];
-        body = [];
-
-        // Construct first header row
-        headerRow = [];
-        headerRow.push('Potential cost impact on project');
-        headerRow.push({content: 'Amount', styles: {halign: 'center'}});
-        header.push(headerRow);
-
-        // generate row for data
-        bodyRow = []; // stores name and data row
-        // Push row title
-        bodyRow.push('Potential impact');
-        // Puch impact on project value
-        bodyRow.push({content: '£' + Math.round( cat.costImpact_cat * 100 ) / 100, styles: {halign: 'center'}});
-
-        // push completed row to rows results array for printing Math.round( percent * 10 ) / 10;
-        body.push(bodyRow);
-
-        // Print table
-        pdf.autoTable({
-            startY: pdfY + Yincrement,
-            head: header,
-            body: body,
-            showHeader: 'firstPage',
-            tableWidth: 'wrap',
-            //tableWidth: 'wrap',       // Use to limit table width
-            margin: {
-                left: pdfX
-            },
-            styles: {
-                fontSize: tableFontSize,
-                overflow: 'linebreak',
-            },
-            columnStyles: narrow3CellTableColumnStyles
-        });
-        // Record bottom of table
-        pdfY = pdf.autoTable.previous.finalY;
-
     }
 
+
+    // NOTES - RISK ASSESSMENT PAGE
+    // PRINT NOTES TABLE
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: [['Risk Assessment Page Notes']],
+        body: [[project.riskAssessmentNotes]],
+        showHeader: 'firstPage',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: {
+            0: {cellWidth: notesWidth},
+        }
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
 
 
     // SUMMARY PAGE
@@ -1362,7 +1452,7 @@ function printRiskAnalysisReportPDF() {
     // Loop over risk levels (RiskLevels_obj: [[0, 0, 0], [0, 0, 0], [0, 0, 0]])
     for (var i = 0; i < 3; i++) {
         // push data for each grade
-        bodyRow.push({content: toPercent(project.RiskLevels_obj[i][0]), styles: {halign: 'center'}});
+        bodyRow.push({content: '£'+ helpers.roundTo2(project.CostImpact_obj[i][0]), styles: {halign: 'center'}});
     }
     // push completed row to rows results array for printing
     body.push(bodyRow);
@@ -1374,7 +1464,7 @@ function printRiskAnalysisReportPDF() {
     // Loop over risk levels (RiskLevels_obj: [[0, 0, 0], [0, 0, 0], [0, 0, 0]])
     for (var i = 0; i < 3; i++) {
         // push data for each grade
-        bodyRow.push({content: toPercent(project.RiskLevels_obj[i][1]), styles: {halign: 'center'}});
+        bodyRow.push({content: '£'+ helpers.roundTo2(project.CostImpact_obj[i][1]), styles: {halign: 'center'}});
     }
     // push completed row to rows results array for printing
     body.push(bodyRow);
@@ -1386,7 +1476,7 @@ function printRiskAnalysisReportPDF() {
     // Loop over risk levels (RiskLevels_obj: [[0, 0, 0], [0, 0, 0], [0, 0, 0]])
     for (var i = 0; i < 3; i++) {
         // push data for each grade
-        bodyRow.push({content: toPercent(project.RiskLevels_obj[i][2]), styles: {halign: 'center'}});
+        bodyRow.push({content: '£'+ helpers.roundTo2(project.CostImpact_obj[i][2]), styles: {halign: 'center'}});
     }
     // push completed row to rows results array for printing
     body.push(bodyRow);
@@ -1408,6 +1498,29 @@ function printRiskAnalysisReportPDF() {
 
         },
         columnStyles: narrow3CellTableColumnStyles
+    });
+    // Record bottom of table
+    pdfY = pdf.autoTable.previous.finalY;
+
+    // NOTES - SUMMARY PAGE
+    // PRINT NOTES TABLE
+    pdf.autoTable({
+        startY: pdfY + Yincrement,
+        head: [['Summary Page Notes']],
+        body: [[project.summaryNotes]],
+        showHeader: 'firstPage',
+        //tableWidth: 'wrap',       // Use to limit table width
+        margin: {
+            left: pdfX
+        },
+        styles: {
+            fontSize: tableFontSize,
+            overflow: 'linebreak',
+
+        },
+        columnStyles: {
+            0: {cellWidth: notesWidth},
+        }
     });
     // Record bottom of table
     pdfY = pdf.autoTable.previous.finalY;
@@ -1543,9 +1656,9 @@ function printRiskAnalysisReportPDF() {
     // Push row title
     bodyRow.push('Risk Levels');
     // Loop over RiskLevels_cat
-    for (var i = 0; i < project.RiskLevels_proj.length; i++) {
+    for (var i = 0; i < project.costImpact_proj.length; i++) {
         // push data for each range
-        bodyRow.push({content: toPercent(project.RiskLevels_proj[i]), styles: {halign: 'center'}});
+        bodyRow.push({content: '£'+ helpers.roundTo2(project.costImpact_proj[i]), styles: {halign: 'center'}});
     }
     // push completed row to rows results array for printing
     body.push(bodyRow);
@@ -1577,33 +1690,13 @@ function printRiskAnalysisReportPDF() {
     pdfY = pdf.autoTable.previous.finalY;
 
 
-    // Potential cost impact on project TABLE
-    header = [];
-    body = [];
-
-    // Construct first header row
-    headerRow = [];
-    headerRow.push('Potential cost impact on project');
-    headerRow.push({content: 'Amount', styles: {halign: 'center'}});
-    header.push(headerRow);
-
-    // generate row for data
-    bodyRow = []; // stores name and data row
-    // Push row title
-    bodyRow.push('Potential impact');
-    // Puch impact on project value
-    bodyRow.push({content: '£' + Math.round( project.costImpact_proj * 100 ) / 100, styles: {halign: 'center'}});
-
-    // push completed row to rows results array for printing Math.round( percent * 10 ) / 10;
-    body.push(bodyRow);
-
-    // Print table
+    // NOTES - RESULTS PAGE
+    // PRINT NOTES TABLE
     pdf.autoTable({
         startY: pdfY + Yincrement,
-        head: header,
-        body: body,
+        head: [['Results Page Notes']],
+        body: [[project.resultsNotes]],
         showHeader: 'firstPage',
-        tableWidth: 'wrap',
         //tableWidth: 'wrap',       // Use to limit table width
         margin: {
             left: pdfX
@@ -1611,8 +1704,11 @@ function printRiskAnalysisReportPDF() {
         styles: {
             fontSize: tableFontSize,
             overflow: 'linebreak',
+
         },
-        columnStyles: narrow3CellTableColumnStyles
+        columnStyles: {
+            0: {cellWidth: notesWidth},
+        }
     });
     // Record bottom of table
     pdfY = pdf.autoTable.previous.finalY;
