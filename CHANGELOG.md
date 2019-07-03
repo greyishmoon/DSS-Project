@@ -8,6 +8,14 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+## [0.2.7] - 03-07-2019
+### Fixed
+#### RISK ANALYSIS
+- Risk assessment + Results percentages
+* Fixed grades values not displaying correct values in table headers
+- Instructions pages
+* Altered text to alight to percentages not 0-1 grading
+
 ## [0.2.6] - 25-06-2019
 ### Added
 #### RISK ANALYSIS
