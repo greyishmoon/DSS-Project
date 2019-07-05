@@ -2,7 +2,7 @@
 
 var problemManager; // Manager holding the Problem data object
 // Ractive components
-var ractiveTitle, ractiveAlternatives, ractiveCategories, ractiveData, ractiveSummary, ractiveCategoryWeights, ractiveAggregatedBeliefs, ractiveDistributedIgnorance;
+var ractiveTitle, ractiveAlternatives, ractiveCategories, ractiveData, ractiveSummary, ractiveCategoryWeights, ractiveAggregatedBeliefs, ractiveDistributedIgnorance, ractiveNotesSetup, ractiveNotesData, ractiveNotesSummary, ractiveNotesResults;
 
 var minAltCount = 2; // Number of alternatives - limited >=2 <=5
 var maxAltCount = 5;
@@ -79,7 +79,7 @@ function setRactives() {
         data: problemManager.problem
     });
     // NOTES SETUP PAGE
-    ractiveCategories = new Ractive({
+    ractiveNotesSetup = new Ractive({
         target: '#target-notes-setup-table',
         template: '#template-notes-setup-table',
         data: problemManager.problem
@@ -91,7 +91,7 @@ function setRactives() {
         data: problemManager.problem
     });
     // NOTES DATA ENTRY PAGE
-    ractiveCategories = new Ractive({
+    ractiveNotesData = new Ractive({
         target: '#target-notes-data-entry-table',
         template: '#template-notes-data-entry-table',
         data: problemManager.problem
@@ -103,7 +103,7 @@ function setRactives() {
         data: problemManager.problem
     });
     // NOTES SUMMARY PAGE
-    ractiveCategories = new Ractive({
+    ractiveNotesSummary = new Ractive({
         target: '#target-notes-summary-table',
         template: '#template-notes-summary-table',
         data: problemManager.problem
@@ -127,7 +127,7 @@ function setRactives() {
         data: problemManager.problem
     });
     // NOTES RESULTS PAGE
-    ractiveCategories = new Ractive({
+    ractiveNotesResults = new Ractive({
         target: '#target-notes-results-table',
         template: '#template-notes-results-table',
         data: problemManager.problem
@@ -428,6 +428,10 @@ function updateRactives() {
     ractiveCategoryWeights.update();
     ractiveAggregatedBeliefs.update();
     ractiveDistributedIgnorance.update();
+    ractiveNotesSetup.update();
+    ractiveNotesData.update();
+    ractiveNotesSummary.update();
+    ractiveNotesResults.update();
 }
 
 // UPDATE ractive model to display changes, upgrade MDL elements and reset listeners
