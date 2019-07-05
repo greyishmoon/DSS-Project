@@ -8,6 +8,12 @@ and this project follows [Semantic Versioning](http://semver.org/spec/v2.0.0.htm
 - RA = RISK ANALYSIS TOOL
 - DM = DECISION MAKING TOOL
 
+## [0.2.8] - 03-07-2019
+### Fixed
+#### RISK ANALYSIS
+- Project Setup
+* Add category and Next buttons not updating (error introduced with notes boxes not being updated - fixed by updating notes boxes)
+
 ## [0.2.7] - 03-07-2019
 ### Fixed
 #### RISK ANALYSIS

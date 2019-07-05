@@ -3,7 +3,7 @@
 var projectManager; // Manager holding the Problem data object
 var project; // Link to project data
 // Ractive components
-var ractiveTitle, ractiveCategories, ractiveRisks, ractiveGrades, ractiveImpacts, ractiveRiskAssessment, ractiveSummary, ractiveResults;
+var ractiveTitle, ractiveCategories, ractiveNotesSetup, ractiveRisks, ractiveNotesRisks, ractiveGrades, ractiveImpacts, ractiveNotesImpacts, ractiveRiskAssessment, ractiveNotesRiskAssessment, ractiveSummary, ractiveNotesSummary, ractiveResults, ractiveNotesResults;
 
 var minCatCount = 1; // Number of categories - limited >=1 <=6
 var maxCatCount = 6;
@@ -61,7 +61,7 @@ function setRactives() {
         data: projectManager.getProject()
     });
     // NOTES SETUP PAGE
-    ractiveCategories = new Ractive({
+    ractiveNotesSetup = new Ractive({
         target: '#target-notes-setup-table',
         template: '#template-notes-setup-table',
         data: projectManager.getProject()
@@ -73,7 +73,7 @@ function setRactives() {
         data: projectManager.getProject()
     });
     // NOTES RISK CHARACTERISTICS PAGE
-    ractiveCategories = new Ractive({
+    ractiveNotesRisks = new Ractive({
         target: '#target-notes-risk-characteristic-table',
         template: '#template-notes-risk-characteristic-table',
         data: projectManager.getProject()
@@ -91,7 +91,7 @@ function setRactives() {
         data: projectManager.getProject()
     });
     // NOTES IMPACT ASSESSMENT PAGE
-    ractiveCategories = new Ractive({
+    ractiveNotesImpacts = new Ractive({
         target: '#target-notes-impact-assessment-table',
         template: '#template-notes-impact-assessment-table',
         data: projectManager.getProject()
@@ -103,7 +103,7 @@ function setRactives() {
         data: projectManager.getProject()
     });
     // NOTES RISK ASSESSMENT PAGE
-    ractiveCategories = new Ractive({
+    ractiveNotesRiskAssessment = new Ractive({
         target: '#target-notes-risk-assessment-table',
         template: '#template-notes-risk-assessment-table',
         data: projectManager.getProject()
@@ -115,7 +115,7 @@ function setRactives() {
         data: projectManager.getProject()
     });
     // NOTES SUMMARY PAGE
-    ractiveCategories = new Ractive({
+    ractiveNotesSummary = new Ractive({
         target: '#target-notes-summary-table',
         template: '#template-notes-summary-table',
         data: projectManager.getProject()
@@ -127,7 +127,7 @@ function setRactives() {
         data: projectManager.getProject()
     });
     // NOTES RESULTS PAGE
-    ractiveCategories = new Ractive({
+    ractiveNotesResults = new Ractive({
         target: '#target-notes-results-table',
         template: '#template-notes-results-table',
         data: projectManager.getProject()
@@ -428,6 +428,12 @@ function updateRactives() {
     ractiveRiskAssessment.update();
     ractiveSummary.update();
     ractiveResults.update();
+    ractiveNotesSetup.update();
+    ractiveNotesRisks.update();
+    ractiveNotesImpacts.update();
+    ractiveNotesRiskAssessment.update();
+    ractiveNotesSummary.update();
+    ractiveNotesResults.update();
 }
 
 // UPDATE ractive model to display changes, upgrade MDL elements and reset listeners
